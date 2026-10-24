@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Khu vực ứng dụng demo và tệp tải lên không cần lập chỉ mục
+Disallow: /uploads/
+
+Sitemap: {{ "sitemap.xml" | absURL }}

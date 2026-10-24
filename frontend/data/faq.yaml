@@ -1,0 +1,17 @@
+- q: "Phí trung gian 2% được tính như thế nào?"
+  a: "Studeal chỉ thu 2% trên giá trị đơn hàng khi giao dịch thành công. Ví dụ đơn 200.000đ, phí sàn là 4.000đ và người bán nhận 196.000đ. Không có phí đăng tin, không phí ẩn."
+
+- q: "Escrow bảo vệ người mua như thế nào?"
+  a: "Khi bạn thanh toán, tiền được Studeal giữ ở trạng thái HOLDING. Người bán chỉ nhận được tiền sau khi bạn bấm “Đã nhận hàng”. Nếu hàng không đúng mô tả, bạn có thể mở tranh chấp để được hoàn tiền."
+
+- q: "Tại sao phải xác thực email .edu.vn?"
+  a: "Xác thực .edu.vn giúp chợ chỉ dành cho sinh viên thật, giảm tin rác và lừa đảo. Studeal chỉ kiểm tra tên miền trường, không lưu mật khẩu email và không hiển thị email hay số điện thoại của bạn."
+
+- q: "Người mua có thấy thông tin của tôi không?"
+  a: "Không. Người mua chỉ thấy bí danh ẩn danh (ví dụ “Sinh viên #101”) và huy hiệu trường. Email, số điện thoại và thông tin cá nhân được ẩn hoàn toàn."
+
+- q: "Tuyến giao hàng xanh miễn phí hoạt động ra sao?"
+  a: "Mỗi tuần Studeal có các chuyến miễn phí giữa CS1 (227 Nguyễn Văn Cừ, Q.5) và CS2 (Linh Trung, TP. Thủ Đức). Bạn đặt trước 20:00 hôm trước, nhân viên nhận hàng tại sảnh trường và giao trong ngày."
+
+- q: "Tôi có thể trả giá không? Có chat không?"
+  a: "Bạn có thể gửi mức giá đề xuất; người bán chỉ chọn Chấp nhận hoặc Từ chối. Studeal không có chat để tránh mặc cả kéo dài và bảo vệ thông tin hai bên."

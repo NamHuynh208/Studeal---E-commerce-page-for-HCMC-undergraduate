@@ -1,0 +1,23 @@
+# Lịch tuyến giao hàng xanh Studeal Routine (CS1 ↔ CS2 – ĐH KHTN)
+# Các chuyến có thể lùi 10–15 phút khi kẹt xe; cập nhật qua nhóm Zalo của trường.
+
+- day: "Thứ Ba"
+  short: "T3"
+  cs1_to_cs2: "17:30 – 18:45"
+  cs2_to_cs1: "19:30 – 20:45"
+  cutoff: "20:00 Thứ Hai"
+  note: "Chuyến chiều – phù hợp đơn giáo trình, đồ dùng nhỏ."
+
+- day: "Thứ Năm"
+  short: "T5"
+  cs1_to_cs2: "17:30 – 18:45"
+  cs2_to_cs1: "19:30 – 20:45"
+  cutoff: "20:00 Thứ Tư"
+  note: "Chuyến chiều – ưu tiên đơn có bảo hiểm escrow."
+
+- day: "Thứ Bảy"
+  short: "T7"
+  cs1_to_cs2: "08:00 – 09:15"
+  cs2_to_cs1: "10:00 – 11:15"
+  cutoff: "20:00 Thứ Sáu"
+  note: "Chuyến sáng – nhận đồ trọ cồng kềnh (tối đa 15 kg)."

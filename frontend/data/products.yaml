@@ -1,0 +1,98 @@
+# Dữ liệu minh họa cho khu "Chợ sinh viên" trên trang chủ.
+# Giá và tình trạng lấy cảm hứng từ dữ liệu seed của backend.
+
+- name: "Giáo trình Giải tích 1 – ĐH KHTN (bản in mới)"
+  category: "Giáo trình"
+  category_slug: "giao-trinh"
+  price: "55.000đ"
+  original: "135.000đ"
+  condition: "Khá 90%"
+  school: "SV ĐH KHTN"
+  seller: "Sinh viên #101"
+  image: "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?auto=format&fit=crop&w=900&q=80"
+  alt: "Giáo trình Giải tích 1 bản in mới"
+  vip: true
+
+- name: "Laptop Dell Latitude 7420 – i7 / 16GB / 512GB"
+  category: "Máy tính"
+  category_slug: "may-tinh"
+  price: "12.900.000đ"
+  original: "28.000.000đ"
+  condition: "Như mới 95%"
+  school: "SV ĐH CNTT"
+  seller: "Sinh viên #207"
+  image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=900&q=80"
+  alt: "Laptop Dell Latitude 7420 màu bạc"
+  vip: true
+
+- name: "Máy tính Casio fx-580VN X (full box)"
+  category: "Đồ dùng"
+  category_slug: "do-dung"
+  price: "320.000đ"
+  original: "750.000đ"
+  condition: "Tốt 85%"
+  school: "SV ĐH Bách Khoa"
+  seller: "Sinh viên #315"
+  image: "https://images.unsplash.com/photo-1587145820266-a5951ee6f620?auto=format&fit=crop&w=900&q=80"
+  alt: "Máy tính khoa học Casio fx-580VN X"
+  vip: false
+
+- name: "Giáo trình Kinh tế vi mô + sách bài tập"
+  category: "Giáo trình"
+  category_slug: "giao-trinh"
+  price: "90.000đ"
+  original: "210.000đ"
+  condition: "Tốt 85%"
+  school: "SV ĐH Kinh tế"
+  seller: "Sinh viên #422"
+  image: "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?auto=format&fit=crop&w=900&q=80"
+  alt: "Giáo trình Kinh tế vi mô và sách bài tập"
+  vip: false
+
+- name: "Balo laptop chống nước 15.6 inch"
+  category: "Đồ dùng"
+  category_slug: "do-dung"
+  price: "180.000đ"
+  original: "450.000đ"
+  condition: "Khá 90%"
+  school: "SV ĐH Sư phạm"
+  seller: "Sinh viên #518"
+  image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=900&q=80"
+  alt: "Balo laptop chống nước màu xám"
+  vip: false
+
+- name: "Đèn bàn LED chống cận + kẹp sách"
+  category: "Đồ trọ"
+  category_slug: "do-tro"
+  price: "120.000đ"
+  original: "300.000đ"
+  condition: "Như mới 95%"
+  school: "SV ĐH KHTN"
+  seller: "Sinh viên #633"
+  image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=900&q=80"
+  alt: "Đèn bàn LED trên bàn học"
+  vip: false
+
+- name: "Tai nghe Bluetooth Soundcore Life Q30"
+  category: "Đồ dùng"
+  category_slug: "do-dung"
+  price: "650.000đ"
+  original: "1.890.000đ"
+  condition: "Tốt 85%"
+  school: "SV ĐH CNTT"
+  seller: "Sinh viên #744"
+  image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=80"
+  alt: "Tai nghe Bluetooth chụp tai"
+  vip: false
+
+- name: "Kệ sách gỗ 3 tầng + ghế gấp"
+  category: "Đồ trọ"
+  category_slug: "do-tro"
+  price: "250.000đ"
+  original: "600.000đ"
+  condition: "Khá 90%"
+  school: "SV ĐH KHTN"
+  seller: "Sinh viên #856"
+  image: "https://images.unsplash.com/photo-1594620302200-9a762244a156?auto=format&fit=crop&w=900&q=80"
+  alt: "Kệ sách gỗ nhỏ trong phòng trọ"
+  vip: false

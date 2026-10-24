@@ -1,0 +1,156 @@
+{{- $isHome := .IsHome -}}
+{{- $pageTitle := cond $isHome site.Title (printf "%s | Studeal" .Title) -}}
+{{- $description := "" -}}
+{{- with .Description }}{{ $description = . }}{{ end -}}
+{{- if not $description }}{{ with .Params.description }}{{ $description = . }}{{ end }}{{ end -}}
+{{- if not $description }}{{ with .Summary }}{{ $description = . }}{{ end }}{{ end -}}
+{{- if not $description }}{{ $description = site.Params.description }}{{ end -}}
+{{- $description = $description | plainify | truncate 160 "" -}}
+{{- $ogImagePath := site.Params.ogImage -}}
+{{- with .Params.image }}{{ $ogImagePath = . }}{{ end -}}
+{{- $ogImage := $ogImagePath | absURL -}}
+{{- $ogType := cond $isHome "website" "article" -}}
+{{- $keywords := site.Params.keywords -}}
+{{- with .Params.keywords }}{{ $keywords = . }}{{ end -}}
+{{- $isAbout := false -}}
+{{- with .File }}{{ $isAbout = eq .BaseFileName "about" }}{{ end -}}
+
+<title>{{ $pageTitle }}</title>
+<meta name="description" content="{{ $description }}">
+<meta name="keywords" content="{{ delimit $keywords ", " }}">
+<meta name="author" content="{{ site.Params.author }}">
+<meta name="theme-color" content="#0284c7">
+<meta name="format-detection" content="telephone=no">
+<meta name="robots" content="{{ if or .Params.noindex (eq .Kind "404") }}noindex, nofollow{{ else }}index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1{{ end }}">
+<link rel="canonical" href="{{ .Permalink }}">
+<link rel="alternate" hreflang="vi" href="{{ .Permalink }}">
+<link rel="alternate" type="application/rss+xml" href="{{ "index.xml" | absURL }}" title="Studeal">
+
+<!-- OpenGraph -->
+<meta property="og:locale" content="vi_VN">
+<meta property="og:type" content="{{ $ogType }}">
+<meta property="og:title" content="{{ $pageTitle }}">
+<meta property="og:description" content="{{ $description }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:site_name" content="Studeal">
+<meta property="og:image" content="{{ $ogImage }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{{ $pageTitle }}">
+{{- if not $isHome }}
+<meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+<meta property="article:modified_time" content="{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}">
+<meta property="article:author" content="Studeal Team">
+{{- end }}
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ $pageTitle }}">
+<meta name="twitter:description" content="{{ $description }}">
+<meta name="twitter:image" content="{{ $ogImage }}">
+<meta name="twitter:image:alt" content="{{ $pageTitle }}">
+
+<!-- Schema.org: Organization + WebSite -->
+{{- $orgID := printf "%s#organization" site.BaseURL -}}
+{{- $websiteID := printf "%s#website" site.BaseURL -}}
+{{- $org := dict
+  "@context" "https://schema.org"
+  "@type" "Organization"
+  "@id" $orgID
+  "name" "Studeal"
+  "url" site.BaseURL
+  "logo" ("images/logo.svg" | absURL)
+  "description" site.Params.description
+  "email" site.Params.email
+  "foundingDate" "2026"
+  "sameAs" (slice site.Params.facebook)
+  "areaServed" (dict "@type" "City" "name" "TP. Hồ Chí Minh")
+  "address" (dict
+    "@type" "PostalAddress"
+    "streetAddress" "227 Nguyễn Văn Cừ"
+    "addressLocality" "Quận 5"
+    "addressRegion" "TP. Hồ Chí Minh"
+    "addressCountry" "VN")
+-}}
+{{- $website := dict
+  "@context" "https://schema.org"
+  "@type" "WebSite"
+  "@id" $websiteID
+  "url" site.BaseURL
+  "name" "Studeal"
+  "description" site.Params.description
+  "inLanguage" "vi-VN"
+  "publisher" (dict "@id" $orgID)
+-}}
+<script type="application/ld+json">{{ $org | jsonify | safeJS }}</script>
+<script type="application/ld+json">{{ $website | jsonify | safeJS }}</script>
+
+{{- if $isHome }}
+{{- $items := slice -}}
+{{- range $i, $p := hugo.Data.products -}}
+  {{- $price := $p.price | replaceRE "[^0-9]" "" -}}
+  {{- $items = $items | append (dict
+    "@type" "ListItem"
+    "position" (add $i 1)
+    "item" (dict
+      "@type" "Product"
+      "name" $p.name
+      "image" $p.image
+      "description" (printf "%s – %s" $p.condition $p.school)
+      "offers" (dict
+        "@type" "Offer"
+        "price" $price
+        "priceCurrency" "VND"
+        "availability" "https://schema.org/InStock"
+        "seller" (dict "@type" "Organization" "name" "Studeal")))
+  ) -}}
+{{- end -}}
+{{- $itemList := dict
+  "@context" "https://schema.org"
+  "@type" "ItemList"
+  "name" "Sản phẩm nổi bật trên Studeal"
+  "numberOfItems" (len $items)
+  "itemListElement" $items
+-}}
+<script type="application/ld+json">{{ $itemList | jsonify | safeJS }}</script>
+{{- end }}
+
+{{- if not $isHome }}
+{{- $crumbItems := slice
+  (dict "@type" "ListItem" "position" 1 "name" "Trang chủ" "item" site.BaseURL)
+  (dict "@type" "ListItem" "position" 2 "name" .Title "item" .Permalink)
+-}}
+{{- $breadcrumb := dict
+  "@context" "https://schema.org"
+  "@type" "BreadcrumbList"
+  "itemListElement" $crumbItems
+-}}
+<script type="application/ld+json">{{ $breadcrumb | jsonify | safeJS }}</script>
+{{- end }}
+
+{{- if $isAbout }}
+{{- $aboutPage := dict
+  "@context" "https://schema.org"
+  "@type" "AboutPage"
+  "name" .Title
+  "description" $description
+  "url" .Permalink
+  "inLanguage" "vi-VN"
+  "isPartOf" (dict "@id" $websiteID)
+  "about" (dict "@id" $orgID)
+-}}
+<script type="application/ld+json">{{ $aboutPage | jsonify | safeJS }}</script>
+{{- $questions := slice -}}
+{{- range hugo.Data.faq -}}
+  {{- $questions = $questions | append (dict
+    "@type" "Question"
+    "name" .q
+    "acceptedAnswer" (dict "@type" "Answer" "text" .a)) -}}
+{{- end -}}
+{{- $faq := dict
+  "@context" "https://schema.org"
+  "@type" "FAQPage"
+  "mainEntity" $questions
+-}}
+<script type="application/ld+json">{{ $faq | jsonify | safeJS }}</script>
+{{- end }}

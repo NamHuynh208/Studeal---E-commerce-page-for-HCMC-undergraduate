@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Studeal - Chợ mua bán giáo trình cũ và đồ dùng sinh viên các trường Đại học tại TP.HCM. Escrow an toàn, phí trung gian chỉ 2%." />
+  <title>Studeal - Chợ đồ cũ sinh viên TP.HCM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <!--
+    Đây là trang demo tĩnh phục vụ cùng cổng 3001 với API.
+    Khi build website Hugo, output sẽ ghi đè thư mục frontend/public này.
+  -->
+
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="../" aria-label="Studeal - trang chủ">
+        <span class="brand-mark">S</span>
+        <span class="brand-text">
+          <strong>Studeal</strong>
+          <small>Chợ đồ cũ sinh viên</small>
+        </span>
+      </a>
+
+      <nav class="main-nav" aria-label="Điều hướng chính">
+        <a href="#products">Chợ sinh viên</a>
+        <a href="#how">Cách hoạt động</a>
+        <button type="button" class="nav-link" data-action="open-dashboard">Ví của tôi</button>
+      </nav>
+
+      <form class="top-search" id="searchForm" role="search">
+        <span class="top-search-icon" aria-hidden="true">⌕</span>
+        <input id="searchInput" type="search" placeholder="Tìm giáo trình, Casio, balo..." autocomplete="off" aria-label="Tìm sản phẩm" />
+        <button type="submit" class="top-search-btn">Tìm</button>
+      </form>
+
+      <div class="auth-area" id="authArea"></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">
+            <span class="pulse-dot"></span>
+            Dành riêng cho sinh viên TP.HCM
+          </div>
+          <h1>
+            Đồ cũ sinh viên.<br />
+            <span class="highlight">Giá trị mới.</span>
+          </h1>
+          <p class="hero-desc">
+            Mua bán giáo trình, máy tính, đồ dùng học tập và đồ trọ trong cộng đồng sinh viên đã xác thực
+            <strong>.edu.vn</strong>. Studeal giữ tiền an toàn và chỉ thu <strong>2%</strong> mỗi giao dịch thành công.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary btn-lg" href="#products">Khám phá chợ</a>
+            <button class="btn btn-ghost btn-lg" type="button" data-action="open-sell">
+              <span aria-hidden="true">＋</span> Đăng bán ngay
+            </button>
+          </div>
+          <div class="hero-trust">
+            <div class="trust-item">
+              <span class="trust-icon">🛡</span>
+              <span><strong>Escrow</strong><br />Giữ tiền đến khi nhận hàng</span>
+            </div>
+            <div class="trust-item">
+              <span class="trust-icon">🎓</span>
+              <span><strong>Huy hiệu .edu.vn</strong><br />Người bán đã xác thực</span>
+            </div>
+            <div class="trust-item">
+              <span class="trust-icon">🔒</span>
+              <span><strong>Ẩn liên hệ</strong><br />Tự che SĐT &amp; Zalo</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-panel" aria-label="Minh họa giao dịch an toàn">
+          <div class="panel-top">
+            <span class="panel-badge">Giao dịch mẫu</span>
+            <span class="panel-secure">● Escrow đang bảo vệ</span>
+          </div>
+          <div class="panel-product">
+            <div class="panel-thumb">📘</div>
+            <div>
+              <strong>Giáo trình Giải tích 1</strong>
+              <span>SV ĐH KHTN · Khá 90%</span>
+            </div>
+            <b>55.000đ</b>
+          </div>
+          <div class="panel-flow">
+            <div class="flow-step done">
+              <span>1</span>
+              <div><strong>Người mua thanh toán</strong><small>Tiền vào ví trung gian</small></div>
+              <em>✓</em>
+            </div>
+            <div class="flow-step active">
+              <span>2</span>
+              <div><strong>Studeal giữ tiền</strong><small>Trạng thái HOLDING</small></div>
+              <em>•••</em>
+            </div>
+            <div class="flow-step">
+              <span>3</span>
+              <div><strong>Xác nhận đã nhận hàng</strong><small>Người bán nhận 98%</small></div>
+              <em>○</em>
+            </div>
+          </div>
+          <div class="panel-ledger">
+            <div><span>Người bán nhận</span><strong>53.900đ</strong></div>
+            <div><span>Phí nền tảng 2%</span><strong class="fee">1.100đ</strong></div>
+          </div>
+          <p class="panel-note">Ví dụ: giao dịch 55.000đ. Studeal khấu trừ 2% khi người mua xác nhận đã nhận hàng.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="voucher-strip-wrap">
+      <div class="container">
+        <div class="voucher-strip" id="voucherStrip">
+          <span class="voucher-label">Ưu đãi hôm nay</span>
+          <span class="voucher-skeleton">Đang tải mã giảm giá...</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="products-section" id="products">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Chợ sinh viên</div>
+            <h2>Đang được bán gần bạn</h2>
+            <p class="section-sub" id="productCount">Đang tải sản phẩm...</p>
+          </div>
+          <button class="btn btn-outline" type="button" data-action="open-sell">＋ Đăng bán</button>
+        </div>
+
+        <div class="filter-row">
+          <div class="chips" id="categoryChips" role="group" aria-label="Lọc theo danh mục">
+            <button type="button" class="chip active" data-category="">Tất cả</button>
+            <button type="button" class="chip" data-category="Giáo trình">Giáo trình</button>
+            <button type="button" class="chip" data-category="Điện tử">Điện tử</button>
+            <button type="button" class="chip" data-category="Đồ trọ">Đồ trọ</button>
+            <button type="button" class="chip" data-category="Dụng cụ học tập">Dụng cụ học tập</button>
+          </div>
+          <div class="sort-note"><span class="vip-dot"></span> Tin VIP luôn được ưu tiên hiển thị</div>
+        </div>
+
+        <div class="product-grid" id="productGrid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="how-section" id="how">
+      <div class="container">
+        <div class="section-head centered">
+          <div>
+            <div class="section-kicker">An toàn &amp; minh bạch</div>
+            <h2>Ba bước để giao dịch không lo lừa đảo</h2>
+            <p class="section-sub">Không cần gặp riêng để thương lượng. Không lộ số điện thoại. Không giao dịch ngoài luồng.</p>
+          </div>
+        </div>
+        <div class="how-grid">
+          <article class="how-card">
+            <span class="how-num">01</span>
+            <div class="how-icon">🎓</div>
+            <h3>Xác thực sinh viên</h3>
+            <p>Đăng ký bằng email trường có đuôi <strong>.edu.vn</strong>. Hệ thống gửi OTP và gắn huy hiệu trường ĐH của bạn.</p>
+          </article>
+          <article class="how-card featured">
+            <span class="how-num">02</span>
+            <div class="how-icon">🤝</div>
+            <h3>Trả giá &amp; chốt deal</h3>
+            <p>Người mua gửi mức giá mong muốn. Người bán chỉ cần bấm <strong>ACCEPT</strong> hoặc <strong>REJECT</strong>. Không có chat để lộ thông tin.</p>
+          </article>
+          <article class="how-card">
+            <span class="how-num">03</span>
+            <div class="how-icon">🛡</div>
+            <h3>Escrow &amp; giải ngân</h3>
+            <p>Studeal giữ tiền ở trạng thái <strong>HOLDING</strong>. Khi người mua xác nhận đã nhận hàng, người bán nhận 98%, sàn giữ 2%.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <a class="brand" href="../">
+          <span class="brand-mark">S</span>
+          <span class="brand-text"><strong>Studeal</strong><small>Chợ đồ cũ sinh viên TP.HCM</small></span>
+        </a>
+        <p class="footer-note">Đồ án demo Node.js + Express + sql.js. Phí trung gian 2% mỗi giao dịch thành công.</p>
+      </div>
+      <div class="footer-links">
+        <a href="/api/health" target="_blank" rel="noopener">API Health</a>
+        <a href="/api/products" target="_blank" rel="noopener">API Sản phẩm</a>
+        <span>© 2026 Studeal</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal-backdrop" id="modal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Hộp thoại Studeal">
+      <button class="modal-close" type="button" data-close aria-label="Đóng">×</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+  <script src="assets/app.js" defer></script>
+</body>
+</html>

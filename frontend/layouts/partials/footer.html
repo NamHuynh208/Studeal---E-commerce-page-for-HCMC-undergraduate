@@ -1,0 +1,122 @@
+<footer class="relative mt-24 overflow-hidden bg-[#061826] text-slate-300">
+  <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+    <div class="absolute -top-32 left-1/4 h-72 w-72 rounded-full bg-sky-500/20 blur-[100px]"></div>
+    <div class="absolute -bottom-40 right-0 h-80 w-80 rounded-full bg-cyan-400/10 blur-[120px]"></div>
+    <div class="footer-grid absolute inset-0 opacity-[0.07]"></div>
+  </div>
+
+  <div class="relative mx-auto max-w-7xl px-4 pb-10 pt-16 sm:px-6 lg:px-8">
+    <div class="grid gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-4">
+        <a href="{{ "/" | relURL }}" class="inline-flex items-center gap-3" aria-label="Studeal – trang chủ">
+          <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-400 via-sky-500 to-sky-700 shadow-lg shadow-sky-500/20">
+            <span class="text-xl font-extrabold text-white">S</span>
+          </span>
+          <span class="leading-tight">
+            <strong class="block text-lg font-extrabold tracking-tight text-white">Studeal</strong>
+            <small class="block text-[10px] font-semibold uppercase tracking-[0.16em] text-sky-300">Chợ đồ cũ sinh viên</small>
+          </span>
+        </a>
+        <p class="mt-5 max-w-sm text-sm leading-relaxed text-slate-400">
+          Sàn mua bán giáo trình, máy tính và đồ dùng dành riêng cho sinh viên đã xác thực
+          <span class="font-semibold text-sky-300">.edu.vn</span> tại TP.Hồ Chí Minh.
+          Escrow giữ tiền an toàn, phí trung gian chỉ {{ site.Params.platformFee }}%.
+        </p>
+        <div class="mt-6 flex items-center gap-2">
+          <a href="mailto:{{ site.Params.email }}" aria-label="Gửi email cho Studeal"
+             class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-300 transition hover:-translate-y-0.5 hover:border-sky-400/40 hover:bg-sky-500/15 hover:text-sky-300">
+            <i class="fa-solid fa-envelope"></i>
+          </a>
+          <a href="{{ site.Params.facebook }}" target="_blank" rel="noopener noreferrer" aria-label="Studeal trên Facebook"
+             class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-300 transition hover:-translate-y-0.5 hover:border-sky-400/40 hover:bg-sky-500/15 hover:text-sky-300">
+            <i class="fa-brands fa-facebook-f"></i>
+          </a>
+          <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" aria-label="Studeal trên TikTok"
+             class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-300 transition hover:-translate-y-0.5 hover:border-sky-400/40 hover:bg-sky-500/15 hover:text-sky-300">
+            <i class="fa-brands fa-tiktok"></i>
+          </a>
+        </div>
+        <div class="mt-6 inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1.5 text-[11px] font-semibold text-emerald-300">
+          <span class="relative flex h-2 w-2">
+            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+            <span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span>
+          </span>
+          Đang phục vụ sinh viên TP.HCM
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-5">
+        <div>
+          <h3 class="text-xs font-bold uppercase tracking-[0.16em] text-white">Khám phá</h3>
+          <ul class="mt-4 space-y-3 text-sm">
+            <li><a href="{{ "/" | relURL }}" class="text-slate-400 transition hover:text-sky-300">Trang chủ</a></li>
+            <li><a href="{{ "/#san-pham" | relURL }}" class="text-slate-400 transition hover:text-sky-300">Chợ sinh viên</a></li>
+            <li><a href="{{ "/#cach-hoat-dong" | relURL }}" class="text-slate-400 transition hover:text-sky-300">Cách hoạt động</a></li>
+            <li><a href="{{ site.Params.demoURL | relURL }}" class="text-slate-400 transition hover:text-sky-300">Dùng thử ứng dụng</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-xs font-bold uppercase tracking-[0.16em] text-white">Về Studeal</h3>
+          <ul class="mt-4 space-y-3 text-sm">
+            <li><a href="{{ "/about/" | relURL }}" class="text-slate-400 transition hover:text-sky-300">Giới thiệu</a></li>
+            <li><a href="{{ "/about/#escrow" | relURL }}" class="text-slate-400 transition hover:text-sky-300">Cơ chế Escrow</a></li>
+            <li><a href="{{ "/about/#verification" | relURL }}" class="text-slate-400 transition hover:text-sky-300">Xác thực .edu.vn</a></li>
+            <li><a href="{{ "/about/#routine" | relURL }}" class="text-slate-400 transition hover:text-sky-300">Tuyến giao hàng xanh</a></li>
+          </ul>
+        </div>
+        <div class="col-span-2 sm:col-span-1">
+          <h3 class="text-xs font-bold uppercase tracking-[0.16em] text-white">Liên hệ</h3>
+          <ul class="mt-4 space-y-3 text-sm">
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-location-dot mt-0.5 text-sky-400"></i>
+              <span class="text-slate-400">{{ site.Params.address }}</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-envelope mt-0.5 text-sky-400"></i>
+              <a href="mailto:{{ site.Params.email }}" class="text-slate-400 transition hover:text-sky-300">{{ site.Params.email }}</a>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-clock mt-0.5 text-sky-400"></i>
+              <span class="text-slate-400">T2 – T7 · 08:00 – 20:00</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="lg:col-span-3">
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm">
+          <h3 class="text-sm font-bold text-white">Nhận tin tuyến giao hàng</h3>
+          <p class="mt-2 text-xs leading-relaxed text-slate-400">
+            Lịch chuyến xanh, voucher và mẹo mua bán an toàn — mỗi tuần một email.
+          </p>
+          <div x-data="{ email: '', joined: false }" class="mt-4">
+            <form x-show="!joined" @submit.prevent="joined = email.length > 3" class="space-y-2">
+              <label for="newsletter-email" class="sr-only">Email sinh viên</label>
+              <input id="newsletter-email" type="email" required x-model="email" placeholder="ban@student.edu.vn"
+                     class="w-full rounded-xl border border-white/10 bg-[#0a2236] px-3.5 py-2.5 text-sm text-white placeholder:text-slate-500 focus:border-sky-400 focus:ring-sky-400/30">
+              <button type="submit"
+                      class="w-full rounded-xl bg-gradient-to-r from-sky-500 to-cyan-400 px-4 py-2.5 text-sm font-bold text-[#052033] transition hover:brightness-110">
+                Đăng ký nhận tin
+              </button>
+              <p class="text-[10px] leading-relaxed text-slate-500">Không spam. Hủy đăng ký bất cứ lúc nào.</p>
+            </form>
+            <div x-show="joined" x-cloak x-transition class="rounded-xl border border-emerald-400/20 bg-emerald-400/10 p-3 text-xs text-emerald-300">
+              <i class="fa-solid fa-circle-check mr-1"></i>
+              Đã ghi nhận email. Hẹn gặp bạn ở chuyến xe xanh tuần này!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-xs text-slate-500 sm:flex-row">
+      <p>© {{ now.Year }} Studeal. Đồ án sinh viên — không vì mục tiêu lợi nhuận.</p>
+      <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+        <a href="{{ "/about/" | relURL }}" class="transition hover:text-sky-300">Về chúng tôi</a>
+        <a href="{{ "/about/#escrow" | relURL }}" class="transition hover:text-sky-300">Bảo mật &amp; Escrow</a>
+        <a href="{{ "/about/#verification" | relURL }}" class="transition hover:text-sky-300">Quy chế xác thực</a>
+        <a href="{{ "/sitemap.xml" | relURL }}" class="transition hover:text-sky-300">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>

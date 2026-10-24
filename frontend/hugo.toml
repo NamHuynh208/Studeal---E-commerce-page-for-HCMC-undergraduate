@@ -1,0 +1,59 @@
+baseURL = "https://namprojects.site/"
+languageCode = "vi-vn"
+locale = "vi-VN"
+defaultContentLanguage = "vi"
+title = "Studeal - Sàn Mua Bán Giáo Trình & Đồ Cũ Sinh Viên TP.HCM"
+enableRobotsTXT = true
+disableKinds = ["taxonomy", "term"]
+enableEmoji = false
+summaryLength = 30
+timeZone = "Asia/Ho_Chi_Minh"
+
+[params]
+  description = "Studeal là sàn mua bán giáo trình, máy tính và đồ dùng sinh viên đã xác thực .edu.vn tại TP.HCM. Escrow an toàn, phí trung gian chỉ 2%, ẩn danh tuyệt đối thông tin người bán."
+  keywords = ["studeal", "mua bán giáo trình", "đồ cũ sinh viên", "escrow", "sinh viên TP.HCM", "đại học khoa học tự nhiên", "tuyến giao hàng xanh"]
+  author = "Studeal Team"
+  ogImage = "images/og-cover.png"
+  platformFee = 2
+  vipFee = 15000
+  email = "hello@studeal.vn"
+  facebook = "https://www.facebook.com/studeal.vn"
+  address = "227 Nguyễn Văn Cừ, Phường 4, Quận 5, TP. Hồ Chí Minh"
+  demoURL = "/demo/"
+
+  [params.routine]
+    cs1 = "227 Nguyễn Văn Cừ, Quận 5"
+    cs2 = "Linh Trung, TP. Thủ Đức"
+    distance = "12 km"
+    duration = "35–45 phút"
+
+[menu]
+  [[menu.main]]
+    name = "Trang chủ"
+    url = "/"
+    weight = 1
+  [[menu.main]]
+    name = "Cách hoạt động"
+    url = "/#cach-hoat-dong"
+    weight = 2
+  [[menu.main]]
+    name = "Tuyến giao hàng"
+    url = "/about/#routine"
+    weight = 3
+  [[menu.main]]
+    name = "Giới thiệu"
+    pageRef = "/about"
+    weight = 4
+
+[sitemap]
+  changefreq = "weekly"
+  priority = 0.6
+  filename = "sitemap.xml"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 3

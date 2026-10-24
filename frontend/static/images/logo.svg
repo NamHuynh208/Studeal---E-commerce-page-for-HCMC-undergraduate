@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Studeal logo">
+  <defs>
+    <linearGradient id="logo-gradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="55%" stop-color="#0ea5e9"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+    <radialGradient id="logo-glow" cx="0.2" cy="0.15" r="0.9">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="128" fill="url(#logo-gradient)"/>
+  <rect width="512" height="512" rx="128" fill="url(#logo-glow)"/>
+  <path d="M330 178c-20-22-46-33-78-33-46 0-77 23-77 57 0 32 22 49 66 58l28 6c22 4 32 11 32 24 0 15-15 26-41 26-28 0-51-10-68-29"
+        fill="none" stroke="#ffffff" stroke-width="36" stroke-linecap="round"/>
+  <circle cx="416" cy="96" r="48" fill="#fbbf24" stroke="#ffffff" stroke-width="24"/>
+</svg>
