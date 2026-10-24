@@ -46,13 +46,16 @@
   </script>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" referrerpolicy="no-referrer">
-  <link rel="stylesheet" href="{{ "css/studeal.css" | relURL }}">
+  <link rel="stylesheet" href="{{ "css/studeal.css" | relURL }}?v=2410">
+
+  <!-- Studeal Sharp & Flat Design: cấm tuyệt đối bo góc trên mọi thành phần -->
+  <style>*, *::before, *::after { border-radius: 0px !important; }</style>
 
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 <body class="bg-[#f7fbfe] font-sans text-slate-700 antialiased selection:bg-sky-200 selection:text-sky-950">
-  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-sky-600 focus:px-5 focus:py-3 focus:text-sm focus:font-bold focus:text-white">
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-sky-600 focus:px-5 focus:py-3 focus:text-sm focus:font-bold focus:text-white">
     Bỏ qua điều hướng
   </a>
 
@@ -66,13 +69,13 @@
 
   <div x-data="{ show: false }" @scroll.window.throttle.200ms="show = window.scrollY > 700" x-cloak>
     <a x-show="show" x-transition.opacity.duration.300ms href="#main"
-       class="fixed bottom-6 right-6 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-sky-600 text-white shadow-lg shadow-sky-600/30 transition hover:-translate-y-1 hover:bg-sky-700"
+       class="fixed bottom-6 right-6 z-40 flex h-12 w-12 items-center justify-center bg-sky-600 text-white shadow-lg shadow-sky-600/30 transition hover:-translate-y-1 hover:bg-sky-700"
        aria-label="Lên đầu trang">
       <i class="fa-solid fa-arrow-up"></i>
     </a>
   </div>
 
-  <script src="{{ "js/studeal.js" | relURL }}" defer></script>
+  <script src="{{ "js/studeal.js" | relURL }}?v=2410" defer></script>
   {{ block "scripts" . }}{{ end }}
 </body>
 </html>

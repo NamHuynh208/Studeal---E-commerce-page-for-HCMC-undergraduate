@@ -55,12 +55,12 @@
     CANCELLED: { label: 'Đã hủy', cls: 'bg-rose-50 text-rose-700 ring-rose-200' },
   };
   const BTN = {
-    primary: 'inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-sky-600 px-3 text-xs font-extrabold text-white shadow-lg shadow-sky-500/15 transition hover:bg-sky-700 disabled:cursor-wait disabled:opacity-70',
-    outline: 'inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl border border-sky-200 bg-white px-3 text-xs font-extrabold text-sky-700 transition hover:border-sky-300 hover:bg-sky-50 disabled:cursor-wait disabled:opacity-70',
-    gold: 'inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-400 to-orange-400 px-3 text-xs font-extrabold text-amber-950 shadow-lg shadow-amber-400/25 transition hover:from-amber-300 hover:to-orange-300 disabled:cursor-wait disabled:opacity-70',
-    soft: 'inline-flex h-9 items-center justify-center gap-2 rounded-full bg-sky-50 px-3.5 text-[11px] font-extrabold text-sky-700 ring-1 ring-sky-100 transition hover:bg-sky-100 disabled:cursor-wait disabled:opacity-70',
-    danger: 'inline-flex h-9 items-center justify-center gap-2 rounded-full bg-rose-50 px-3.5 text-[11px] font-extrabold text-rose-700 ring-1 ring-rose-100 transition hover:bg-rose-100 disabled:cursor-wait disabled:opacity-70',
-    success: 'inline-flex h-9 items-center justify-center gap-2 rounded-full bg-emerald-600 px-3.5 text-[11px] font-extrabold text-white shadow-sm transition hover:bg-emerald-700 disabled:cursor-wait disabled:opacity-70',
+    primary: 'inline-flex h-10 w-full items-center justify-center gap-2 bg-sky-600 px-3 text-xs font-extrabold text-white shadow-lg shadow-sky-500/15 transition hover:bg-sky-700 disabled:cursor-wait disabled:opacity-70',
+    outline: 'inline-flex h-10 w-full items-center justify-center gap-2 border border-sky-200 bg-white px-3 text-xs font-extrabold text-sky-700 transition hover:border-sky-300 hover:bg-sky-50 disabled:cursor-wait disabled:opacity-70',
+    gold: 'inline-flex h-10 w-full items-center justify-center gap-2 bg-amber-400 px-3 text-xs font-extrabold text-amber-950 shadow-lg shadow-amber-400/25 transition hover:bg-amber-300 disabled:cursor-wait disabled:opacity-70',
+    soft: 'inline-flex h-9 items-center justify-center gap-2 bg-sky-50 px-3.5 text-[11px] font-extrabold text-sky-700 ring-1 ring-sky-100 transition hover:bg-sky-100 disabled:cursor-wait disabled:opacity-70',
+    danger: 'inline-flex h-9 items-center justify-center gap-2 bg-rose-50 px-3.5 text-[11px] font-extrabold text-rose-700 ring-1 ring-rose-100 transition hover:bg-rose-100 disabled:cursor-wait disabled:opacity-70',
+    success: 'inline-flex h-9 items-center justify-center gap-2 bg-emerald-600 px-3.5 text-[11px] font-extrabold text-white shadow-sm transition hover:bg-emerald-700 disabled:cursor-wait disabled:opacity-70',
   };
 
   const state = {
@@ -182,9 +182,9 @@
 
     while (stack.children.length >= 4) stack.firstElementChild.remove();
     const item = document.createElement('div');
-    item.className = 'toast-card pointer-events-auto flex items-start gap-3 rounded-2xl border border-white/10 bg-slate-950/95 p-3.5 text-sm text-white shadow-2xl shadow-slate-950/25 backdrop-blur';
+    item.className = 'toast-card pointer-events-auto flex items-start gap-3 border border-white/10 bg-slate-950/95 p-3.5 text-sm text-white shadow-2xl shadow-slate-950/25 backdrop-blur';
     item.innerHTML = `
-      <span class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${meta.tone}">
+      <span class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center ${meta.tone}">
         <i class="fa-solid ${meta.icon} text-xs" aria-hidden="true"></i>
       </span>
       <p class="min-w-0 flex-1 pt-0.5 text-[12px] font-semibold leading-relaxed">${esc(message)}</p>
@@ -335,7 +335,7 @@
 
   function statusPill(status) {
     const meta = STATUS_META[status] || { label: status || 'Không rõ', cls: 'bg-slate-100 text-slate-600 ring-slate-200' };
-    return `<span class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-[10px] font-extrabold ring-1 ${meta.cls}">${esc(meta.label)}</span>`;
+    return `<span class="inline-flex items-center gap-1 px-2 py-1 text-[10px] font-extrabold ring-1 ${meta.cls}">${esc(meta.label)}</span>`;
   }
 
   function categoryMeta(category) {
@@ -361,7 +361,7 @@
       let label = meta.short;
       if (method.code === 'MEETUP') label = `Tại ${shortLocation(product.meetup_location)}`;
       if (method.code === 'KHTN_ROUTINE') label = 'Miễn phí CS1-CS2';
-      return `<span class="inline-flex max-w-full items-center gap-1 rounded-full px-2 py-1 text-[9px] font-extrabold ring-1 ${meta.tone}">
+      return `<span class="inline-flex max-w-full items-center gap-1 px-2 py-1 text-[9px] font-extrabold ring-1 ${meta.tone}">
         <i class="fa-solid ${meta.icon}" aria-hidden="true"></i><span class="truncate">${esc(label)}</span>
       </span>`;
     }).join('');
@@ -370,7 +370,7 @@
   function sellerBadge(product) {
     const badge = product.seller_badge || (product.seller && product.seller.university) || 'sinh viên';
     return `<div class="flex min-w-0 items-center gap-1.5">
-      <span class="inline-flex max-w-full items-center gap-1 rounded-full bg-emerald-50 px-2 py-1 text-[9px] font-extrabold text-emerald-700 ring-1 ring-emerald-100" title="Bảo mật 100% thông tin liên lạc">
+      <span class="inline-flex max-w-full items-center gap-1 bg-emerald-50 px-2 py-1 text-[9px] font-extrabold text-emerald-700 ring-1 ring-emerald-100" title="Bảo mật 100% thông tin liên lạc">
         <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>
         <span class="truncate">Đã xác thực ${esc(badge)}</span>
       </span>
@@ -424,7 +424,7 @@
           <span class="text-lg font-extrabold tracking-tight ${deal ? 'text-amber-600' : 'text-sky-700'}">${vnd(price)}</span>
           ${deal ? `<span class="text-[10px] font-bold text-slate-400 line-through">${vnd(listed)}</span>` : ''}
           ${!deal && original > listed ? `<span class="text-[10px] font-semibold text-slate-400 line-through">${vnd(original)}</span>` : ''}
-          ${!deal && discount > 0 ? `<span class="rounded-full bg-emerald-50 px-1.5 py-0.5 text-[9px] font-extrabold text-emerald-700">-${discount}%</span>` : ''}
+          ${!deal && discount > 0 ? `<span class=" bg-emerald-50 px-1.5 py-0.5 text-[9px] font-extrabold text-emerald-700">-${discount}%</span>` : ''}
         </div>
         ${deal ? '<p class="mt-1 inline-flex items-center gap-1 text-[9px] font-extrabold uppercase tracking-wide text-amber-600"><i class="fa-solid fa-handshake" aria-hidden="true"></i> Giá Deal đã chốt</p>' : ''}
       </div>`;
@@ -436,19 +436,19 @@
     const img = product.image_url || FALLBACK_IMG;
     const own = isOwnProduct(product);
     return `
-      <article class="group flex h-full min-w-0 flex-col overflow-hidden rounded-3xl border border-sky-100 bg-white shadow-card transition duration-300 hover:-translate-y-1 hover:border-sky-200 hover:shadow-soft" data-product-card="${product.id}">
+      <article class="group flex h-full min-w-0 flex-col overflow-hidden border border-sky-100 bg-white shadow-card transition duration-300 hover:-translate-y-1 hover:border-sky-200 hover:shadow-soft" data-product-card="${product.id}">
         <div class="relative aspect-[4/3] shrink-0 overflow-hidden bg-sky-50">
           <img src="${esc(img)}" alt="${esc(product.title)}" loading="lazy" data-fallback="${esc(FALLBACK_IMG)}"
                class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
-          <span class="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full px-2 py-1 text-[9px] font-extrabold ring-1 backdrop-blur ${cat.cls}">
+          <span class="absolute left-3 top-3 inline-flex items-center gap-1 px-2 py-1 text-[9px] font-extrabold ring-1 backdrop-blur ${cat.cls}">
             <i class="fa-solid ${cat.icon}" aria-hidden="true"></i> ${esc(product.category)}
           </span>
-          ${deal ? '<span class="absolute bottom-3 left-3 inline-flex items-center gap-1 rounded-full bg-amber-300 px-2.5 py-1 text-[9px] font-extrabold text-amber-950 shadow-lg"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Deal đã chấp nhận</span>' : ''}
-          ${own ? '<span class="absolute right-3 top-3 rounded-full bg-slate-950/75 px-2.5 py-1 text-[9px] font-extrabold text-white backdrop-blur">Tin của bạn</span>' : ''}
+          ${deal ? '<span class="absolute bottom-3 left-3 inline-flex items-center gap-1 bg-amber-300 px-2.5 py-1 text-[9px] font-extrabold text-amber-950 shadow-lg"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Deal đã chấp nhận</span>' : ''}
+          ${own ? '<span class="absolute right-3 top-3 bg-slate-950/75 px-2.5 py-1 text-[9px] font-extrabold text-white backdrop-blur">Tin của bạn</span>' : ''}
         </div>
         <div class="flex flex-1 flex-col p-5">
           <div class="flex flex-wrap items-center gap-1.5">
-            <span class="rounded-full bg-slate-50 px-2 py-1 text-[9px] font-bold text-slate-500 ring-1 ring-slate-100">${esc(product.condition_text)}</span>
+            <span class=" bg-slate-50 px-2 py-1 text-[9px] font-bold text-slate-500 ring-1 ring-slate-100">${esc(product.condition_text)}</span>
             <span class="text-[10px] font-semibold text-slate-400">${esc(product.seller ? product.seller.alias : '')}</span>
           </div>
           <h3 class="mt-2 line-clamp-2 min-h-[2.5rem] text-[15px] font-extrabold leading-snug text-ink">${esc(product.title)}</h3>
@@ -468,22 +468,22 @@
     const img = product.image_url || FALLBACK_IMG;
     const own = isOwnProduct(product);
     return `
-      <article class="vip-card group grid min-w-0 overflow-hidden rounded-[2rem] lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]" data-product-card="${product.id}">
+      <article class="vip-card group grid min-w-0 overflow-hidden lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]" data-product-card="${product.id}">
         <div class="relative min-h-[190px] overflow-hidden bg-sky-50 lg:min-h-full">
           <img src="${esc(img)}" alt="${esc(product.title)}" loading="lazy" data-fallback="${esc(FALLBACK_IMG)}"
                class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
-          <span class="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-sky-600 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-wide text-white shadow-lg">
+          <span class="absolute left-3 top-3 inline-flex items-center gap-1 bg-sky-600 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-wide text-white shadow-lg">
             <i class="fa-solid fa-crown" aria-hidden="true"></i> VIP
           </span>
-          <span class="absolute right-3 top-3 rounded-full bg-amber-300 px-2.5 py-1 text-[9px] font-extrabold text-amber-950 shadow-lg">Quảng cáo</span>
+          <span class="absolute right-3 top-3 bg-amber-300 px-2.5 py-1 text-[9px] font-extrabold text-amber-950 shadow-lg">Quảng cáo</span>
         </div>
         <div class="flex min-w-0 flex-col p-5 sm:p-6">
           <div class="flex flex-wrap items-center gap-1.5">
-            <span class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-[9px] font-extrabold ring-1 ${cat.cls}">
+            <span class="inline-flex items-center gap-1 px-2 py-1 text-[9px] font-extrabold ring-1 ${cat.cls}">
               <i class="fa-solid ${cat.icon}" aria-hidden="true"></i> ${esc(product.category)}
             </span>
-            <span class="rounded-full bg-slate-50 px-2 py-1 text-[9px] font-bold text-slate-500 ring-1 ring-slate-100">${esc(product.condition_text)}</span>
-            ${own ? '<span class="rounded-full bg-slate-950/80 px-2 py-1 text-[9px] font-extrabold text-white">Tin của bạn</span>' : ''}
+            <span class=" bg-slate-50 px-2 py-1 text-[9px] font-bold text-slate-500 ring-1 ring-slate-100">${esc(product.condition_text)}</span>
+            ${own ? '<span class=" bg-slate-950/80 px-2 py-1 text-[9px] font-extrabold text-white">Tin của bạn</span>' : ''}
           </div>
           <h3 class="mt-3 line-clamp-2 text-lg font-extrabold leading-snug tracking-tight text-ink">${esc(product.title)}</h3>
           <p class="mt-2 line-clamp-2 text-xs leading-relaxed text-slate-500">${esc(product.description || 'Tin tài trợ nổi bật từ sinh viên đã xác thực.')}</p>
@@ -616,7 +616,7 @@
       grid.innerHTML = normalProducts.map(productCard).join('');
       grid.classList.remove('hidden');
     } else {
-      grid.innerHTML = '<div class="col-span-full rounded-3xl border border-dashed border-amber-200 bg-amber-50 px-5 py-8 text-center text-xs font-semibold text-amber-800">Các tin phù hợp đang nằm trong khu vực Tin đăng tài trợ (VIP) phía trên.</div>';
+      grid.innerHTML = '<div class="col-span-full border border-dashed border-amber-200 bg-amber-50 px-5 py-8 text-center text-xs font-semibold text-amber-800">Các tin phù hợp đang nằm trong khu vực Tin đăng tài trợ (VIP) phía trên.</div>';
       grid.classList.remove('hidden');
     }
 
@@ -642,18 +642,18 @@
     const area = $('#marketAuthArea');
     if (!area) return;
     if (state.token && !state.authReady && !state.user) {
-      area.innerHTML = '<span class="inline-flex h-11 items-center gap-2 rounded-full border border-sky-100 bg-white px-4 text-xs font-bold text-slate-400"><i class="fa-solid fa-circle-notch fa-spin" aria-hidden="true"></i><span class="hidden sm:inline">Đang xác thực…</span></span>';
+      area.innerHTML = '<span class="inline-flex h-11 items-center gap-2 border border-sky-100 bg-white px-4 text-xs font-bold text-slate-400"><i class="fa-solid fa-circle-notch fa-spin" aria-hidden="true"></i><span class="hidden sm:inline">Đang xác thực…</span></span>';
       return;
     }
     if (!state.user) {
-      area.innerHTML = `<button type="button" data-market-action="login" class="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-sky-200 bg-white px-4 text-xs font-extrabold text-sky-700 shadow-sm transition hover:-translate-y-0.5 hover:border-sky-300 hover:bg-sky-50">
+      area.innerHTML = `<button type="button" data-market-action="login" class="inline-flex h-11 items-center justify-center gap-2 border border-sky-200 bg-white px-4 text-xs font-extrabold text-sky-700 shadow-sm transition hover:-translate-y-0.5 hover:border-sky-300 hover:bg-sky-50">
         <i class="fa-solid fa-user" aria-hidden="true"></i><span>Đăng nhập</span>
       </button>`;
       return;
     }
     const verified = Boolean(state.user.is_student_verified);
-    area.innerHTML = `<button type="button" data-market-action="open-account" class="group flex h-11 max-w-[15rem] items-center gap-2 rounded-full border border-sky-200 bg-white py-1 pl-1 pr-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sky-300 hover:bg-sky-50" aria-label="Mở tài khoản ${esc(state.user.name)}">
-      <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-sky-500 to-cyan-400 text-xs font-extrabold text-white shadow-md shadow-sky-500/20">${userInitial(state.user)}</span>
+    area.innerHTML = `<button type="button" data-market-action="open-account" class="group flex h-11 max-w-[15rem] items-center gap-2 border border-sky-200 bg-white py-1 pl-1 pr-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sky-300 hover:bg-sky-50" aria-label="Mở tài khoản ${esc(state.user.name)}">
+      <span class="flex h-9 w-9 shrink-0 items-center justify-center bg-sky-600 text-xs font-extrabold text-white shadow-md shadow-sky-500/20">${userInitial(state.user)}</span>
       <span class="hidden min-w-0 sm:block">
         <span class="block truncate text-[11px] font-extrabold text-ink">${esc(state.user.name)}</span>
         <span class="block truncate text-[9px] font-bold ${verified ? 'text-emerald-600' : 'text-slate-400'}">${verified ? `Đã xác thực ${esc(state.user.university_name || '.edu.vn')}` : 'Tài khoản sinh viên'}</span>
@@ -834,64 +834,64 @@
   function authTabButton(tab, label) {
     const active = state.authTab === tab;
     return `<button type="button" data-market-action="auth-tab" data-auth-tab="${tab}"
-      class="inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-xl text-xs font-extrabold transition ${active ? 'bg-white text-sky-700 shadow-sm' : 'text-slate-500 hover:text-sky-700'}">${label}</button>`;
+      class="inline-flex h-10 flex-1 items-center justify-center gap-2 text-xs font-extrabold transition ${active ? 'bg-white text-sky-700 shadow-sm' : 'text-slate-500 hover:text-sky-700'}">${label}</button>`;
   }
 
   function renderAuthModal(tab = 'login') {
     state.authTab = tab;
     const isLogin = tab === 'login';
     const continueNote = state.afterAuth
-      ? '<p class="mt-3 rounded-xl bg-amber-50 px-3 py-2 text-[11px] font-semibold text-amber-800 ring-1 ring-amber-100"><i class="fa-solid fa-circle-info mr-1" aria-hidden="true"></i>Đăng nhập để tiếp tục thao tác bạn vừa chọn.</p>'
+      ? '<p class="mt-3 bg-amber-50 px-3 py-2 text-[11px] font-semibold text-amber-800 ring-1 ring-amber-100"><i class="fa-solid fa-circle-info mr-1" aria-hidden="true"></i>Đăng nhập để tiếp tục thao tác bạn vừa chọn.</p>'
       : '';
     const form = isLogin ? `
       <form data-market-form="login" class="mt-5 space-y-3" novalidate>
-        <p data-form-error class="hidden rounded-xl bg-rose-50 px-3 py-2 text-[11px] font-semibold text-rose-700 ring-1 ring-rose-100"></p>
+        <p data-form-error class="hidden bg-rose-50 px-3 py-2 text-[11px] font-semibold text-rose-700 ring-1 ring-rose-100"></p>
         <div>
           <label for="marketLoginEmail" class="mb-1.5 block text-[11px] font-extrabold text-slate-700">Email tài khoản</label>
           <input id="marketLoginEmail" name="email" type="email" autocomplete="email" required
-                 class="h-11 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 text-sm font-semibold text-ink outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100"
+                 class="h-11 w-full border border-slate-200 bg-slate-50 px-3 text-sm font-semibold text-ink outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100"
                  placeholder="ban@studeal.vn">
         </div>
         <div>
           <label for="marketLoginPassword" class="mb-1.5 block text-[11px] font-extrabold text-slate-700">Mật khẩu</label>
           <input id="marketLoginPassword" name="password" type="password" autocomplete="current-password" required
-                 class="h-11 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 text-sm font-semibold text-ink outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100"
+                 class="h-11 w-full border border-slate-200 bg-slate-50 px-3 text-sm font-semibold text-ink outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100"
                  placeholder="Ít nhất 6 ký tự">
         </div>
         <button type="submit" class="${BTN.primary} h-11">
           <i class="fa-solid fa-arrow-right-to-bracket" aria-hidden="true"></i> Đăng nhập &amp; nhận OTP
         </button>
       </form>
-      <div class="mt-4 rounded-2xl border border-sky-100 bg-sky-50/70 p-3.5">
+      <div class="mt-4 border border-sky-100 bg-sky-50/70 p-3.5">
         <p class="text-[10px] font-extrabold uppercase tracking-[0.14em] text-sky-700">Tài khoản demo</p>
         <p class="mt-1 text-[10px] leading-relaxed text-slate-500">Mật khẩu <strong class="text-slate-700">123456</strong>. OTP demo hiện ngay ở bước sau.</p>
         <div class="mt-2.5 grid grid-cols-2 gap-2">
-          <button type="button" data-market-action="quick-login" data-email="buyer@studeal.vn" class="inline-flex h-9 items-center justify-center gap-1.5 rounded-xl bg-white px-2 text-[10px] font-extrabold text-sky-700 ring-1 ring-sky-100 transition hover:bg-sky-100">
+          <button type="button" data-market-action="quick-login" data-email="buyer@studeal.vn" class="inline-flex h-9 items-center justify-center gap-1.5 bg-white px-2 text-[10px] font-extrabold text-sky-700 ring-1 ring-sky-100 transition hover:bg-sky-100">
             <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i> Người mua
           </button>
-          <button type="button" data-market-action="quick-login" data-email="seller.khtn@studeal.vn" class="inline-flex h-9 items-center justify-center gap-1.5 rounded-xl bg-white px-2 text-[10px] font-extrabold text-emerald-700 ring-1 ring-emerald-100 transition hover:bg-emerald-50">
+          <button type="button" data-market-action="quick-login" data-email="seller.khtn@studeal.vn" class="inline-flex h-9 items-center justify-center gap-1.5 bg-white px-2 text-[10px] font-extrabold text-emerald-700 ring-1 ring-emerald-100 transition hover:bg-emerald-50">
             <i class="fa-solid fa-store" aria-hidden="true"></i> Người bán
           </button>
         </div>
       </div>` : `
       <form data-market-form="register" class="mt-5 space-y-3" novalidate>
-        <p data-form-error class="hidden rounded-xl bg-rose-50 px-3 py-2 text-[11px] font-semibold text-rose-700 ring-1 ring-rose-100"></p>
+        <p data-form-error class="hidden bg-rose-50 px-3 py-2 text-[11px] font-semibold text-rose-700 ring-1 ring-rose-100"></p>
         <div>
           <label for="marketRegisterName" class="mb-1.5 block text-[11px] font-extrabold text-slate-700">Họ và tên</label>
           <input id="marketRegisterName" name="name" type="text" autocomplete="name" required maxlength="80"
-                 class="h-11 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 text-sm font-semibold text-ink outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100"
+                 class="h-11 w-full border border-slate-200 bg-slate-50 px-3 text-sm font-semibold text-ink outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100"
                  placeholder="Nguyễn Minh Anh">
         </div>
         <div>
           <label for="marketRegisterEmail" class="mb-1.5 block text-[11px] font-extrabold text-slate-700">Email</label>
           <input id="marketRegisterEmail" name="email" type="email" autocomplete="email" required
-                 class="h-11 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 text-sm font-semibold text-ink outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100"
+                 class="h-11 w-full border border-slate-200 bg-slate-50 px-3 text-sm font-semibold text-ink outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100"
                  placeholder="ban@studeal.vn">
         </div>
         <div>
           <label for="marketRegisterPassword" class="mb-1.5 block text-[11px] font-extrabold text-slate-700">Mật khẩu</label>
           <input id="marketRegisterPassword" name="password" type="password" autocomplete="new-password" required minlength="6"
-                 class="h-11 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 text-sm font-semibold text-ink outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100"
+                 class="h-11 w-full border border-slate-200 bg-slate-50 px-3 text-sm font-semibold text-ink outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100"
                  placeholder="Ít nhất 6 ký tự">
         </div>
         <button type="submit" class="${BTN.primary} h-11">
@@ -901,14 +901,14 @@
 
     openModal(`
       <div class="pr-8">
-        <span class="inline-flex items-center gap-2 rounded-full bg-sky-50 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.16em] text-sky-700 ring-1 ring-sky-100">
+        <span class="inline-flex items-center gap-2 bg-sky-50 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.16em] text-sky-700 ring-1 ring-sky-100">
           <i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Tài khoản Studeal
         </span>
         <h2 class="mt-3 text-2xl font-extrabold tracking-tight text-ink">${isLogin ? 'Chào mừng trở lại' : 'Tạo tài khoản sinh viên'}</h2>
         <p class="mt-2 text-xs leading-relaxed text-slate-500">${isLogin ? 'Đăng nhập bằng email và mật khẩu, sau đó xác thực OTP 6 số.' : 'Đăng ký bằng email cá nhân. Bạn có thể xác thực email trường sau để nhận huy hiệu.'}</p>
         ${continueNote}
       </div>
-      <div class="mt-5 flex rounded-2xl bg-slate-100 p-1">
+      <div class="mt-5 flex bg-slate-100 p-1">
         ${authTabButton('login', 'Đăng nhập')}
         ${authTabButton('register', 'Đăng ký')}
       </div>
@@ -950,13 +950,13 @@
       return;
     }
     const debugBox = flow.debugOtp ? `
-      <div class="absolute right-14 top-3 rounded-xl border border-dashed border-amber-300 bg-amber-50 px-3 py-2 shadow-lg sm:right-16 sm:top-4">
+      <div class="absolute right-14 top-3 border border-dashed border-amber-300 bg-amber-50 px-3 py-2 shadow-lg sm:right-16 sm:top-4">
         <div class="flex items-center justify-between gap-3">
           <div>
             <p class="text-[8px] font-extrabold uppercase tracking-[0.12em] text-amber-700">OTP gợi ý · demo</p>
             <p class="mt-0.5 text-base font-extrabold tracking-[0.25em] text-amber-900">${esc(flow.debugOtp)}</p>
           </div>
-          <button type="button" data-market-action="fill-otp" class="inline-flex h-8 items-center gap-1 rounded-full bg-white px-3 text-[10px] font-extrabold text-amber-800 ring-1 ring-amber-200 transition hover:bg-amber-100">
+          <button type="button" data-market-action="fill-otp" class="inline-flex h-8 items-center gap-1 bg-white px-3 text-[10px] font-extrabold text-amber-800 ring-1 ring-amber-200 transition hover:bg-amber-100">
             <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Điền mã
           </button>
         </div>
@@ -964,22 +964,22 @@
 
     openModal(`
       <div class="relative pr-8">
-        <span class="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.16em] text-emerald-700 ring-1 ring-emerald-100">
+        <span class="inline-flex items-center gap-2 bg-emerald-50 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.16em] text-emerald-700 ring-1 ring-emerald-100">
           <i class="fa-solid fa-envelope-circle-check" aria-hidden="true"></i> Xác thực OTP
         </span>
         <h2 class="mt-3 text-2xl font-extrabold tracking-tight text-ink">Nhập mã 6 chữ số</h2>
         <p class="mt-2 text-xs leading-relaxed text-slate-500">${esc(flow.message || 'Mã OTP đã được gửi tới email tài khoản.')}</p>
-        <p class="mt-2 inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold text-slate-600">
+        <p class="mt-2 inline-flex items-center gap-1.5 bg-slate-100 px-2.5 py-1 text-[10px] font-bold text-slate-600">
           <i class="fa-solid fa-at text-slate-400" aria-hidden="true"></i> ${esc(flow.accountEmail || '')}
         </p>
         ${debugBox}
       </div>
       <form data-market-form="otp" data-email="${esc(flow.accountEmail || '')}" data-purpose="${esc(flow.purpose || 'LOGIN')}" class="mt-5 space-y-3" novalidate>
-        <p data-form-error class="hidden rounded-xl bg-rose-50 px-3 py-2 text-[11px] font-semibold text-rose-700 ring-1 ring-rose-100"></p>
+        <p data-form-error class="hidden bg-rose-50 px-3 py-2 text-[11px] font-semibold text-rose-700 ring-1 ring-rose-100"></p>
         <div>
           <label for="marketOtp" class="mb-1.5 block text-[11px] font-extrabold text-slate-700">Mã OTP</label>
           <input id="marketOtp" name="otp" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]*" required
-                 class="h-14 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 text-center text-xl font-extrabold tracking-[0.4em] text-ink outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100"
+                 class="h-14 w-full border border-slate-200 bg-slate-50 px-3 text-center text-xl font-extrabold tracking-[0.4em] text-ink outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100"
                  placeholder="••••••">
         </div>
         <button type="submit" class="${BTN.primary} h-11">
@@ -1067,16 +1067,16 @@
     const local = String(state.user.email || 'sinhvien').split('@')[0].replace(/[^a-z0-9._-]/gi, '') || 'sinhvien';
     openModal(`
       <div class="pr-8">
-        <span class="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.14em] text-emerald-700 ring-1 ring-emerald-100"><i class="fa-solid fa-graduation-cap"></i>Xác thực sinh viên</span>
+        <span class="inline-flex items-center gap-2 bg-emerald-50 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.14em] text-emerald-700 ring-1 ring-emerald-100"><i class="fa-solid fa-graduation-cap"></i>Xác thực sinh viên</span>
         <h2 class="mt-3 text-2xl font-extrabold tracking-tight text-ink">Xác thực email trường</h2>
         <p class="mt-2 text-xs leading-relaxed text-slate-500">Nhập email .edu.vn để nhận OTP và cấp huy hiệu trường. Email trường không hiển thị cho người mua; xác thực mở khóa chức năng đăng bán.</p>
       </div>
-      ${state.user.is_student_verified ? `<div class="mt-4 rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-[11px] font-semibold text-emerald-800"><i class="fa-solid fa-circle-check mr-1"></i>Đã xác thực ${esc(state.user.university_name || '.edu.vn')} · ${esc(state.user.student_email || '')}</div>` : ''}
+      ${state.user.is_student_verified ? `<div class="mt-4 border border-emerald-200 bg-emerald-50 p-3 text-[11px] font-semibold text-emerald-800"><i class="fa-solid fa-circle-check mr-1"></i>Đã xác thực ${esc(state.user.university_name || '.edu.vn')} · ${esc(state.user.student_email || '')}</div>` : ''}
       <form data-market-form="student" class="mt-5 space-y-3" novalidate>
-        <p data-form-error class="hidden rounded-xl bg-rose-50 px-3 py-2 text-[11px] font-semibold text-rose-700 ring-1 ring-rose-100"></p>
+        <p data-form-error class="hidden bg-rose-50 px-3 py-2 text-[11px] font-semibold text-rose-700 ring-1 ring-rose-100"></p>
         <label for="marketStudentEmail" class="block text-[11px] font-extrabold text-slate-700">Email sinh viên .edu.vn</label>
-        <input id="marketStudentEmail" name="student_email" type="email" autocomplete="email" required value="${esc(`${local}@student.hcmus.edu.vn`)}" placeholder="tenban@student.hcmus.edu.vn" class="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 text-sm font-semibold text-ink outline-none focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100">
-        <div class="rounded-xl bg-sky-50 p-3 text-[10px] leading-relaxed text-sky-800 ring-1 ring-sky-100"><strong>Hỗ trợ:</strong> @student.hcmus.edu.vn, @gm.uit.edu.vn, @hcmut.edu.vn, @st.ueh.edu.vn và các email trường .edu.vn khác.</div>
+        <input id="marketStudentEmail" name="student_email" type="email" autocomplete="email" required value="${esc(`${local}@student.hcmus.edu.vn`)}" placeholder="tenban@student.hcmus.edu.vn" class="h-12 w-full border border-slate-200 bg-slate-50 px-3 text-sm font-semibold text-ink outline-none focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100">
+        <div class=" bg-sky-50 p-3 text-[10px] leading-relaxed text-sky-800 ring-1 ring-sky-100"><strong>Hỗ trợ:</strong> @student.hcmus.edu.vn, @gm.uit.edu.vn, @hcmut.edu.vn, @st.ueh.edu.vn và các email trường .edu.vn khác.</div>
         <button type="submit" class="${BTN.primary} h-11"><i class="fa-solid fa-paper-plane"></i>Gửi OTP xác thực</button>
       </form>
     `, { label: 'Xác thực email sinh viên' });
@@ -1116,39 +1116,39 @@
     if (!state.user.is_student_verified) {
       state.afterAuth = { type: 'sell' };
       openModal(`
-        <div class="pr-8"><span class="inline-flex items-center gap-2 rounded-full bg-amber-50 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-wide text-amber-800"><i class="fa-solid fa-lock"></i>Cần xác thực</span>
+        <div class="pr-8"><span class="inline-flex items-center gap-2 bg-amber-50 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-wide text-amber-800"><i class="fa-solid fa-lock"></i>Cần xác thực</span>
         <h2 class="mt-3 text-2xl font-extrabold text-ink">Mở khóa Đăng bán</h2>
         <p class="mt-2 text-xs leading-relaxed text-slate-500">Xác thực email sinh viên .edu.vn để đăng tin và nhận huy hiệu trường.</p></div>
-        <div class="mt-5 grid gap-2"><button type="button" data-market-action="verify-student" class="${BTN.primary} h-11"><i class="fa-solid fa-graduation-cap"></i>Xác thực email sinh viên</button><button type="button" data-market-action="sell-demo-link" class="inline-flex h-10 items-center justify-center rounded-xl bg-slate-100 text-xs font-bold text-slate-600">Quay lại</button></div>
+        <div class="mt-5 grid gap-2"><button type="button" data-market-action="verify-student" class="${BTN.primary} h-11"><i class="fa-solid fa-graduation-cap"></i>Xác thực email sinh viên</button><button type="button" data-market-action="sell-demo-link" class="inline-flex h-10 items-center justify-center bg-slate-100 text-xs font-bold text-slate-600">Quay lại</button></div>
       `, { label: 'Xác thực để đăng bán' });
       return;
     }
     const categories = ['Giáo trình', 'Điện tử', 'Đồ trọ', 'Dụng cụ học tập'];
     const conditions = ['Mới 99%', 'Khá 90%', 'Cũ dùng tốt'];
     openModal(`
-      <div class="pr-8"><span class="inline-flex items-center gap-2 rounded-full bg-sky-50 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-wide text-sky-700"><i class="fa-solid fa-store"></i>Đăng bán miễn phí</span>
+      <div class="pr-8"><span class="inline-flex items-center gap-2 bg-sky-50 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-wide text-sky-700"><i class="fa-solid fa-store"></i>Đăng bán miễn phí</span>
         <h2 class="mt-3 text-2xl font-extrabold tracking-tight text-ink">Đăng món đồ lên chợ</h2>
         <p class="mt-2 text-xs leading-relaxed text-slate-500">Thông tin liên lạc được ẩn. Chỉ sinh viên đã xác thực mới đăng bán được.</p></div>
       <form data-market-form="sell" class="mt-5 space-y-3" novalidate>
-        <p data-form-error class="hidden rounded-xl bg-rose-50 px-3 py-2 text-[11px] font-semibold text-rose-700 ring-1 ring-rose-100"></p>
-        <div><label for="marketSellTitle" class="mb-1 block text-[10px] font-extrabold text-slate-700">Tên món đồ</label><input id="marketSellTitle" name="title" required minlength="5" maxlength="160" placeholder="Ví dụ: Giáo trình Giải tích 1" class="h-10 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 text-xs font-semibold text-ink outline-none focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100"></div>
+        <p data-form-error class="hidden bg-rose-50 px-3 py-2 text-[11px] font-semibold text-rose-700 ring-1 ring-rose-100"></p>
+        <div><label for="marketSellTitle" class="mb-1 block text-[10px] font-extrabold text-slate-700">Tên món đồ</label><input id="marketSellTitle" name="title" required minlength="5" maxlength="160" placeholder="Ví dụ: Giáo trình Giải tích 1" class="h-10 w-full border border-slate-200 bg-slate-50 px-3 text-xs font-semibold text-ink outline-none focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100"></div>
         <div class="grid grid-cols-2 gap-2">
-          <div><label for="marketSellCategory" class="mb-1 block text-[10px] font-extrabold text-slate-700">Danh mục</label><select id="marketSellCategory" name="category" class="h-10 w-full rounded-xl border border-slate-200 bg-white px-2 text-xs font-semibold text-ink">${categories.map((item) => `<option>${esc(item)}</option>`).join('')}</select></div>
-          <div><label for="marketSellCondition" class="mb-1 block text-[10px] font-extrabold text-slate-700">Tình trạng</label><select id="marketSellCondition" name="condition_text" class="h-10 w-full rounded-xl border border-slate-200 bg-white px-2 text-xs font-semibold text-ink">${conditions.map((item) => `<option>${esc(item)}</option>`).join('')}</select></div>
+          <div><label for="marketSellCategory" class="mb-1 block text-[10px] font-extrabold text-slate-700">Danh mục</label><select id="marketSellCategory" name="category" class="h-10 w-full border border-slate-200 bg-white px-2 text-xs font-semibold text-ink">${categories.map((item) => `<option>${esc(item)}</option>`).join('')}</select></div>
+          <div><label for="marketSellCondition" class="mb-1 block text-[10px] font-extrabold text-slate-700">Tình trạng</label><select id="marketSellCondition" name="condition_text" class="h-10 w-full border border-slate-200 bg-white px-2 text-xs font-semibold text-ink">${conditions.map((item) => `<option>${esc(item)}</option>`).join('')}</select></div>
         </div>
-        <div class="grid grid-cols-2 gap-2"><div><label for="marketSellPrice" class="mb-1 block text-[10px] font-extrabold text-slate-700">Giá bán (đ)</label><input id="marketSellPrice" name="price" type="number" min="1000" step="1000" required placeholder="75000" class="h-10 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 text-xs font-semibold text-ink outline-none focus:border-sky-400 focus:ring-4 focus:ring-sky-100"></div><div><label for="marketSellOriginal" class="mb-1 block text-[10px] font-extrabold text-slate-700">Giá gốc (đ)</label><input id="marketSellOriginal" name="original_price" type="number" min="1000" step="1000" placeholder="150000" class="h-10 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 text-xs font-semibold text-ink outline-none focus:border-sky-400 focus:ring-4 focus:ring-sky-100"></div></div>
-        <div><label for="marketSellDescription" class="mb-1 block text-[10px] font-extrabold text-slate-700">Mô tả</label><textarea id="marketSellDescription" name="description" maxlength="3000" rows="3" placeholder="Mô tả tình trạng, phụ kiện, lý do bán…" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-medium text-ink outline-none focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100"></textarea><p id="marketPhoneWarning" class="mt-1 hidden rounded-lg bg-rose-50 px-2.5 py-2 text-[10px] font-bold text-rose-700"><i class="fa-solid fa-triangle-exclamation mr-1"></i>Phát hiện số điện thoại. Không đăng thông tin liên lạc để giữ ẩn danh.</p></div>
-        <div class="grid gap-2 sm:grid-cols-2"><div><label for="marketSellImageUrl" class="mb-1 block text-[10px] font-extrabold text-slate-700">Link ảnh (tùy chọn)</label><input id="marketSellImageUrl" name="image_url" type="url" placeholder="https://…" class="h-10 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 text-xs text-ink outline-none focus:border-sky-400 focus:ring-4 focus:ring-sky-100"></div><div><label for="marketSellImageFile" class="mb-1 block text-[10px] font-extrabold text-slate-700">Hoặc tải ảnh lên</label><input id="marketSellImageFile" name="image" type="file" accept="image/jpeg,image/png,image/webp,image/gif" class="block w-full text-[10px] text-slate-500 file:mr-2 file:rounded-lg file:border-0 file:bg-sky-50 file:px-2 file:py-2 file:text-[10px] file:font-bold file:text-sky-700"><p class="mt-1 text-[9px] text-slate-400">JPG/PNG/WEBP/GIF · tối đa 5MB</p></div></div>
-        <div class="rounded-2xl border border-slate-200 bg-slate-50 p-3">
+        <div class="grid grid-cols-2 gap-2"><div><label for="marketSellPrice" class="mb-1 block text-[10px] font-extrabold text-slate-700">Giá bán (đ)</label><input id="marketSellPrice" name="price" type="number" min="1000" step="1000" required placeholder="75000" class="h-10 w-full border border-slate-200 bg-slate-50 px-3 text-xs font-semibold text-ink outline-none focus:border-sky-400 focus:ring-4 focus:ring-sky-100"></div><div><label for="marketSellOriginal" class="mb-1 block text-[10px] font-extrabold text-slate-700">Giá gốc (đ)</label><input id="marketSellOriginal" name="original_price" type="number" min="1000" step="1000" placeholder="150000" class="h-10 w-full border border-slate-200 bg-slate-50 px-3 text-xs font-semibold text-ink outline-none focus:border-sky-400 focus:ring-4 focus:ring-sky-100"></div></div>
+        <div><label for="marketSellDescription" class="mb-1 block text-[10px] font-extrabold text-slate-700">Mô tả</label><textarea id="marketSellDescription" name="description" maxlength="3000" rows="3" placeholder="Mô tả tình trạng, phụ kiện, lý do bán…" class="w-full border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-medium text-ink outline-none focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100"></textarea><p id="marketPhoneWarning" class="mt-1 hidden bg-rose-50 px-2.5 py-2 text-[10px] font-bold text-rose-700"><i class="fa-solid fa-triangle-exclamation mr-1"></i>Phát hiện số điện thoại. Không đăng thông tin liên lạc để giữ ẩn danh.</p></div>
+        <div class="grid gap-2 sm:grid-cols-2"><div><label for="marketSellImageUrl" class="mb-1 block text-[10px] font-extrabold text-slate-700">Link ảnh (tùy chọn)</label><input id="marketSellImageUrl" name="image_url" type="url" placeholder="https://…" class="h-10 w-full border border-slate-200 bg-slate-50 px-3 text-xs text-ink outline-none focus:border-sky-400 focus:ring-4 focus:ring-sky-100"></div><div><label for="marketSellImageFile" class="mb-1 block text-[10px] font-extrabold text-slate-700">Hoặc tải ảnh lên</label><input id="marketSellImageFile" name="image" type="file" accept="image/jpeg,image/png,image/webp,image/gif" class="block w-full text-[10px] text-slate-500 file:mr-2 file:border-0 file:bg-sky-50 file:px-2 file:py-2 file:text-[10px] file:font-bold file:text-sky-700"><p class="mt-1 text-[9px] text-slate-400">JPG/PNG/WEBP/GIF · tối đa 5MB</p></div></div>
+        <div class=" border border-slate-200 bg-slate-50 p-3">
           <p class="mb-2 text-[10px] font-extrabold text-slate-700">Phương thức giao dịch chấp nhận</p>
           <div class="space-y-2 text-[10px] font-semibold text-slate-600">
-            <label class="flex items-center gap-2"><input type="checkbox" name="allow_meetup" checked class="rounded border-slate-300 text-sky-600 focus:ring-sky-500">Gặp mặt tại trường / phường</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="allow_ship_3rd" class="rounded border-slate-300 text-sky-600 focus:ring-sky-500">Ship bên thứ 3 (Grab/AhaMove)</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="allow_khtn_routine" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">Tuyến cố định KHTN CS1-CS2 miễn phí</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="allow_meetup" checked class=" border-slate-300 text-sky-600 focus:ring-sky-500">Gặp mặt tại trường / phường</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="allow_ship_3rd" class=" border-slate-300 text-sky-600 focus:ring-sky-500">Ship bên thứ 3 (Grab/AhaMove)</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="allow_khtn_routine" class=" border-slate-300 text-emerald-600 focus:ring-emerald-500">Tuyến cố định KHTN CS1-CS2 miễn phí</label>
           </div>
-          <div class="mt-2"><label for="marketMeetupLocation" class="mb-1 block text-[9px] font-bold text-slate-500">Tên trường / phường / điểm hẹn</label><input id="marketMeetupLocation" name="meetup_location" maxlength="200" value="${esc(state.user.university_name || '')}" placeholder="ĐH KHTN CS1 hoặc Phường Đông Hòa" class="h-9 w-full rounded-lg border border-slate-200 bg-white px-3 text-[10px] font-semibold text-ink outline-none focus:border-sky-400 focus:ring-4 focus:ring-sky-100"></div>
+          <div class="mt-2"><label for="marketMeetupLocation" class="mb-1 block text-[9px] font-bold text-slate-500">Tên trường / phường / điểm hẹn</label><input id="marketMeetupLocation" name="meetup_location" maxlength="200" value="${esc(state.user.university_name || '')}" placeholder="ĐH KHTN CS1 hoặc Phường Đông Hòa" class="h-9 w-full border border-slate-200 bg-white px-3 text-[10px] font-semibold text-ink outline-none focus:border-sky-400 focus:ring-4 focus:ring-sky-100"></div>
         </div>
-        <label class="flex cursor-pointer items-start gap-2 rounded-2xl border border-sky-200 bg-sky-50 p-3"><input type="checkbox" name="is_promoted" class="mt-0.5 rounded border-sky-300 text-sky-600 focus:ring-sky-500"><span><strong class="block text-[10px] font-extrabold text-sky-900">Mua gói Quảng cáo Đẩy tin Đầu trang (+15.000đ)</strong><span class="mt-0.5 block text-[9px] text-sky-700">Gắn nhãn Quảng cáo và ưu tiên hiển thị VIP. Phí demo ghi nhận theo gói đăng.</span></span></label>
+        <label class="flex cursor-pointer items-start gap-2 border border-sky-200 bg-sky-50 p-3"><input type="checkbox" name="is_promoted" class="mt-0.5 border-sky-300 text-sky-600 focus:ring-sky-500"><span><strong class="block text-[10px] font-extrabold text-sky-900">Mua gói Quảng cáo Đẩy tin Đầu trang (+15.000đ)</strong><span class="mt-0.5 block text-[9px] text-sky-700">Gắn nhãn Quảng cáo và ưu tiên hiển thị VIP. Phí demo ghi nhận theo gói đăng.</span></span></label>
         <button type="submit" class="${BTN.primary} h-11"><i class="fa-solid fa-cloud-arrow-up"></i>Đăng bán ngay</button>
       </form>
     `, { wide: true, label: 'Đăng bán sản phẩm' });
@@ -1209,9 +1209,9 @@
   function accountTabButton(tab, label, count, icon) {
     const active = state.offersTab === tab;
     return `<button type="button" data-market-action="offers-tab" data-tab="${tab}"
-      class="inline-flex shrink-0 items-center gap-2 rounded-xl px-3.5 py-2.5 text-[11px] font-extrabold transition ${active ? 'bg-sky-600 text-white shadow-lg shadow-sky-500/20' : 'bg-white text-slate-500 ring-1 ring-slate-200 hover:bg-sky-50 hover:text-sky-700'}">
+      class="inline-flex shrink-0 items-center gap-2 px-3.5 py-2.5 text-[11px] font-extrabold transition ${active ? 'bg-sky-600 text-white shadow-lg shadow-sky-500/20' : 'bg-white text-slate-500 ring-1 ring-slate-200 hover:bg-sky-50 hover:text-sky-700'}">
       <i class="fa-solid ${icon}" aria-hidden="true"></i> ${label}
-      <span class="inline-flex h-4 min-w-4 items-center justify-center rounded-full px-1 text-[9px] ${active ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600'}">${count}</span>
+      <span class="inline-flex h-4 min-w-4 items-center justify-center px-1 text-[9px] ${active ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600'}">${count}</span>
     </button>`;
   }
 
@@ -1239,9 +1239,9 @@
         <i class="fa-solid fa-bolt" aria-hidden="true"></i> Mua ngay với giá Deal
       </button>` : '';
     return `
-      <article class="rounded-2xl border border-slate-200 bg-white p-3.5 shadow-sm">
+      <article class=" border border-slate-200 bg-white p-3.5 shadow-sm">
         <div class="flex items-start gap-3">
-          <img src="${esc(image)}" alt="" data-fallback="${esc(FALLBACK_IMG)}" class="h-16 w-16 shrink-0 rounded-xl object-cover ring-1 ring-slate-100">
+          <img src="${esc(image)}" alt="" data-fallback="${esc(FALLBACK_IMG)}" class="h-16 w-16 shrink-0 object-cover ring-1 ring-slate-100">
           <div class="min-w-0 flex-1">
             <div class="flex flex-wrap items-start justify-between gap-2">
               <p class="line-clamp-2 text-[12px] font-extrabold leading-snug text-ink">${esc(offer.product ? offer.product.title : 'Sản phẩm')}</p>
@@ -1249,12 +1249,12 @@
             </div>
             <div class="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] text-slate-500">
               <span>${otherLabel}: <strong class="text-slate-700">${esc(other ? other.alias : 'Sinh viên ẩn danh')}</strong></span>
-              ${other && other.university ? `<span class="rounded-full bg-sky-50 px-1.5 py-0.5 font-bold text-sky-700">${esc(other.university)}</span>` : ''}
+              ${other && other.university ? `<span class=" bg-sky-50 px-1.5 py-0.5 font-bold text-sky-700">${esc(other.university)}</span>` : ''}
               <span>· ${fmtDate(offer.created_at)}</span>
             </div>
             <div class="mt-2 flex flex-wrap items-center gap-2">
-              <span class="rounded-lg bg-slate-50 px-2 py-1 text-[10px] font-semibold text-slate-500">Niêm yết <strong class="text-slate-700">${vnd(listed)}</strong></span>
-              <span class="rounded-lg bg-amber-50 px-2 py-1 text-[10px] font-extrabold text-amber-800 ring-1 ring-amber-100">Offer <strong>${vnd(offered)}</strong></span>
+              <span class=" bg-slate-50 px-2 py-1 text-[10px] font-semibold text-slate-500">Niêm yết <strong class="text-slate-700">${vnd(listed)}</strong></span>
+              <span class=" bg-amber-50 px-2 py-1 text-[10px] font-extrabold text-amber-800 ring-1 ring-amber-100">Offer <strong>${vnd(offered)}</strong></span>
             </div>
             ${actions}
             ${buyDeal}
@@ -1280,9 +1280,9 @@
         </button>` : ''}
       </div>` : '';
     return `
-      <article class="rounded-2xl border border-slate-200 bg-white p-3.5 shadow-sm">
+      <article class=" border border-slate-200 bg-white p-3.5 shadow-sm">
         <div class="flex items-start gap-3">
-          <img src="${esc(image)}" alt="" data-fallback="${esc(FALLBACK_IMG)}" class="h-16 w-16 shrink-0 rounded-xl object-cover ring-1 ring-slate-100">
+          <img src="${esc(image)}" alt="" data-fallback="${esc(FALLBACK_IMG)}" class="h-16 w-16 shrink-0 object-cover ring-1 ring-slate-100">
           <div class="min-w-0 flex-1">
             <div class="flex flex-wrap items-start justify-between gap-2">
               <p class="line-clamp-2 text-[12px] font-extrabold leading-snug text-ink">${esc(order.product ? order.product.title : 'Đơn hàng')}</p>
@@ -1290,20 +1290,20 @@
             </div>
             <p class="mt-1 text-[10px] font-semibold text-slate-500">${isBuyer ? 'Bạn mua' : 'Bạn bán'} · Mã đơn <strong class="text-slate-700">#${order.id}</strong> · ${esc(order.delivery_method_label)}</p>
             ${order.delivery_detail ? `<p class="mt-1 line-clamp-1 text-[10px] text-slate-400">${esc(order.delivery_detail)}</p>` : ''}
-            <div class="mt-2 flex flex-wrap items-center justify-between gap-2 rounded-xl bg-slate-50 px-3 py-2">
+            <div class="mt-2 flex flex-wrap items-center justify-between gap-2 bg-slate-50 px-3 py-2">
               <span class="text-[10px] font-semibold text-slate-500">${isBuyer ? 'Bạn đã thanh toán' : 'Bạn nhận được (98%)'}</span>
               <strong class="text-sm font-extrabold ${isBuyer ? 'text-sky-700' : 'text-emerald-700'}">${vnd(amount)}</strong>
             </div>
             ${order.voucher_code ? `<p class="mt-1 text-[9px] font-bold text-emerald-600">Voucher ${esc(order.voucher_code)} · giảm ${vnd(order.discount_amount)}</p>` : ''}
             ${actions}
-            ${order.escrow_status === 'COMPLETED' ? `<div class="mt-2 rounded-xl border border-emerald-100 bg-emerald-50 px-3 py-2 text-[10px] leading-relaxed text-emerald-800"><p class="font-extrabold"><i class="fa-solid fa-circle-check mr-1"></i>Giao dịch hoàn tất</p><p class="mt-0.5">${isBuyer ? 'Đã cộng' : 'Được cộng'} ${vnd(order.seller_receive_amount)} (98%) vào Ví người bán · Phí sàn 2%: ${vnd(order.platform_fee_2_percent)}.</p></div>` : ''}
+            ${order.escrow_status === 'COMPLETED' ? `<div class="mt-2 border border-emerald-100 bg-emerald-50 px-3 py-2 text-[10px] leading-relaxed text-emerald-800"><p class="font-extrabold"><i class="fa-solid fa-circle-check mr-1"></i>Giao dịch hoàn tất</p><p class="mt-0.5">${isBuyer ? 'Đã cộng' : 'Được cộng'} ${vnd(order.seller_receive_amount)} (98%) vào Ví người bán · Phí sàn 2%: ${vnd(order.platform_fee_2_percent)}.</p></div>` : ''}
           </div>
         </div>
       </article>`;
   }
 
   function emptyAccountPanel(icon, title, text) {
-    return `<div class="rounded-2xl border border-dashed border-slate-200 bg-slate-50/60 px-5 py-10 text-center">
+    return `<div class=" border border-dashed border-slate-200 bg-slate-50/60 px-5 py-10 text-center">
       <i class="fa-solid ${icon} text-2xl text-slate-300" aria-hidden="true"></i>
       <p class="mt-3 text-sm font-extrabold text-slate-700">${title}</p>
       <p class="mx-auto mt-1 max-w-sm text-[11px] leading-relaxed text-slate-400">${text}</p>
@@ -1336,11 +1336,11 @@
         ? `<div class="space-y-5">
             <div>
               <h4 class="mb-2 text-[10px] font-extrabold uppercase tracking-[0.14em] text-slate-400">Đơn mua (${buying.length})</h4>
-              <div class="space-y-2.5">${buying.length ? buying.map(orderCard).join('') : '<p class="rounded-xl bg-slate-50 px-3 py-4 text-[11px] text-slate-400">Bạn chưa có đơn mua nào.</p>'}</div>
+              <div class="space-y-2.5">${buying.length ? buying.map(orderCard).join('') : '<p class=" bg-slate-50 px-3 py-4 text-[11px] text-slate-400">Bạn chưa có đơn mua nào.</p>'}</div>
             </div>
             <div>
               <h4 class="mb-2 text-[10px] font-extrabold uppercase tracking-[0.14em] text-slate-400">Đơn bán (${selling.length})</h4>
-              <div class="space-y-2.5">${selling.length ? selling.map(orderCard).join('') : '<p class="rounded-xl bg-slate-50 px-3 py-4 text-[11px] text-slate-400">Bạn chưa có đơn bán nào.</p>'}</div>
+              <div class="space-y-2.5">${selling.length ? selling.map(orderCard).join('') : '<p class=" bg-slate-50 px-3 py-4 text-[11px] text-slate-400">Bạn chưa có đơn bán nào.</p>'}</div>
             </div>
           </div>`
         : emptyAccountPanel('fa-receipt', 'Chưa có đơn escrow', 'Sau khi thanh toán, đơn hàng sẽ xuất hiện tại đây. Bạn xác nhận đã nhận hàng để Studeal giải ngân 98% cho người bán.');
@@ -1349,20 +1349,20 @@
     openModal(`
       <div class="pr-8">
         <div class="flex items-start gap-3">
-          <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-500 to-cyan-400 text-base font-extrabold text-white shadow-lg shadow-sky-500/20">${userInitial(user)}</span>
+          <span class="flex h-12 w-12 shrink-0 items-center justify-center bg-sky-600 text-base font-extrabold text-white shadow-lg shadow-sky-500/20">${userInitial(user)}</span>
           <div class="min-w-0 flex-1">
             <p class="text-[10px] font-extrabold uppercase tracking-[0.14em] text-sky-600">${state.offersTab === 'orders' ? 'Escrow Holding · ví người bán' : 'Quản lý trả giá &amp; đơn hàng'}</p>
             <h2 class="mt-0.5 truncate text-xl font-extrabold tracking-tight text-ink">${esc(user.name)}</h2>
             <div class="mt-1 flex flex-wrap items-center gap-1.5">
               <span class="truncate text-[10px] font-semibold text-slate-400">${esc(user.email)}</span>
-              <span class="rounded-full px-2 py-0.5 text-[9px] font-extrabold ${verified ? 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100' : 'bg-slate-100 text-slate-500'}">${verified ? `Đã xác thực ${esc(user.university_name || '.edu.vn')}` : 'Chưa xác thực .edu.vn'}</span>
+              <span class=" px-2 py-0.5 text-[9px] font-extrabold ${verified ? 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100' : 'bg-slate-100 text-slate-500'}">${verified ? `Đã xác thực ${esc(user.university_name || '.edu.vn')}` : 'Chưa xác thực .edu.vn'}</span>
             </div>
           </div>
         </div>
         <div class="mt-4 grid grid-cols-3 gap-2">
-          <div class="rounded-xl bg-sky-50 px-3 py-2.5 ring-1 ring-sky-100"><p class="text-[9px] font-bold text-sky-600">Ví người bán</p><p class="mt-0.5 truncate text-xs font-extrabold text-sky-800">${vnd(user.wallet_balance)}</p></div>
-          <div class="rounded-xl bg-amber-50 px-3 py-2.5 ring-1 ring-amber-100"><p class="text-[9px] font-bold text-amber-600">Offer chờ</p><p class="mt-0.5 text-xs font-extrabold text-amber-800">${pendingReceived}</p></div>
-          <div class="rounded-xl bg-emerald-50 px-3 py-2.5 ring-1 ring-emerald-100"><p class="text-[9px] font-bold text-emerald-600">Deal đã nhận</p><p class="mt-0.5 text-xs font-extrabold text-emerald-800">${acceptedSent}</p></div>
+          <div class=" bg-sky-50 px-3 py-2.5 ring-1 ring-sky-100"><p class="text-[9px] font-bold text-sky-600">Ví người bán</p><p class="mt-0.5 truncate text-xs font-extrabold text-sky-800">${vnd(user.wallet_balance)}</p></div>
+          <div class=" bg-amber-50 px-3 py-2.5 ring-1 ring-amber-100"><p class="text-[9px] font-bold text-amber-600">Offer chờ</p><p class="mt-0.5 text-xs font-extrabold text-amber-800">${pendingReceived}</p></div>
+          <div class=" bg-emerald-50 px-3 py-2.5 ring-1 ring-emerald-100"><p class="text-[9px] font-bold text-emerald-600">Deal đã nhận</p><p class="mt-0.5 text-xs font-extrabold text-emerald-800">${acceptedSent}</p></div>
         </div>
       </div>
       <div class="no-scrollbar mt-4 flex gap-1.5 overflow-x-auto pb-1">
@@ -1371,13 +1371,13 @@
         ${accountTabButton('orders', 'Đơn hàng & Ví Trung Gian', orderCount, 'fa-wallet')}
       </div>
       <div class="mt-3 grid gap-2 sm:grid-cols-2">
-        <button type="button" data-market-action="verify-student" class="inline-flex h-9 items-center justify-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-3 text-[10px] font-extrabold text-emerald-800 transition hover:bg-emerald-100"><i class="fa-solid fa-graduation-cap"></i>${verified ? 'Quản lý huy hiệu sinh viên' : 'Xác thực email .edu.vn'}</button>
-        <button type="button" data-market-action="open-sell" class="inline-flex h-9 items-center justify-center gap-2 rounded-xl bg-sky-600 px-3 text-[10px] font-extrabold text-white transition hover:bg-sky-700"><i class="fa-solid fa-plus"></i>Đăng bán sản phẩm</button>
+        <button type="button" data-market-action="verify-student" class="inline-flex h-9 items-center justify-center gap-2 border border-emerald-200 bg-emerald-50 px-3 text-[10px] font-extrabold text-emerald-800 transition hover:bg-emerald-100"><i class="fa-solid fa-graduation-cap"></i>${verified ? 'Quản lý huy hiệu sinh viên' : 'Xác thực email .edu.vn'}</button>
+        <button type="button" data-market-action="open-sell" class="inline-flex h-9 items-center justify-center gap-2 bg-sky-600 px-3 text-[10px] font-extrabold text-white transition hover:bg-sky-700"><i class="fa-solid fa-plus"></i>Đăng bán sản phẩm</button>
       </div>
       <div class="mt-4">${content}</div>
       <div class="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 pt-4">
         <p class="text-[10px] leading-relaxed text-slate-400"><i class="fa-solid fa-user-secret mr-1 text-sky-400"></i>Thông tin liên lạc được ẩn hoàn toàn.</p>
-        <button type="button" data-market-action="logout" class="inline-flex h-8 items-center gap-1.5 rounded-full bg-slate-100 px-3 text-[10px] font-extrabold text-slate-600 transition hover:bg-rose-50 hover:text-rose-700">
+        <button type="button" data-market-action="logout" class="inline-flex h-8 items-center gap-1.5 bg-slate-100 px-3 text-[10px] font-extrabold text-slate-600 transition hover:bg-rose-50 hover:text-rose-700">
           <i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i> Đăng xuất
         </button>
       </div>
@@ -1455,32 +1455,32 @@
     const image = product.image_url || FALLBACK_IMG;
     openModal(`
       <div class="pr-8">
-        <span class="inline-flex items-center gap-2 rounded-full bg-amber-50 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.14em] text-amber-700 ring-1 ring-amber-100">
+        <span class="inline-flex items-center gap-2 bg-amber-50 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.14em] text-amber-700 ring-1 ring-amber-100">
           <i class="fa-solid fa-tag" aria-hidden="true"></i> Trả giá an toàn
         </span>
         <h2 class="mt-3 text-2xl font-extrabold tracking-tight text-ink">Đề xuất mức giá</h2>
         <p class="mt-2 text-xs leading-relaxed text-slate-500">Chỉ nhập con số. Studeal không có khung chat và không chia sẻ email, số điện thoại hay Zalo.</p>
       </div>
-      <div class="mt-5 flex items-center gap-3 rounded-2xl border border-slate-100 bg-slate-50 p-3">
-        <img src="${esc(image)}" alt="" data-fallback="${esc(FALLBACK_IMG)}" class="h-16 w-16 rounded-xl object-cover">
+      <div class="mt-5 flex items-center gap-3 border border-slate-100 bg-slate-50 p-3">
+        <img src="${esc(image)}" alt="" data-fallback="${esc(FALLBACK_IMG)}" class="h-16 w-16 object-cover">
         <div class="min-w-0 flex-1">
           <p class="line-clamp-2 text-xs font-extrabold leading-snug text-ink">${esc(product.title)}</p>
           <p class="mt-1 text-[10px] font-semibold text-slate-500">Giá niêm yết <strong class="text-sky-700">${vnd(product.price)}</strong></p>
         </div>
       </div>
       <form data-market-form="offer" data-product-id="${product.id}" class="mt-5 space-y-3" novalidate>
-        <p data-form-error class="hidden rounded-xl bg-rose-50 px-3 py-2 text-[11px] font-semibold text-rose-700 ring-1 ring-rose-100"></p>
+        <p data-form-error class="hidden bg-rose-50 px-3 py-2 text-[11px] font-semibold text-rose-700 ring-1 ring-rose-100"></p>
         <label for="marketOfferPrice" class="block text-[11px] font-extrabold text-slate-700">Mức giá bạn đề xuất (VNĐ)</label>
         <div class="relative">
           <input id="marketOfferPrice" name="offer_price" type="number" inputmode="numeric" min="1" max="${Math.max(1, Number(product.price) - 1)}" step="1000" required
                  value="${esc(prior ? prior.offer_price : '')}" placeholder="Ví dụ: ${Math.max(1000, Math.floor(Number(product.price) * 0.85 / 1000) * 1000)}"
-                 class="h-14 w-full rounded-xl border border-slate-200 bg-white px-4 pr-14 text-lg font-extrabold text-ink outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100">
+                 class="h-14 w-full border border-slate-200 bg-white px-4 pr-14 text-lg font-extrabold text-ink outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100">
           <span class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs font-extrabold text-slate-400">VNĐ</span>
         </div>
         <div class="flex flex-wrap gap-2">
-          ${[5, 10, 15].map((pct) => `<button type="button" data-market-action="offer-suggest" data-percent="${pct}" data-price="${product.price}" class="inline-flex h-8 items-center rounded-full bg-slate-100 px-3 text-[10px] font-extrabold text-slate-600 transition hover:bg-sky-50 hover:text-sky-700">-${pct}% · ${vnd(Math.floor(Number(product.price) * (100 - pct) / 100 / 1000) * 1000)}</button>`).join('')}
+          ${[5, 10, 15].map((pct) => `<button type="button" data-market-action="offer-suggest" data-percent="${pct}" data-price="${product.price}" class="inline-flex h-8 items-center bg-slate-100 px-3 text-[10px] font-extrabold text-slate-600 transition hover:bg-sky-50 hover:text-sky-700">-${pct}% · ${vnd(Math.floor(Number(product.price) * (100 - pct) / 100 / 1000) * 1000)}</button>`).join('')}
         </div>
-        <p class="rounded-xl bg-sky-50 px-3 py-2.5 text-[10px] leading-relaxed text-sky-800 ring-1 ring-sky-100"><i class="fa-solid fa-lock mr-1" aria-hidden="true"></i>Offer chỉ gồm giá đề xuất. Không gửi tin nhắn hoặc thông tin liên lạc.</p>
+        <p class=" bg-sky-50 px-3 py-2.5 text-[10px] leading-relaxed text-sky-800 ring-1 ring-sky-100"><i class="fa-solid fa-lock mr-1" aria-hidden="true"></i>Offer chỉ gồm giá đề xuất. Không gửi tin nhắn hoặc thông tin liên lạc.</p>
         <button type="submit" class="${BTN.primary} h-11"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i>${prior ? 'Cập nhật mức trả giá' : 'Gửi offer cho người bán'}</button>
       </form>
     `, { label: 'Trả giá sản phẩm' });
@@ -1566,9 +1566,9 @@
       const meta = DELIVERY_META[code];
       if (!meta) return '';
       const checked = cart.method === code;
-      return `<label class="group flex cursor-pointer items-start gap-3 rounded-2xl border p-3.5 transition ${checked ? 'border-sky-400 bg-sky-50/80 ring-2 ring-sky-100' : 'border-slate-200 bg-white hover:border-sky-200 hover:bg-sky-50/40'}">
+      return `<label class="group flex cursor-pointer items-start gap-3 border p-3.5 transition ${checked ? 'border-sky-400 bg-sky-50/80 ring-2 ring-sky-100' : 'border-slate-200 bg-white hover:border-sky-200 hover:bg-sky-50/40'}">
         <input type="radio" name="delivery_method" value="${code}" ${checked ? 'checked' : ''} class="mt-0.5 h-4 w-4 border-slate-300 text-sky-600 focus:ring-sky-500">
-        <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${meta.tone}"><i class="fa-solid ${meta.icon} text-sm" aria-hidden="true"></i></span>
+        <span class="flex h-9 w-9 shrink-0 items-center justify-center ${meta.tone}"><i class="fa-solid ${meta.icon} text-sm" aria-hidden="true"></i></span>
         <span class="min-w-0 flex-1">
           <span class="block text-[11px] font-extrabold text-ink">${meta.label}</span>
           <span class="mt-0.5 block text-[10px] leading-relaxed text-slate-500">${meta.desc}</span>
@@ -1579,30 +1579,30 @@
 
   function cartDetailPanel(cart) {
     if (cart.method === 'MEETUP') {
-      return `<div class="rounded-2xl bg-sky-50/80 p-3.5 ring-1 ring-sky-100">
+      return `<div class=" bg-sky-50/80 p-3.5 ring-1 ring-sky-100">
         <label for="marketMeetupDetail" class="mb-1.5 block text-[10px] font-extrabold text-sky-900">Điểm hẹn theo đề xuất người bán</label>
         <input id="marketMeetupDetail" data-cart-field="meetupDetail" type="text" maxlength="240" value="${esc(cart.meetupDetail)}" placeholder="Ví dụ: ĐH KHTN CS1, cổng Nguyễn Văn Cừ"
-               class="h-10 w-full rounded-xl border border-sky-200 bg-white px-3 text-xs font-semibold text-ink outline-none focus:border-sky-400 focus:ring-4 focus:ring-sky-100">
+               class="h-10 w-full border border-sky-200 bg-white px-3 text-xs font-semibold text-ink outline-none focus:border-sky-400 focus:ring-4 focus:ring-sky-100">
         <p class="mt-1.5 text-[9px] leading-relaxed text-sky-700"><i class="fa-solid fa-location-dot mr-1"></i>Ưu tiên địa điểm công cộng. Không nhập số điện thoại hoặc thông tin liên lạc.</p>
       </div>`;
     }
     if (cart.method === 'SHIP_3RD') {
-      return `<div class="rounded-2xl bg-indigo-50/80 p-3.5 ring-1 ring-indigo-100">
+      return `<div class=" bg-indigo-50/80 p-3.5 ring-1 ring-indigo-100">
         <label for="marketShipDetail" class="mb-1.5 block text-[10px] font-extrabold text-indigo-900">Địa chỉ / ghi chú giao hàng</label>
         <textarea id="marketShipDetail" data-cart-field="shipDetail" rows="2" maxlength="500" placeholder="Nhập địa chỉ nhận hàng và ghi chú cần thiết">${esc(cart.shipDetail)}</textarea>
         <p class="mt-1.5 text-[9px] leading-relaxed text-indigo-700"><i class="fa-solid fa-truck-fast mr-1"></i>Bạn tự đặt Grab/AhaMove; phí tài xế không nằm trong khoản escrow này.</p>
       </div>`;
     }
     const directionOptions = ['CS1 → CS2', 'CS2 → CS1'].map((value) => `<option value="${value}" ${cart.direction === value ? 'selected' : ''}>${value}</option>`).join('');
-    return `<div class="rounded-2xl bg-emerald-50/80 p-3.5 ring-1 ring-emerald-100">
+    return `<div class=" bg-emerald-50/80 p-3.5 ring-1 ring-emerald-100">
       <p class="text-[10px] font-extrabold text-emerald-900">Chọn chuyến tuyến KHTN miễn phí</p>
       <div class="mt-2 grid grid-cols-2 gap-2">
-        ${['Thứ 4', 'Thứ 7'].map((day) => `<label class="flex cursor-pointer items-center justify-center gap-2 rounded-xl border px-3 py-2.5 text-[11px] font-extrabold transition ${cart.weekday === day ? 'border-emerald-400 bg-white text-emerald-800 shadow-sm' : 'border-emerald-100 bg-emerald-50 text-emerald-700'}">
+        ${['Thứ 4', 'Thứ 7'].map((day) => `<label class="flex cursor-pointer items-center justify-center gap-2 border px-3 py-2.5 text-[11px] font-extrabold transition ${cart.weekday === day ? 'border-emerald-400 bg-white text-emerald-800 shadow-sm' : 'border-emerald-100 bg-emerald-50 text-emerald-700'}">
           <input type="radio" name="routine_weekday" value="${day}" ${cart.weekday === day ? 'checked' : ''} class="h-3.5 w-3.5 border-emerald-300 text-emerald-600 focus:ring-emerald-500">${day}
         </label>`).join('')}
       </div>
       <label for="marketRoutineDirection" class="mb-1.5 mt-3 block text-[10px] font-extrabold text-emerald-900">Chiều giao</label>
-      <select id="marketRoutineDirection" data-cart-field="direction" class="h-10 w-full rounded-xl border border-emerald-200 bg-white px-3 text-xs font-bold text-ink outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-100">${directionOptions}</select>
+      <select id="marketRoutineDirection" data-cart-field="direction" class="h-10 w-full border border-emerald-200 bg-white px-3 text-xs font-bold text-ink outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-100">${directionOptions}</select>
       <p class="mt-1.5 text-[9px] leading-relaxed text-emerald-700"><i class="fa-solid fa-leaf mr-1"></i>Điểm nhận/giao tại CS1 Nguyễn Văn Cừ và CS2 Linh Trung. Phí vận chuyển: 0đ.</p>
     </div>`;
   }
@@ -1624,7 +1624,7 @@
       const active = state.cart && state.cart.voucherCode === code && state.cart.voucher;
       const desc = voucher ? voucher.description : '';
       return `<button type="button" data-market-action="quick-voucher" data-code="${code}" title="${esc(desc)}"
-        class="inline-flex h-8 items-center gap-1 rounded-full border px-2.5 text-[9px] font-extrabold transition ${active ? 'border-emerald-300 bg-emerald-50 text-emerald-800' : 'border-sky-100 bg-white text-sky-700 hover:border-sky-300 hover:bg-sky-50'}">
+        class="inline-flex h-8 items-center gap-1 border px-2.5 text-[9px] font-extrabold transition ${active ? 'border-emerald-300 bg-emerald-50 text-emerald-800' : 'border-sky-100 bg-white text-sky-700 hover:border-sky-300 hover:bg-sky-50'}">
         <i class="fa-solid ${active ? 'fa-circle-check' : 'fa-ticket'}" aria-hidden="true"></i>${code}
       </button>`;
     }).join('');
@@ -1635,7 +1635,7 @@
     const summary = cartSummary(cart);
     const image = product.image_url || FALLBACK_IMG;
     const dealCopy = cart.offer ? `<span class="mt-1 inline-flex items-center gap-1 text-[9px] font-extrabold text-amber-700"><i class="fa-solid fa-bolt" aria-hidden="true"></i>Deal đã chấp nhận · offer #${cart.offer.id}</span>` : '';
-    const authNotice = state.user ? '' : `<button type="button" data-market-action="cart-login" class="mt-3 w-full rounded-xl border border-amber-200 bg-amber-50 p-3 text-left text-[10px] font-bold leading-relaxed text-amber-900 transition hover:bg-amber-100"><i class="fa-solid fa-lock mr-1"></i>Đăng nhập để tạo đơn escrow. Giỏ hàng sẽ được giữ trong phiên này.</button>`;
+    const authNotice = state.user ? '' : `<button type="button" data-market-action="cart-login" class="mt-3 w-full border border-amber-200 bg-amber-50 p-3 text-left text-[10px] font-bold leading-relaxed text-amber-900 transition hover:bg-amber-100"><i class="fa-solid fa-lock mr-1"></i>Đăng nhập để tạo đơn escrow. Giỏ hàng sẽ được giữ trong phiên này.</button>`;
     const checkoutLabel = cart.checkoutBusy ? 'Đang tạo đơn…' : `Thanh toán escrow · ${vnd(summary.buyerPay)}`;
     return `
       <header class="flex shrink-0 items-center justify-between border-b border-slate-100 bg-white px-5 py-4 sm:px-6">
@@ -1643,16 +1643,16 @@
           <p class="text-[10px] font-extrabold uppercase tracking-[0.16em] text-sky-600">Thanh toán an toàn</p>
           <h2 class="mt-0.5 text-lg font-extrabold tracking-tight text-ink">Giỏ hàng escrow</h2>
         </div>
-        <button type="button" data-market-close-cart aria-label="Đóng giỏ hàng" class="flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition hover:bg-slate-200 hover:text-slate-800"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+        <button type="button" data-market-close-cart aria-label="Đóng giỏ hàng" class="flex h-9 w-9 items-center justify-center bg-slate-100 text-slate-500 transition hover:bg-slate-200 hover:text-slate-800"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
       </header>
       <div class="cart-scroll min-h-0 flex-1 overflow-y-auto px-5 py-4 sm:px-6">
-        <div class="rounded-2xl border border-slate-200 bg-white p-3.5 shadow-sm">
+        <div class=" border border-slate-200 bg-white p-3.5 shadow-sm">
           <div class="flex items-start gap-3">
-            <img src="${esc(image)}" alt="${esc(product.title)}" data-fallback="${esc(FALLBACK_IMG)}" class="h-20 w-20 shrink-0 rounded-xl object-cover ring-1 ring-slate-100">
+            <img src="${esc(image)}" alt="${esc(product.title)}" data-fallback="${esc(FALLBACK_IMG)}" class="h-20 w-20 shrink-0 object-cover ring-1 ring-slate-100">
             <div class="min-w-0 flex-1">
               <div class="flex items-start justify-between gap-2">
                 <h3 class="line-clamp-2 text-xs font-extrabold leading-snug text-ink">${esc(product.title)}</h3>
-                <button type="button" data-market-action="remove-cart" aria-label="Bỏ sản phẩm khỏi giỏ" class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-slate-400 transition hover:bg-rose-50 hover:text-rose-600"><i class="fa-solid fa-trash-can text-[10px]" aria-hidden="true"></i></button>
+                <button type="button" data-market-action="remove-cart" aria-label="Bỏ sản phẩm khỏi giỏ" class="flex h-7 w-7 shrink-0 items-center justify-center text-slate-400 transition hover:bg-rose-50 hover:text-rose-600"><i class="fa-solid fa-trash-can text-[10px]" aria-hidden="true"></i></button>
               </div>
               <p class="mt-1 text-[10px] font-semibold text-slate-400">${esc(product.condition_text)} · ${esc(product.seller ? product.seller.alias : '')}</p>
               <div class="mt-1.5 flex flex-wrap items-baseline gap-2">
@@ -1673,7 +1673,7 @@
           <div class="mt-2.5">${cartDetailPanel(cart)}</div>
         </section>
 
-        <section class="mt-5 rounded-2xl border border-slate-200 bg-white p-3.5" aria-labelledby="voucherHeading">
+        <section class="mt-5 border border-slate-200 bg-white p-3.5" aria-labelledby="voucherHeading">
           <div class="flex items-center justify-between gap-2">
             <h3 id="voucherHeading" class="text-[11px] font-extrabold text-ink"><i class="fa-solid fa-ticket mr-1 text-amber-500" aria-hidden="true"></i>Mã giảm giá</h3>
             ${cart.voucher ? `<button type="button" data-market-action="remove-voucher" class="text-[9px] font-extrabold text-rose-600 hover:text-rose-700">Gỡ mã</button>` : ''}
@@ -1681,16 +1681,16 @@
           <div class="mt-2 flex gap-2">
             <label for="marketVoucherCode" class="sr-only">Nhập mã giảm giá</label>
             <input id="marketVoucherCode" type="text" maxlength="40" autocomplete="off" value="${esc(cart.voucherCode)}" placeholder="Nhập mã voucher"
-                   class="h-10 min-w-0 flex-1 rounded-xl border border-slate-200 bg-slate-50 px-3 text-xs font-extrabold uppercase text-ink outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100">
-            <button type="button" data-market-action="apply-voucher" class="inline-flex h-10 shrink-0 items-center justify-center gap-1.5 rounded-xl bg-slate-900 px-3 text-[10px] font-extrabold text-white transition hover:bg-slate-700 disabled:opacity-60" ${cart.applyingVoucher ? 'disabled' : ''}>
+                   class="h-10 min-w-0 flex-1 border border-slate-200 bg-slate-50 px-3 text-xs font-extrabold uppercase text-ink outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100">
+            <button type="button" data-market-action="apply-voucher" class="inline-flex h-10 shrink-0 items-center justify-center gap-1.5 bg-slate-900 px-3 text-[10px] font-extrabold text-white transition hover:bg-slate-700 disabled:opacity-60" ${cart.applyingVoucher ? 'disabled' : ''}>
               ${cart.applyingVoucher ? '<i class="fa-solid fa-circle-notch fa-spin"></i> Kiểm tra' : 'Áp dụng'}
             </button>
           </div>
           <div class="mt-2 flex flex-wrap gap-1.5">${cartVoucherButtons()}</div>
-          ${cart.voucher ? `<p class="mt-2 rounded-lg bg-emerald-50 px-2.5 py-2 text-[10px] font-bold text-emerald-700"><i class="fa-solid fa-circle-check mr-1"></i>${esc(cart.voucher.code)} · tiết kiệm ${vnd(cart.voucher.discount_amount)}</p>` : ''}
+          ${cart.voucher ? `<p class="mt-2 bg-emerald-50 px-2.5 py-2 text-[10px] font-bold text-emerald-700"><i class="fa-solid fa-circle-check mr-1"></i>${esc(cart.voucher.code)} · tiết kiệm ${vnd(cart.voucher.discount_amount)}</p>` : ''}
         </section>
 
-        <section class="mt-5 rounded-2xl border border-slate-200 bg-white p-3.5" aria-labelledby="summaryHeading">
+        <section class="mt-5 border border-slate-200 bg-white p-3.5" aria-labelledby="summaryHeading">
           <h3 id="summaryHeading" class="text-[11px] font-extrabold text-ink">Tổng kết thanh toán</h3>
           <div class="mt-2.5 space-y-2 text-[10px]">
             <div class="flex items-center justify-between gap-2 text-slate-500"><span>Giá sản phẩm${cart.offer ? ' (giá deal)' : ''}</span><strong class="text-slate-700">${vnd(summary.price)}</strong></div>
@@ -1701,8 +1701,8 @@
           </div>
         </section>
 
-        <div class="mt-4 flex items-start gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 p-3.5 text-emerald-950">
-          <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i></span>
+        <div class="mt-4 flex items-start gap-3 border border-emerald-200 bg-emerald-50 p-3.5 text-emerald-950">
+          <span class="flex h-8 w-8 shrink-0 items-center justify-center bg-emerald-100 text-emerald-700"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i></span>
           <p class="text-[10px] font-semibold leading-relaxed">Studeal tạm giữ 100% số tiền. Sau khi giao dịch hoàn tất, người bán nhận 98% và Studeal thu 2% phí dịch vụ</p>
         </div>
         <p class="mt-3 text-center text-[9px] leading-relaxed text-slate-400">Mỗi đơn escrow xử lý một sản phẩm. Voucher giảm phần người mua thanh toán; phí 2% tính theo giá sản phẩm/deal.</p>
@@ -1720,7 +1720,7 @@
     const content = $('#marketCartContent');
     if (!content) return;
     if (!state.cart) {
-      content.innerHTML = `<header class="flex items-center justify-between border-b border-slate-100 bg-white px-5 py-4"><div><p class="text-[10px] font-extrabold uppercase tracking-[0.16em] text-sky-600">Studeal escrow</p><h2 class="mt-0.5 text-lg font-extrabold text-ink">Giỏ hàng</h2></div><button type="button" data-market-close-cart aria-label="Đóng" class="flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-500"><i class="fa-solid fa-xmark"></i></button></header><div class="flex flex-1 flex-col items-center justify-center px-6 text-center"><span class="flex h-16 w-16 items-center justify-center rounded-3xl bg-sky-50 text-2xl text-sky-500"><i class="fa-solid fa-bag-shopping" aria-hidden="true"></i></span><h3 class="mt-4 text-base font-extrabold text-ink">Giỏ escrow đang trống</h3><p class="mt-2 max-w-xs text-xs leading-relaxed text-slate-500">Chọn một sản phẩm rồi bấm “Mua ngay” hoặc “Mua ngay với giá Deal” để bắt đầu.</p><button type="button" data-market-action="close-cart" class="mt-5 inline-flex h-10 items-center gap-2 rounded-full bg-sky-600 px-5 text-xs font-extrabold text-white"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Tiếp tục xem chợ</button></div>`;
+      content.innerHTML = `<header class="flex items-center justify-between border-b border-slate-100 bg-white px-5 py-4"><div><p class="text-[10px] font-extrabold uppercase tracking-[0.16em] text-sky-600">Studeal escrow</p><h2 class="mt-0.5 text-lg font-extrabold text-ink">Giỏ hàng</h2></div><button type="button" data-market-close-cart aria-label="Đóng" class="flex h-9 w-9 items-center justify-center bg-slate-100 text-slate-500"><i class="fa-solid fa-xmark"></i></button></header><div class="flex flex-1 flex-col items-center justify-center px-6 text-center"><span class="flex h-16 w-16 items-center justify-center bg-sky-50 text-2xl text-sky-500"><i class="fa-solid fa-bag-shopping" aria-hidden="true"></i></span><h3 class="mt-4 text-base font-extrabold text-ink">Giỏ escrow đang trống</h3><p class="mt-2 max-w-xs text-xs leading-relaxed text-slate-500">Chọn một sản phẩm rồi bấm “Mua ngay” hoặc “Mua ngay với giá Deal” để bắt đầu.</p><button type="button" data-market-action="close-cart" class="mt-5 inline-flex h-10 items-center gap-2 bg-sky-600 px-5 text-xs font-extrabold text-white"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Tiếp tục xem chợ</button></div>`;
       return;
     }
     content.innerHTML = cartHtml(state.cart);
@@ -1838,39 +1838,39 @@
     const isHolding = order.escrow_status === 'HOLDING';
     openModal(`
       <div class="pr-8">
-        <span class="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.16em] text-emerald-700 ring-1 ring-emerald-100">
+        <span class="inline-flex items-center gap-2 bg-emerald-50 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.16em] text-emerald-700 ring-1 ring-emerald-100">
           <i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Đơn escrow đã tạo
         </span>
         <h2 class="mt-3 text-2xl font-extrabold tracking-tight text-ink">${isHolding ? 'Quét mã VietQR' : 'Chi tiết đơn hàng'}</h2>
         <p class="mt-2 text-xs leading-relaxed text-slate-500">Mã đơn <strong class="text-ink">#${order.id}</strong> · trạng thái ${statusPill(order.escrow_status)}</p>
       </div>
       <div class="mt-5 grid gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-        <div class="rounded-3xl border border-sky-100 bg-gradient-to-br from-sky-50 to-white p-4 text-center">
-          <div class="mx-auto flex aspect-square max-w-[240px] items-center justify-center overflow-hidden rounded-2xl border border-sky-100 bg-white p-2 shadow-sm">
+        <div class=" border border-sky-100 bg-sky-50 p-4 text-center">
+          <div class="mx-auto flex aspect-square max-w-[240px] items-center justify-center overflow-hidden border border-sky-100 bg-white p-2 shadow-sm">
             <img src="${esc(image)}" alt="Mã VietQR minh họa cho đơn Studeal ${order.id}" class="h-full w-full object-contain" loading="eager" onerror="this.onerror=null;this.src='https://api.qrserver.com/v1/create-qr-code/?size=320x320&margin=8&data=STUDEAL-DEMO-${encodeURIComponent(String(order.id))}-${encodeURIComponent(String(order.buyer_paid_amount))}'">
           </div>
-          <span class="mt-3 inline-flex items-center gap-1.5 rounded-full bg-white px-2.5 py-1 text-[9px] font-extrabold text-sky-700 ring-1 ring-sky-100"><i class="fa-solid fa-building-columns" aria-hidden="true"></i>${esc(VIETQR_BANK.label)}</span>
+          <span class="mt-3 inline-flex items-center gap-1.5 bg-white px-2.5 py-1 text-[9px] font-extrabold text-sky-700 ring-1 ring-sky-100"><i class="fa-solid fa-building-columns" aria-hidden="true"></i>${esc(VIETQR_BANK.label)}</span>
         </div>
         <div class="flex flex-col">
-          <div class="rounded-2xl border border-slate-200 bg-white p-4">
+          <div class=" border border-slate-200 bg-white p-4">
             <p class="text-[9px] font-extrabold uppercase tracking-[0.14em] text-slate-400">Thông tin chuyển khoản demo</p>
             <div class="mt-3 space-y-2.5 text-[10px]">
               <div class="flex items-center justify-between gap-2"><span class="text-slate-500">Số tiền</span><strong class="text-lg font-extrabold text-sky-700">${vnd(order.buyer_paid_amount)}</strong></div>
-              <div class="flex items-center justify-between gap-2"><span class="text-slate-500">Nội dung</span><strong class="rounded-lg bg-slate-50 px-2 py-1 font-extrabold text-slate-700">STUDEAL DH${order.id}</strong></div>
+              <div class="flex items-center justify-between gap-2"><span class="text-slate-500">Nội dung</span><strong class=" bg-slate-50 px-2 py-1 font-extrabold text-slate-700">STUDEAL DH${order.id}</strong></div>
               <div class="flex items-center justify-between gap-2"><span class="text-slate-500">Trạng thái escrow</span>${statusPill(order.escrow_status)}</div>
             </div>
           </div>
-          <div class="mt-3 rounded-2xl border border-amber-200 bg-amber-50 p-3 text-[10px] leading-relaxed text-amber-900">
+          <div class="mt-3 border border-amber-200 bg-amber-50 p-3 text-[10px] leading-relaxed text-amber-900">
             <strong><i class="fa-solid fa-triangle-exclamation mr-1" aria-hidden="true"></i>QR minh họa cho môi trường demo.</strong>
             Tài khoản nhận không phải tài khoản thanh toán thật. Backend đã ghi nhận đơn ở trạng thái HOLDING; không chuyển tiền thật.
           </div>
           <div class="mt-auto flex flex-col gap-2 pt-4">
             <button type="button" data-market-action="qr-orders" class="${BTN.primary} h-11"><i class="fa-solid fa-receipt" aria-hidden="true"></i>Xem đơn hàng của tôi</button>
-            <button type="button" data-market-action="qr-done" class="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-slate-100 text-xs font-extrabold text-slate-600 transition hover:bg-slate-200"><i class="fa-solid fa-check" aria-hidden="true"></i>Đóng màn hình</button>
+            <button type="button" data-market-action="qr-done" class="inline-flex h-10 items-center justify-center gap-2 bg-slate-100 text-xs font-extrabold text-slate-600 transition hover:bg-slate-200"><i class="fa-solid fa-check" aria-hidden="true"></i>Đóng màn hình</button>
           </div>
         </div>
       </div>
-      <div class="mt-4 flex items-start gap-2 rounded-xl bg-emerald-50 px-3 py-2.5 text-[10px] leading-relaxed text-emerald-800 ring-1 ring-emerald-100">
+      <div class="mt-4 flex items-start gap-2 bg-emerald-50 px-3 py-2.5 text-[10px] leading-relaxed text-emerald-800 ring-1 ring-emerald-100">
         <i class="fa-solid fa-lock mt-0.5" aria-hidden="true"></i>
         <span>Studeal tạm giữ 100% số tiền. Người bán chỉ nhận 98% sau khi bạn xác nhận đã nhận hàng; phí dịch vụ 2%.</span>
       </div>

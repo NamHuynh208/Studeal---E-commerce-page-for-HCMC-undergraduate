@@ -1,59 +1,40 @@
-<div class="relative overflow-hidden rounded-[2rem] border border-sky-100 bg-white p-3 shadow-card">
-  <svg viewBox="0 0 820 540" role="img" aria-labelledby="studeal-map-title studeal-map-desc" class="h-auto w-full rounded-[1.4rem]">
+<div class="relative overflow-hidden border-2 border-sky-100 bg-white p-3 shadow-card">
+  <svg viewBox="0 0 820 540" role="img" aria-labelledby="studeal-map-title studeal-map-desc" class="h-auto w-full">
     <title id="studeal-map-title">Bản đồ minh họa tuyến giao hàng xanh Studeal</title>
     <desc id="studeal-map-desc">Tuyến xe miễn phí hàng tuần giữa Cơ sở 1 tại 227 Nguyễn Văn Cừ, Quận 5 và Cơ sở 2 tại Linh Trung, TP. Thủ Đức, Trường Đại học Khoa học Tự nhiên.</desc>
 
     <defs>
-      <linearGradient id="studeal-map-bg" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="#f0f9ff"></stop>
-        <stop offset="55%" stop-color="#f8fcff"></stop>
-        <stop offset="100%" stop-color="#ecfeff"></stop>
-      </linearGradient>
-      <linearGradient id="studeal-route" x1="0" y1="1" x2="1" y2="0">
-        <stop offset="0%" stop-color="#0284c7"></stop>
-        <stop offset="55%" stop-color="#0ea5e9"></stop>
-        <stop offset="100%" stop-color="#06b6d4"></stop>
-      </linearGradient>
-      <linearGradient id="studeal-pin" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="#38bdf8"></stop>
-        <stop offset="100%" stop-color="#0369a1"></stop>
-      </linearGradient>
-      <filter id="studeal-pin-shadow" x="-40%" y="-40%" width="180%" height="180%">
-        <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#0c4a6e" flood-opacity="0.22"></feDropShadow>
-      </filter>
-      <filter id="studeal-chip-shadow" x="-20%" y="-40%" width="140%" height="180%">
-        <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#0c4a6e" flood-opacity="0.10"></feDropShadow>
-      </filter>
       <pattern id="studeal-map-grid" width="34" height="34" patternUnits="userSpaceOnUse">
         <path d="M 34 0 L 0 0 0 34" fill="none" stroke="#bae6fd" stroke-width="1" opacity="0.28"></path>
       </pattern>
     </defs>
 
-    <rect width="820" height="540" fill="url(#studeal-map-bg)"></rect>
+    <!-- Nền phẳng màu xanh da trời nhạt (không gradient) -->
+    <rect width="820" height="540" fill="#f0f9ff"></rect>
     <rect width="820" height="540" fill="url(#studeal-map-grid)"></rect>
 
-    <!-- Khối quận minh họa -->
+    <!-- Khối quận minh họa (góc vuông sắc cạnh) -->
     <g fill="#e0f2fe" opacity="0.55">
-      <rect x="58" y="382" width="190" height="120" rx="18"></rect>
-      <rect x="252" y="330" width="140" height="112" rx="16"></rect>
-      <rect x="420" y="238" width="152" height="122" rx="18"></rect>
-      <rect x="560" y="88" width="204" height="168" rx="20"></rect>
-      <rect x="300" y="108" width="170" height="120" rx="18"></rect>
+      <rect x="58" y="382" width="190" height="120"></rect>
+      <rect x="252" y="330" width="140" height="112"></rect>
+      <rect x="420" y="238" width="152" height="122"></rect>
+      <rect x="560" y="88" width="204" height="168"></rect>
+      <rect x="300" y="108" width="170" height="120"></rect>
     </g>
 
     <!-- Sông Sài Gòn -->
-    <path d="M -20 470 C 120 438 212 505 360 460 S 612 404 840 446" fill="none" stroke="#bae6fd" stroke-width="38" stroke-linecap="round" opacity="0.6"></path>
-    <path d="M -20 470 C 120 438 212 505 360 460 S 612 404 840 446" fill="none" stroke="#e0f2fe" stroke-width="10" stroke-linecap="round" opacity="0.8"></path>
+    <path d="M -20 470 C 120 438 212 505 360 460 S 612 404 840 446" fill="none" stroke="#bae6fd" stroke-width="38" opacity="0.6"></path>
+    <path d="M -20 470 C 120 438 212 505 360 460 S 612 404 840 446" fill="none" stroke="#e0f2fe" stroke-width="10" opacity="0.8"></path>
 
     <!-- Đường phố -->
-    <g fill="none" stroke="#dbeafe" stroke-linecap="round">
+    <g fill="none" stroke="#dbeafe">
       <path d="M 0 330 C 180 318 330 300 820 268" stroke-width="13"></path>
       <path d="M 362 0 L 362 540" stroke-width="12"></path>
       <path d="M 90 540 L 700 0" stroke-width="10"></path>
       <path d="M 180 0 L 540 540" stroke-width="9"></path>
       <path d="M 0 205 C 240 190 420 214 820 168" stroke-width="9"></path>
     </g>
-    <g fill="none" stroke="#ffffff" stroke-linecap="round">
+    <g fill="none" stroke="#ffffff">
       <path d="M 0 330 C 180 318 330 300 820 268" stroke-width="6"></path>
       <path d="M 362 0 L 362 540" stroke-width="5"></path>
       <path d="M 90 540 L 700 0" stroke-width="4"></path>
@@ -70,66 +51,66 @@
       <text x="340" y="176">QUẬN 3</text>
     </g>
 
-    <!-- Tuyến xanh -->
+    <!-- Tuyến xanh: màu phẳng #0284c7 -->
     <path id="studeal-route-path" d="M 190 380 C 280 360 300 292 390 282 S 520 252 560 212 S 612 174 640 150"
-          fill="none" stroke="#ffffff" stroke-width="18" stroke-linecap="round" opacity="0.95"></path>
+          fill="none" stroke="#ffffff" stroke-width="18" opacity="0.95"></path>
     <path d="M 190 380 C 280 360 300 292 390 282 S 520 252 560 212 S 612 174 640 150"
-          fill="none" stroke="url(#studeal-route)" stroke-width="7" stroke-linecap="round"
+          fill="none" stroke="#0284c7" stroke-width="7"
           stroke-dasharray="16 12" class="route-dash"></path>
 
     <!-- Chip khoảng cách -->
-    <g filter="url(#studeal-chip-shadow)">
-      <rect x="330" y="318" width="190" height="46" rx="23" fill="#ffffff" stroke="#bae6fd"></rect>
-      <circle cx="356" cy="341" r="11" fill="#e0f2fe"></circle>
-      <path d="M 352 341 h 8 M 356 337 v 8" stroke="#0284c7" stroke-width="2" stroke-linecap="round"></path>
+    <g>
+      <rect x="330" y="318" width="190" height="46" fill="#ffffff" stroke="#bae6fd" stroke-width="2"></rect>
+      <rect x="345" y="330" width="22" height="22" fill="#e0f2fe"></rect>
+      <path d="M 352 335 h 8 M 356 339 v 8" stroke="#0284c7" stroke-width="2"></path>
       <text x="376" y="338" fill="#0c4a6e" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="800">12 km</text>
       <text x="376" y="353" fill="#64748b" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="600">35–45 phút · miễn phí</text>
     </g>
 
-    <!-- Marker CS1 -->
-    <g transform="translate(190,380)" filter="url(#studeal-pin-shadow)">
-      <circle r="26" fill="#0ea5e9" opacity="0.16" class="map-pulse"></circle>
-      <path d="M 0 -30 C 14 -30 24 -20 24 -7 C 24 9 6 22 0 30 C -6 22 -24 9 -24 -7 C -24 -20 -14 -30 0 -30 Z" fill="url(#studeal-pin)"></path>
-      <circle cy="-7" r="8" fill="#ffffff"></circle>
-      <circle cy="-7" r="3.5" fill="#0284c7"></circle>
+    <!-- Marker CS1 (marker vuông, màu phẳng) -->
+    <g transform="translate(190,380)">
+      <rect x="-26" y="-26" width="52" height="52" fill="#0ea5e9" opacity="0.16" class="map-pulse"></rect>
+      <rect x="-22" y="-22" width="44" height="44" fill="#0369a1" stroke="#ffffff" stroke-width="3"></rect>
+      <rect x="-8" y="-8" width="16" height="16" fill="#ffffff"></rect>
+      <rect x="-3.5" y="-3.5" width="7" height="7" fill="#0284c7"></rect>
     </g>
-    <g filter="url(#studeal-chip-shadow)">
-      <rect x="70" y="300" width="228" height="54" rx="16" fill="#ffffff" stroke="#bae6fd"></rect>
+    <g>
+      <rect x="70" y="300" width="228" height="54" fill="#ffffff" stroke="#bae6fd" stroke-width="2"></rect>
       <text x="88" y="322" fill="#0c4a6e" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="800">CS1 · 227 Nguyễn Văn Cừ</text>
       <text x="88" y="340" fill="#64748b" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="600">Phường 4, Quận 5 · ĐH KHTN</text>
     </g>
 
-    <!-- Marker CS2 -->
-    <g transform="translate(640,150)" filter="url(#studeal-pin-shadow)">
-      <circle r="26" fill="#10b981" opacity="0.16" class="map-pulse"></circle>
-      <path d="M 0 -30 C 14 -30 24 -20 24 -7 C 24 9 6 22 0 30 C -6 22 -24 9 -24 -7 C -24 -20 -14 -30 0 -30 Z" fill="url(#studeal-pin)"></path>
-      <circle cy="-7" r="8" fill="#ffffff"></circle>
-      <circle cy="-7" r="3.5" fill="#0284c7"></circle>
+    <!-- Marker CS2 (marker vuông, màu phẳng) -->
+    <g transform="translate(640,150)">
+      <rect x="-26" y="-26" width="52" height="52" fill="#10b981" opacity="0.16" class="map-pulse"></rect>
+      <rect x="-22" y="-22" width="44" height="44" fill="#0369a1" stroke="#ffffff" stroke-width="3"></rect>
+      <rect x="-8" y="-8" width="16" height="16" fill="#ffffff"></rect>
+      <rect x="-3.5" y="-3.5" width="7" height="7" fill="#0284c7"></rect>
     </g>
-    <g filter="url(#studeal-chip-shadow)">
-      <rect x="520" y="62" width="228" height="54" rx="16" fill="#ffffff" stroke="#bae6fd"></rect>
+    <g>
+      <rect x="520" y="62" width="228" height="54" fill="#ffffff" stroke="#bae6fd" stroke-width="2"></rect>
       <text x="538" y="84" fill="#0c4a6e" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="800">CS2 · Linh Trung</text>
       <text x="538" y="102" fill="#64748b" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="600">TP. Thủ Đức · ĐH KHTN</text>
     </g>
 
-    <!-- La bàn -->
+    <!-- La bàn (khung vuông) -->
     <g transform="translate(58,58)">
-      <circle r="26" fill="#ffffff" stroke="#bae6fd"></circle>
+      <rect x="-24" y="-24" width="48" height="48" fill="#ffffff" stroke="#bae6fd" stroke-width="2"></rect>
       <path d="M 0 -13 L 6 6 L 0 3 L -6 6 Z" fill="#0284c7"></path>
       <text x="0" y="20" text-anchor="middle" fill="#7dd3fc" font-family="'Plus Jakarta Sans', sans-serif" font-size="8" font-weight="800">N</text>
     </g>
 
     <!-- Chú thích -->
     <g transform="translate(34,502)">
-      <rect x="0" y="-20" width="266" height="34" rx="17" fill="#ffffff" opacity="0.92"></rect>
-      <path d="M 18 -9 C 12 -3 12 4 18 8 C 24 4 24 -3 18 -9 Z" fill="#10b981"></path>
+      <rect x="0" y="-20" width="266" height="34" fill="#ffffff" opacity="0.92" stroke="#bae6fd" stroke-width="1.5"></rect>
+      <rect x="12" y="-9" width="14" height="14" fill="#10b981"></rect>
       <text x="34" y="1" fill="#047857" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="800">Studeal Routine · Miễn phí 0đ</text>
-      <circle cx="220" cy="-3" r="3" fill="#10b981"></circle>
+      <rect x="217" y="-7" width="7" height="7" fill="#10b981"></rect>
       <text x="230" y="1" fill="#64748b" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="600">Xe xanh</text>
     </g>
   </svg>
 
-  <div class="absolute right-6 top-6 hidden rounded-full border border-white/70 bg-white/90 px-3 py-1.5 text-[10px] font-extrabold text-emerald-700 shadow-sm backdrop-blur sm:inline-flex">
+  <div class="absolute right-6 top-6 hidden border-2 border-emerald-200 bg-white px-3 py-1.5 text-[10px] font-extrabold text-emerald-700 shadow-sm sm:inline-flex">
     <i class="fa-solid fa-leaf mr-1.5"></i> Tuyến xanh
   </div>
 </div>

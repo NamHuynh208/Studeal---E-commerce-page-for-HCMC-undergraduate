@@ -1,9 +1,8 @@
 {{ define "main" }}
 <section class="relative overflow-hidden">
   <div class="hero-mesh pointer-events-none absolute inset-0" aria-hidden="true"></div>
-  <div class="bg-grid pointer-events-none absolute inset-0 opacity-60" aria-hidden="true"></div>
   <div class="relative mx-auto flex min-h-[68vh] max-w-3xl flex-col items-center justify-center px-4 py-24 text-center sm:px-6">
-    <span class="inline-flex items-center gap-2 rounded-full border border-sky-200 bg-white/80 px-4 py-2 text-[11px] font-extrabold uppercase tracking-[0.16em] text-sky-700 shadow-sm backdrop-blur">
+    <span class="inline-flex items-center gap-2 border border-sky-200 bg-white/80 px-4 py-2 text-[11px] font-extrabold uppercase tracking-[0.16em] text-sky-700 shadow-sm backdrop-blur">
       <i class="fa-solid fa-compass"></i> Lạc đường rồi
     </span>
     <p class="text-gradient mt-8 text-[7rem] font-extrabold leading-none tracking-tighter sm:text-[10rem]">404</p>
@@ -12,10 +11,10 @@
       Có thể đường dẫn đã đổi, hoặc món đồ này đã được bán. Quay về chợ để tìm món khác nhé.
     </p>
     <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-      <a href="{{ "/" | relURL }}" class="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-sky-600 to-sky-500 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-sky-500/25 transition hover:-translate-y-0.5">
+      <a href="{{ "/" | relURL }}" class="inline-flex items-center justify-center gap-2 bg-sky-600 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-sky-500/25 transition hover:-translate-y-0.5">
         <i class="fa-solid fa-house text-xs"></i> Về trang chủ
       </a>
-      <a href="{{ site.Params.demoURL | relURL }}" class="inline-flex items-center justify-center gap-2 rounded-full border border-sky-200 bg-white px-6 py-3.5 text-sm font-bold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:text-sky-700">
+      <a href="{{ site.Params.demoURL | relURL }}" class="inline-flex items-center justify-center gap-2 border border-sky-200 bg-white px-6 py-3.5 text-sm font-bold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:text-sky-700">
         <i class="fa-solid fa-store text-xs text-sky-600"></i> Vào chợ
       </a>
     </div>

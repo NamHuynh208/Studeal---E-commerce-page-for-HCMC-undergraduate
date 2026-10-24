@@ -7,8 +7,6 @@
 <!-- ================= ABOUT HERO ================= -->
 <section class="relative overflow-hidden">
   <div class="hero-mesh pointer-events-none absolute inset-0" aria-hidden="true"></div>
-  <div class="bg-grid pointer-events-none absolute inset-0 opacity-50" aria-hidden="true"></div>
-  <div class="pointer-events-none absolute -right-24 top-0 h-96 w-96 rounded-full bg-cyan-200/35 blur-[110px]" aria-hidden="true"></div>
 
   <div class="relative mx-auto max-w-7xl px-4 pb-16 pt-10 sm:px-6 lg:px-8 lg:pb-20">
     <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs font-semibold text-slate-400">
@@ -19,7 +17,7 @@
 
     <div class="mt-10 grid items-center gap-14 lg:grid-cols-12">
       <div class="lg:col-span-7">
-        <span class="inline-flex items-center gap-2 rounded-full border border-sky-200/80 bg-white/80 px-4 py-2 text-[11px] font-extrabold uppercase tracking-[0.16em] text-sky-700 shadow-sm backdrop-blur">
+        <span class="inline-flex items-center gap-2 border border-sky-200/80 bg-white/80 px-4 py-2 text-[11px] font-extrabold uppercase tracking-[0.16em] text-sky-700 shadow-sm backdrop-blur">
           <i class="fa-solid fa-seedling"></i> Về Studeal · Đồ án sinh viên 2026
         </span>
         <h1 class="mt-6 text-4xl font-extrabold leading-[1.08] tracking-tight text-ink sm:text-5xl lg:text-[3.6rem]">
@@ -34,11 +32,11 @@
           <span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-sky-500"></i> TP. Hồ Chí Minh</span>
         </div>
         <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-          <a href="{{ $demo }}" class="group inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-sky-600 to-sky-500 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-sky-500/25 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl">
+          <a href="{{ $demo }}" class="group inline-flex items-center justify-center gap-2 bg-sky-600 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-sky-500/25 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl">
             <i class="fa-solid fa-store text-xs"></i> Khám phá chợ
             <i class="fa-solid fa-arrow-right text-[10px] transition-transform group-hover:translate-x-0.5"></i>
           </a>
-          <a href="#escrow" class="inline-flex items-center justify-center gap-2 rounded-full border border-sky-200 bg-white px-6 py-3.5 text-sm font-bold text-slate-700 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-sky-300 hover:text-sky-700">
+          <a href="#escrow" class="inline-flex items-center justify-center gap-2 border border-sky-200 bg-white px-6 py-3.5 text-sm font-bold text-slate-700 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-sky-300 hover:text-sky-700">
             <i class="fa-solid fa-shield-halved text-xs text-sky-600"></i> Xem cơ chế escrow
           </a>
         </div>
@@ -46,25 +44,25 @@
 
       <div class="lg:col-span-5">
         <div class="relative mx-auto flex h-[320px] w-[320px] items-center justify-center sm:h-[380px] sm:w-[380px]">
-          <div class="absolute inset-0 animate-spin-slow rounded-full border border-dashed border-sky-300/80" aria-hidden="true"></div>
-          <div class="absolute inset-7 rounded-full bg-gradient-to-br from-sky-100 via-cyan-50 to-white shadow-inner" aria-hidden="true"></div>
-          <div class="absolute inset-14 rounded-full border border-white/80 bg-white/60 backdrop-blur" aria-hidden="true"></div>
+          <div class="absolute inset-0 animate-spin-slow border border-dashed border-sky-300/80" aria-hidden="true"></div>
+          <div class="absolute inset-7 bg-sky-100 shadow-inner" aria-hidden="true"></div>
+          <div class="absolute inset-14 border border-white/80 bg-white/60 backdrop-blur" aria-hidden="true"></div>
 
-          <div class="relative flex h-48 w-48 flex-col items-center justify-center rounded-full border border-white bg-white text-center shadow-soft sm:h-56 sm:w-56">
+          <div class="relative flex h-48 w-48 flex-col items-center justify-center border border-white bg-white text-center shadow-soft sm:h-56 sm:w-56">
             <span class="text-gradient text-6xl font-extrabold tracking-tight sm:text-7xl">{{ site.Params.platformFee }}%</span>
             <span class="mt-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-slate-400">Phí trung gian</span>
-            <span class="mt-1 rounded-full bg-emerald-50 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-wide text-emerald-700">Duy nhất</span>
+            <span class="mt-1 bg-emerald-50 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-wide text-emerald-700">Duy nhất</span>
           </div>
 
-          <div class="absolute left-0 top-1/3 flex -translate-x-2 items-center gap-2 rounded-2xl border border-white bg-white/95 px-3.5 py-2.5 shadow-card backdrop-blur">
-            <span class="flex h-8 w-8 items-center justify-center rounded-xl bg-sky-50 text-sky-600"><i class="fa-solid fa-lock text-xs"></i></span>
+          <div class="absolute left-0 top-1/3 flex -translate-x-2 items-center gap-2 border border-white bg-white/95 px-3.5 py-2.5 shadow-card backdrop-blur">
+            <span class="flex h-8 w-8 items-center justify-center bg-sky-50 text-sky-600"><i class="fa-solid fa-lock text-xs"></i></span>
             <div><p class="text-[10px] font-extrabold text-ink">Escrow</p><p class="text-[9px] text-slate-400">Giữ tiền an toàn</p></div>
           </div>
-          <div class="absolute right-0 top-1/3 flex translate-x-2 items-center gap-2 rounded-2xl border border-white bg-white/95 px-3.5 py-2.5 shadow-card backdrop-blur">
-            <span class="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600"><i class="fa-solid fa-user-graduate text-xs"></i></span>
+          <div class="absolute right-0 top-1/3 flex translate-x-2 items-center gap-2 border border-white bg-white/95 px-3.5 py-2.5 shadow-card backdrop-blur">
+            <span class="flex h-8 w-8 items-center justify-center bg-emerald-50 text-emerald-600"><i class="fa-solid fa-user-graduate text-xs"></i></span>
             <div><p class="text-[10px] font-extrabold text-ink">.edu.vn</p><p class="text-[9px] text-slate-400">Đã xác thực</p></div>
           </div>
-          <div class="absolute bottom-1 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full border border-white bg-white/95 px-4 py-2 shadow-card backdrop-blur">
+          <div class="absolute bottom-1 left-1/2 flex -translate-x-1/2 items-center gap-2 border border-white bg-white/95 px-4 py-2 shadow-card backdrop-blur">
             <i class="fa-solid fa-leaf text-[10px] text-emerald-500"></i>
             <span class="text-[10px] font-extrabold text-ink">Tuyến xanh 0đ</span>
           </div>
@@ -83,7 +81,7 @@
       }}
       {{ range $quickStats }}
         <div class="flex items-center gap-3 px-4 py-6 first:pl-0 sm:px-6">
-          <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sky-50 text-sky-600"><i class="fa-solid {{ .icon }} text-sm"></i></span>
+          <span class="flex h-10 w-10 shrink-0 items-center justify-center bg-sky-50 text-sky-600"><i class="fa-solid {{ .icon }} text-sm"></i></span>
           <div>
             <p class="text-xl font-extrabold tracking-tight text-ink">{{ .value }}</p>
             <p class="text-[10px] font-semibold text-slate-500">{{ .label }}</p>
@@ -99,7 +97,7 @@
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="grid gap-14 lg:grid-cols-12">
       <div class="lg:col-span-7" data-reveal>
-        <span class="inline-flex items-center gap-2 rounded-full bg-sky-50 px-3.5 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.16em] text-sky-700">
+        <span class="inline-flex items-center gap-2 bg-sky-50 px-3.5 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.16em] text-sky-700">
           <i class="fa-solid fa-book-open"></i> Câu chuyện &amp; sứ mệnh
         </span>
         <div class="prose-studeal mt-8">{{ .Content }}</div>
@@ -107,27 +105,27 @@
 
       <aside class="lg:col-span-5">
         <div class="space-y-5 lg:sticky lg:top-28">
-          <div class="rounded-3xl border border-sky-100 bg-white p-6 shadow-card" data-reveal>
+          <div class=" border border-sky-100 bg-white p-6 shadow-card" data-reveal>
             <h2 class="text-sm font-extrabold uppercase tracking-[0.14em] text-slate-400">Studeal trong một cái nhìn</h2>
             <div class="mt-5 grid grid-cols-2 gap-4">
-              <div class="rounded-2xl bg-sky-50/70 p-4">
+              <div class=" bg-sky-50/70 p-4">
                 <p class="text-2xl font-extrabold text-sky-700">{{ site.Params.platformFee }}%</p>
                 <p class="mt-1 text-[10px] font-semibold leading-relaxed text-slate-500">Phí sàn, chỉ thu khi giao dịch thành công</p>
               </div>
-              <div class="rounded-2xl bg-emerald-50/70 p-4">
+              <div class=" bg-emerald-50/70 p-4">
                 <p class="text-2xl font-extrabold text-emerald-700">98%</p>
                 <p class="mt-1 text-[10px] font-semibold leading-relaxed text-slate-500">Người bán nhận về sau khi hoàn tất</p>
               </div>
-              <div class="rounded-2xl bg-amber-50/70 p-4">
+              <div class=" bg-amber-50/70 p-4">
                 <p class="text-2xl font-extrabold text-amber-600">{{ div site.Params.vipFee 1000 }}k</p>
                 <p class="mt-1 text-[10px] font-semibold leading-relaxed text-slate-500">Phí đẩy tin VIP, hoàn toàn tùy chọn</p>
               </div>
-              <div class="rounded-2xl bg-cyan-50/70 p-4">
+              <div class=" bg-cyan-50/70 p-4">
                 <p class="text-2xl font-extrabold text-cyan-700">0đ</p>
                 <p class="mt-1 text-[10px] font-semibold leading-relaxed text-slate-500">Giao hàng tuyến KHTN CS1 ↔ CS2</p>
               </div>
             </div>
-            <div class="mt-5 rounded-2xl border border-sky-100 bg-gradient-to-br from-sky-50 to-cyan-50/60 p-4">
+            <div class="mt-5 border border-sky-100 bg-sky-50 p-4">
               <p class="text-xs leading-relaxed text-slate-600">
                 <i class="fa-solid fa-quote-left mr-1 text-sky-300"></i>
                 Sinh viên không cần thêm một ứng dụng nữa. Sinh viên cần một nơi để tin nhau.
@@ -135,7 +133,7 @@
             </div>
           </div>
 
-          <div class="rounded-3xl bg-[#082f49] p-6 text-white shadow-card" data-reveal>
+          <div class=" bg-[#082f49] p-6 text-white shadow-card" data-reveal>
             <div class="flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.16em] text-sky-300">
               <i class="fa-solid fa-code"></i> Made by students
             </div>
@@ -147,7 +145,7 @@
             </p>
           </div>
 
-          <div class="rounded-3xl border border-rose-100 bg-rose-50/60 p-6" data-reveal>
+          <div class=" border border-rose-100 bg-rose-50/60 p-6" data-reveal>
             <h2 class="text-xs font-extrabold uppercase tracking-[0.14em] text-rose-500">Studeal không làm</h2>
             <ul class="mt-4 space-y-2.5 text-xs font-medium text-slate-600">
               <li class="flex items-start gap-2"><i class="fa-solid fa-xmark mt-0.5 text-rose-400"></i> Không bán dữ liệu sinh viên</li>
@@ -162,11 +160,10 @@
 </section>
 
 <!-- ================= ESCROW ================= -->
-<section id="escrow" class="relative overflow-hidden bg-gradient-to-b from-sky-50/80 via-white to-white py-20 sm:py-24">
-  <div class="pointer-events-none absolute left-1/2 top-0 h-72 w-[46rem] -translate-x-1/2 rounded-full bg-sky-200/30 blur-[110px]" aria-hidden="true"></div>
+<section id="escrow" class="relative overflow-hidden bg-sky-50 py-20 sm:py-24">
   <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-3xl text-center" data-reveal>
-      <span class="inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.16em] text-sky-700 shadow-sm ring-1 ring-sky-100">
+      <span class="inline-flex items-center gap-2 bg-white px-3.5 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.16em] text-sky-700 shadow-sm ring-1 ring-sky-100">
         <i class="fa-solid fa-shield-halved"></i> Trung gian thanh toán
       </span>
       <h2 class="mt-5 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
@@ -178,88 +175,88 @@
     </div>
 
     <div class="mt-14 grid items-stretch gap-4 lg:grid-cols-5">
-      <div class="rounded-3xl border border-sky-100 bg-white p-6 shadow-card" data-reveal>
+      <div class=" border border-sky-100 bg-white p-6 shadow-card" data-reveal>
         <div class="flex items-center justify-between">
-          <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-50 text-sky-600"><i class="fa-solid fa-credit-card"></i></span>
-          <span class="rounded-full bg-slate-100 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-wide text-slate-500">Bước 1</span>
+          <span class="flex h-12 w-12 items-center justify-center bg-sky-50 text-sky-600"><i class="fa-solid fa-credit-card"></i></span>
+          <span class=" bg-slate-100 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-wide text-slate-500">Bước 1</span>
         </div>
         <h3 class="mt-5 text-base font-extrabold text-ink">Người mua thanh toán</h3>
         <p class="mt-2 text-sm leading-relaxed text-slate-500">Chuyển khoản hoặc ví điện tử. Tiền rời ví người mua nhưng chưa đến tay người bán.</p>
-        <p class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-sky-50 px-2.5 py-1 text-[10px] font-bold text-sky-700"><i class="fa-solid fa-arrow-right"></i> Tiền vào Studeal</p>
+        <p class="mt-4 inline-flex items-center gap-1.5 bg-sky-50 px-2.5 py-1 text-[10px] font-bold text-sky-700"><i class="fa-solid fa-arrow-right"></i> Tiền vào Studeal</p>
       </div>
 
       <div class="flex items-center justify-center py-1 text-sky-300 lg:py-0">
         <i class="fa-solid fa-arrow-right-long rotate-90 text-xl lg:rotate-0"></i>
       </div>
 
-      <div class="relative overflow-hidden rounded-3xl bg-[#082f49] p-6 text-white shadow-soft ring-1 ring-sky-900/10" data-reveal>
-        <div class="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-sky-500/30 blur-3xl" aria-hidden="true"></div>
+      <div class="relative overflow-hidden bg-[#082f49] p-6 text-white shadow-soft ring-1 ring-sky-900/10" data-reveal>
+        <div class="pointer-events-none absolute -right-10 -top-10 h-32 w-32 bg-sky-500/30 blur-3xl" aria-hidden="true"></div>
         <div class="relative flex items-center justify-between">
-          <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-400/15 text-sky-300"><i class="fa-solid fa-vault"></i></span>
-          <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-400/15 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-wide text-emerald-300">
-            <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Holding
+          <span class="flex h-12 w-12 items-center justify-center bg-sky-400/15 text-sky-300"><i class="fa-solid fa-vault"></i></span>
+          <span class="inline-flex items-center gap-1.5 bg-emerald-400/15 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-wide text-emerald-300">
+            <span class="h-1.5 w-1.5 bg-emerald-400"></span> Holding
           </span>
         </div>
         <h3 class="relative mt-5 text-base font-extrabold">Studeal giữ tiền</h3>
         <p class="relative mt-2 text-sm leading-relaxed text-slate-300">Tiền được khóa trong hệ thống escrow. Cả hai bên đều thấy trạng thái đơn hàng minh bạch.</p>
-        <p class="relative mt-4 inline-flex items-center gap-1.5 rounded-full bg-white/10 px-2.5 py-1 text-[10px] font-bold text-sky-200"><i class="fa-solid fa-lock"></i> 2% chỉ thu khi thành công</p>
+        <p class="relative mt-4 inline-flex items-center gap-1.5 bg-white/10 px-2.5 py-1 text-[10px] font-bold text-sky-200"><i class="fa-solid fa-lock"></i> 2% chỉ thu khi thành công</p>
       </div>
 
       <div class="flex items-center justify-center py-1 text-sky-300 lg:py-0">
         <i class="fa-solid fa-arrow-right-long rotate-90 text-xl lg:rotate-0"></i>
       </div>
 
-      <div class="rounded-3xl border border-emerald-100 bg-white p-6 shadow-card" data-reveal>
+      <div class=" border border-emerald-100 bg-white p-6 shadow-card" data-reveal>
         <div class="flex items-center justify-between">
-          <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600"><i class="fa-solid fa-wallet"></i></span>
-          <span class="rounded-full bg-emerald-50 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-wide text-emerald-600">Bước 3</span>
+          <span class="flex h-12 w-12 items-center justify-center bg-emerald-50 text-emerald-600"><i class="fa-solid fa-wallet"></i></span>
+          <span class=" bg-emerald-50 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-wide text-emerald-600">Bước 3</span>
         </div>
         <h3 class="mt-5 text-base font-extrabold text-ink">Người bán nhận 98%</h3>
         <p class="mt-2 text-sm leading-relaxed text-slate-500">Sau khi người mua bấm “Đã nhận hàng”, 98% giá trị đơn được cộng vào ví người bán.</p>
-        <p class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold text-emerald-700"><i class="fa-solid fa-check"></i> Hoàn tất đơn hàng</p>
+        <p class="mt-4 inline-flex items-center gap-1.5 bg-emerald-50 px-2.5 py-1 text-[10px] font-bold text-emerald-700"><i class="fa-solid fa-check"></i> Hoàn tất đơn hàng</p>
       </div>
     </div>
 
     <div class="mt-10 grid gap-6 lg:grid-cols-2">
-      <div class="rounded-3xl border border-sky-100 bg-white p-6 shadow-card sm:p-8" data-reveal
+      <div class=" border border-sky-100 bg-white p-6 shadow-card sm:p-8" data-reveal
            x-data="{ amount: 200000, get safe() { return Math.max(0, Number(this.amount) || 0) }, get fee() { return Math.round(this.safe * 0.02) }, get seller() { return this.safe - this.fee }, fmt(n) { return (Number(n) || 0).toLocaleString('vi-VN') } }">
         <div class="flex items-center justify-between">
           <div>
             <h3 class="text-lg font-extrabold text-ink">Thử tính phí escrow</h3>
             <p class="mt-1 text-xs text-slate-500">Kéo thanh trượt hoặc nhập giá trị đơn hàng.</p>
           </div>
-          <span class="rounded-full bg-sky-50 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-wide text-sky-700">{{ site.Params.platformFee }}% phí</span>
+          <span class=" bg-sky-50 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-wide text-sky-700">{{ site.Params.platformFee }}% phí</span>
         </div>
 
         <div class="mt-6">
           <label for="escrow-amount" class="text-[10px] font-extrabold uppercase tracking-[0.14em] text-slate-400">Giá trị đơn hàng</label>
-          <div class="mt-2 flex items-center gap-3 rounded-2xl border border-sky-100 bg-sky-50/50 px-4 py-3">
+          <div class="mt-2 flex items-center gap-3 border border-sky-100 bg-sky-50/50 px-4 py-3">
             <input id="escrow-amount" type="number" min="0" max="50000000" step="1000" x-model.number="amount" inputmode="numeric"
                    class="w-full border-0 bg-transparent p-0 text-2xl font-extrabold tracking-tight text-ink focus:ring-0">
             <span class="text-sm font-bold text-slate-400">đ</span>
           </div>
           <input type="range" min="50000" max="5000000" step="10000" x-model.number="amount" aria-label="Chọn giá trị đơn hàng"
-                 class="mt-4 h-2 w-full cursor-pointer appearance-none rounded-full bg-sky-100 accent-sky-600">
+                 class="mt-4 h-2 w-full cursor-pointer appearance-none bg-sky-100 accent-sky-600">
         </div>
 
         <div class="mt-6 space-y-3">
-          <div class="flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-3">
+          <div class="flex items-center justify-between bg-slate-50 px-4 py-3">
             <span class="text-xs font-semibold text-slate-500">Người mua thanh toán</span>
             <span class="text-sm font-extrabold text-ink" x-text="fmt(safe) + 'đ'">200.000đ</span>
           </div>
-          <div class="flex items-center justify-between rounded-2xl bg-amber-50 px-4 py-3">
+          <div class="flex items-center justify-between bg-amber-50 px-4 py-3">
             <span class="text-xs font-semibold text-amber-700">Phí sàn Studeal (2%)</span>
             <span class="text-sm font-extrabold text-amber-600" x-text="'− ' + fmt(fee) + 'đ'">− 4.000đ</span>
           </div>
-          <div class="flex items-center justify-between rounded-2xl bg-emerald-50 px-4 py-3">
+          <div class="flex items-center justify-between bg-emerald-50 px-4 py-3">
             <span class="text-xs font-semibold text-emerald-700">Người bán thực nhận (98%)</span>
             <span class="text-sm font-extrabold text-emerald-600" x-text="fmt(seller) + 'đ'">196.000đ</span>
           </div>
         </div>
 
-        <div class="mt-5 overflow-hidden rounded-full bg-sky-100">
+        <div class="mt-5 overflow-hidden bg-sky-100">
           <div class="flex h-2.5 w-full">
-            <div class="h-full bg-gradient-to-r from-emerald-400 to-cyan-400" style="width: 98%"></div>
+            <div class="h-full bg-emerald-500" style="width: 98%"></div>
             <div class="h-full bg-amber-400" style="width: 2%"></div>
           </div>
         </div>
@@ -269,7 +266,7 @@
         </p>
       </div>
 
-      <div class="rounded-3xl border border-sky-100 bg-white p-6 shadow-card sm:p-8" data-reveal>
+      <div class=" border border-sky-100 bg-white p-6 shadow-card sm:p-8" data-reveal>
         <h3 class="text-lg font-extrabold text-ink">Vì sao escrow an toàn?</h3>
         <div class="mt-5 space-y-4">
           {{ $safeties := slice
@@ -280,7 +277,7 @@
           }}
           {{ range $safeties }}
             <div class="flex items-start gap-3">
-              <span class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-sky-50 text-sky-600"><i class="fa-solid {{ .icon }} text-xs"></i></span>
+              <span class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center bg-sky-50 text-sky-600"><i class="fa-solid {{ .icon }} text-xs"></i></span>
               <div>
                 <p class="text-xs font-extrabold text-ink">{{ .title }}</p>
                 <p class="mt-0.5 text-xs leading-relaxed text-slate-500">{{ .desc }}</p>
@@ -288,7 +285,7 @@
             </div>
           {{ end }}
         </div>
-        <div class="mt-6 rounded-2xl bg-gradient-to-br from-sky-50 to-cyan-50/70 p-4 text-center">
+        <div class="mt-6 bg-sky-50 p-4 text-center">
           <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-sky-600">Ví dụ thực tế</p>
           <p class="mt-1 text-sm font-extrabold text-ink">Đơn 200.000đ → phí 4.000đ → người bán nhận 196.000đ</p>
         </div>
@@ -302,7 +299,7 @@
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="grid items-start gap-12 lg:grid-cols-12">
       <div class="lg:col-span-5" data-reveal>
-        <span class="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3.5 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.16em] text-emerald-700">
+        <span class="inline-flex items-center gap-2 bg-emerald-50 px-3.5 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.16em] text-emerald-700">
           <i class="fa-solid fa-user-graduate"></i> Xác thực sinh viên
         </span>
         <h2 class="mt-5 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
@@ -319,8 +316,8 @@
             (dict "n" "3" "title" "Nhận huy hiệu .edu.vn" "desc" "Tài khoản được phép đăng bán và hiển thị huy hiệu trường.")
           }}
           {{ range $verifySteps }}
-            <div class="flex items-start gap-3 rounded-2xl border border-sky-100 bg-white p-4 shadow-sm">
-              <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-sky-600 text-xs font-extrabold text-white">{{ .n }}</span>
+            <div class="flex items-start gap-3 border border-sky-100 bg-white p-4 shadow-sm">
+              <span class="flex h-8 w-8 shrink-0 items-center justify-center bg-sky-600 text-xs font-extrabold text-white">{{ .n }}</span>
               <div>
                 <p class="text-xs font-extrabold text-ink">{{ .title }}</p>
                 <p class="mt-0.5 text-xs text-slate-500">{{ .desc }}</p>
@@ -331,10 +328,10 @@
       </div>
 
       <div class="lg:col-span-7" data-reveal>
-        <div class="rounded-3xl border border-sky-100 bg-white p-6 shadow-card sm:p-8">
+        <div class=" border border-sky-100 bg-white p-6 shadow-card sm:p-8">
           <div class="flex items-center justify-between gap-4">
             <h3 class="text-sm font-extrabold text-ink">Một số trường đã hỗ trợ</h3>
-            <span class="rounded-full bg-emerald-50 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-wide text-emerald-700">Đang mở rộng</span>
+            <span class=" bg-emerald-50 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-wide text-emerald-700">Đang mở rộng</span>
           </div>
           <div class="mt-5 flex flex-wrap gap-2">
             {{ $domains := slice
@@ -348,7 +345,7 @@
               (dict "d" "iuh.edu.vn" "s" "ĐH Công nghiệp")
             }}
             {{ range $domains }}
-              <span class="inline-flex items-center gap-2 rounded-full border border-sky-100 bg-sky-50/60 px-3 py-2 text-[11px] font-bold text-slate-700">
+              <span class="inline-flex items-center gap-2 border border-sky-100 bg-sky-50/60 px-3 py-2 text-[11px] font-bold text-slate-700">
                 <i class="fa-solid fa-graduation-cap text-sky-500"></i>
                 <span class="font-mono text-[10px] text-sky-700">{{ .d }}</span>
                 <span class="text-[9px] font-semibold text-slate-400">{{ .s }}</span>
@@ -357,7 +354,7 @@
           </div>
 
           <div class="mt-7 grid gap-4 sm:grid-cols-2">
-            <div class="rounded-2xl border border-emerald-100 bg-emerald-50/60 p-4">
+            <div class=" border border-emerald-100 bg-emerald-50/60 p-4">
               <p class="flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.14em] text-emerald-700"><i class="fa-solid fa-check"></i> Studeal kiểm tra</p>
               <ul class="mt-3 space-y-2 text-xs text-slate-600">
                 <li class="flex gap-2"><i class="fa-solid fa-check mt-0.5 text-[9px] text-emerald-500"></i> Tên miền có đuôi .edu.vn</li>
@@ -365,7 +362,7 @@
                 <li class="flex gap-2"><i class="fa-solid fa-check mt-0.5 text-[9px] text-emerald-500"></i> Trạng thái xác thực của tài khoản</li>
               </ul>
             </div>
-            <div class="rounded-2xl border border-rose-100 bg-rose-50/60 p-4">
+            <div class=" border border-rose-100 bg-rose-50/60 p-4">
               <p class="flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.14em] text-rose-600"><i class="fa-solid fa-lock"></i> Studeal không lưu</p>
               <ul class="mt-3 space-y-2 text-xs text-slate-600">
                 <li class="flex gap-2"><i class="fa-solid fa-xmark mt-0.5 text-[9px] text-rose-400"></i> Mật khẩu email của bạn</li>
@@ -375,7 +372,7 @@
             </div>
           </div>
 
-          <div class="mt-5 flex items-start gap-3 rounded-2xl bg-sky-50 p-4">
+          <div class="mt-5 flex items-start gap-3 bg-sky-50 p-4">
             <i class="fa-solid fa-shield-halved mt-0.5 text-sky-600"></i>
             <p class="text-[11px] leading-relaxed text-slate-600">
               <strong class="text-sky-800">Ẩn danh tuyệt đối:</strong> người mua chỉ thấy bí danh như “Sinh viên #101” và huy hiệu trường. Không có nút gọi, không có Zalo, không có email.
@@ -388,12 +385,11 @@
 </section>
 
 <!-- ================= ROUTINE ================= -->
-<section id="routine" class="relative overflow-hidden bg-gradient-to-b from-emerald-50/40 via-sky-50/50 to-white py-20 sm:py-24">
-  <div class="pointer-events-none absolute -left-24 top-20 h-80 w-80 rounded-full bg-emerald-200/25 blur-[100px]" aria-hidden="true"></div>
+<section id="routine" class="relative overflow-hidden bg-sky-50 py-20 sm:py-24">
   <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end" data-reveal>
       <div class="max-w-2xl">
-        <span class="inline-flex items-center gap-2 rounded-full bg-emerald-100/70 px-3.5 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.16em] text-emerald-700">
+        <span class="inline-flex items-center gap-2 bg-emerald-100/70 px-3.5 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.16em] text-emerald-700">
           <i class="fa-solid fa-leaf"></i> Studeal Routine
         </span>
         <h2 class="mt-5 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
@@ -405,9 +401,9 @@
         </p>
       </div>
       <div class="flex flex-wrap gap-2">
-        <span class="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-white px-3 py-1.5 text-[10px] font-bold text-emerald-700"><i class="fa-solid fa-route"></i> {{ site.Params.routine.distance }}</span>
-        <span class="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-white px-3 py-1.5 text-[10px] font-bold text-emerald-700"><i class="fa-regular fa-clock"></i> {{ site.Params.routine.duration }}</span>
-        <span class="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-white px-3 py-1.5 text-[10px] font-bold text-emerald-700"><i class="fa-solid fa-box"></i> Tối đa 15 kg</span>
+        <span class="inline-flex items-center gap-1.5 border border-emerald-200 bg-white px-3 py-1.5 text-[10px] font-bold text-emerald-700"><i class="fa-solid fa-route"></i> {{ site.Params.routine.distance }}</span>
+        <span class="inline-flex items-center gap-1.5 border border-emerald-200 bg-white px-3 py-1.5 text-[10px] font-bold text-emerald-700"><i class="fa-regular fa-clock"></i> {{ site.Params.routine.duration }}</span>
+        <span class="inline-flex items-center gap-1.5 border border-emerald-200 bg-white px-3 py-1.5 text-[10px] font-bold text-emerald-700"><i class="fa-solid fa-box"></i> Tối đa 15 kg</span>
       </div>
     </div>
 
@@ -421,11 +417,11 @@
           </p>
           <div class="flex gap-2">
             <a href="https://www.google.com/maps/search/?api=1&amp;query=227%20Nguy%E1%BB%85n%20V%C4%83n%20C%E1%BB%AB%2C%20Qu%E1%BA%ADn%205%2C%20TP.HCM" target="_blank" rel="noopener noreferrer"
-               class="inline-flex items-center gap-1.5 rounded-full border border-sky-200 bg-white px-3 py-1.5 text-[10px] font-bold text-sky-700 transition hover:bg-sky-50">
+               class="inline-flex items-center gap-1.5 border border-sky-200 bg-white px-3 py-1.5 text-[10px] font-bold text-sky-700 transition hover:bg-sky-50">
               <i class="fa-solid fa-map-location-dot"></i> Maps CS1
             </a>
             <a href="https://www.google.com/maps/search/?api=1&amp;query=Linh%20Trung%2C%20Th%E1%BB%A7%20%C4%90%E1%BB%A9c%2C%20TP.HCM" target="_blank" rel="noopener noreferrer"
-               class="inline-flex items-center gap-1.5 rounded-full border border-sky-200 bg-white px-3 py-1.5 text-[10px] font-bold text-sky-700 transition hover:bg-sky-50">
+               class="inline-flex items-center gap-1.5 border border-sky-200 bg-white px-3 py-1.5 text-[10px] font-bold text-sky-700 transition hover:bg-sky-50">
               <i class="fa-solid fa-map-location-dot"></i> Maps CS2
             </a>
           </div>
@@ -433,10 +429,10 @@
       </div>
 
       <div class="min-w-0 lg:col-span-6" data-reveal>
-        <div class="overflow-hidden rounded-3xl border border-emerald-100 bg-white shadow-card">
+        <div class="overflow-hidden border border-emerald-100 bg-white shadow-card">
           <div class="flex items-center justify-between bg-emerald-50/70 px-5 py-4">
             <h3 class="text-sm font-extrabold text-emerald-900">Lịch chuyến trong tuần</h3>
-            <span class="rounded-full bg-white px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-wide text-emerald-700">0đ</span>
+            <span class=" bg-white px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-wide text-emerald-700">0đ</span>
           </div>
           <div class="overflow-x-auto">
             <table class="w-full min-w-[480px] text-left text-xs">
@@ -454,7 +450,7 @@
                   <tr class="transition hover:bg-emerald-50/40">
                     <th scope="row" class="px-5 py-4">
                       <span class="inline-flex items-center gap-2 font-extrabold text-ink">
-                        <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-50 text-[10px] text-emerald-700">{{ .short }}</span>
+                        <span class="flex h-7 w-7 items-center justify-center bg-emerald-50 text-[10px] text-emerald-700">{{ .short }}</span>
                         {{ .day }}
                       </span>
                     </th>
@@ -475,11 +471,11 @@
         </div>
 
         <div class="mt-4 grid grid-cols-2 gap-3">
-          <div class="rounded-2xl border border-emerald-100 bg-white p-4">
+          <div class=" border border-emerald-100 bg-white p-4">
             <p class="text-[10px] font-extrabold uppercase tracking-wide text-slate-400">Nhận tại CS1</p>
             <p class="mt-1 text-xs font-bold text-ink">Sảnh chính · 227 Nguyễn Văn Cừ</p>
           </div>
-          <div class="rounded-2xl border border-emerald-100 bg-white p-4">
+          <div class=" border border-emerald-100 bg-white p-4">
             <p class="text-[10px] font-extrabold uppercase tracking-wide text-slate-400">Giao tại CS2</p>
             <p class="mt-1 text-xs font-bold text-ink">Cổng Linh Trung · TP. Thủ Đức</p>
           </div>
@@ -489,7 +485,7 @@
 
     <div class="mt-12 grid gap-6 lg:grid-cols-12">
       <div class="lg:col-span-7" data-reveal>
-        <div class="rounded-3xl border border-sky-100 bg-white p-6 shadow-card">
+        <div class=" border border-sky-100 bg-white p-6 shadow-card">
           <h3 class="text-sm font-extrabold text-ink">Một chuyến chiều thứ Ba diễn ra như thế nào?</h3>
           <div class="mt-6 grid gap-4 sm:grid-cols-3">
             {{ $timeline := slice
@@ -498,8 +494,8 @@
               (dict "time" "18:45" "title" "Giao tại CS2" "desc" "Người mua nhận hàng, bấm xác nhận và escrow giải phóng tiền." "icon" "fa-box-open")
             }}
             {{ range $timeline }}
-              <div class="relative rounded-2xl bg-sky-50/60 p-4">
-                <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-white text-sky-600 shadow-sm"><i class="fa-solid {{ .icon }} text-xs"></i></span>
+              <div class="relative bg-sky-50/60 p-4">
+                <span class="flex h-9 w-9 items-center justify-center bg-white text-sky-600 shadow-sm"><i class="fa-solid {{ .icon }} text-xs"></i></span>
                 <p class="mt-3 text-lg font-extrabold tracking-tight text-sky-700">{{ .time }}</p>
                 <p class="text-[11px] font-extrabold text-ink">{{ .title }}</p>
                 <p class="mt-1 text-[10px] leading-relaxed text-slate-500">{{ .desc }}</p>
@@ -510,7 +506,7 @@
       </div>
 
       <div class="lg:col-span-5" data-reveal>
-        <div class="rounded-3xl border border-emerald-100 bg-white p-6 shadow-card">
+        <div class=" border border-emerald-100 bg-white p-6 shadow-card">
           <h3 class="text-sm font-extrabold text-ink">Quy định gửi hàng</h3>
           <ul class="mt-4 space-y-3 text-xs text-slate-600">
             {{ $rules := slice
@@ -521,12 +517,12 @@
             }}
             {{ range $rules }}
               <li class="flex items-start gap-2.5">
-                <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-[9px] text-emerald-600"><i class="fa-solid fa-check"></i></span>
+                <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center bg-emerald-50 text-[9px] text-emerald-600"><i class="fa-solid fa-check"></i></span>
                 {{ . }}
               </li>
             {{ end }}
           </ul>
-          <a href="{{ $demo }}" class="group mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-emerald-600 px-5 py-3 text-xs font-extrabold text-white shadow-lg shadow-emerald-600/20 transition hover:bg-emerald-700">
+          <a href="{{ $demo }}" class="group mt-6 inline-flex w-full items-center justify-center gap-2 bg-emerald-600 px-5 py-3 text-xs font-extrabold text-white shadow-lg shadow-emerald-600/20 transition hover:bg-emerald-700">
             Đặt giao tuyến KHTN
             <i class="fa-solid fa-arrow-right text-[10px] transition-transform group-hover:translate-x-0.5"></i>
           </a>
@@ -540,7 +536,7 @@
 <section id="faq" class="relative py-20 sm:py-24">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-2xl text-center" data-reveal>
-      <span class="inline-flex items-center gap-2 rounded-full bg-sky-50 px-3.5 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.16em] text-sky-700">
+      <span class="inline-flex items-center gap-2 bg-sky-50 px-3.5 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.16em] text-sky-700">
         <i class="fa-solid fa-circle-question"></i> Câu hỏi thường gặp
       </span>
       <h2 class="mt-5 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">Bạn còn thắc mắc?</h2>
@@ -549,11 +545,11 @@
 
     <div class="mx-auto mt-12 max-w-3xl space-y-3">
       {{ range hugo.Data.faq }}
-        <div x-data="{ open: false }" class="overflow-hidden rounded-2xl border border-sky-100 bg-white shadow-sm transition hover:border-sky-200" data-reveal>
+        <div x-data="{ open: false }" class="overflow-hidden border border-sky-100 bg-white shadow-sm transition hover:border-sky-200" data-reveal>
           <button type="button" @click="open = !open" :aria-expanded="open ? 'true' : 'false'"
                   class="flex w-full items-center justify-between gap-4 px-5 py-4 text-left sm:px-6">
             <span class="text-sm font-extrabold text-ink">{{ .q }}</span>
-            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-sky-50 text-sky-600 transition-all duration-300"
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center bg-sky-50 text-sky-600 transition-all duration-300"
                   :class="open ? 'rotate-45 bg-sky-600 text-white' : ''">
               <i class="fa-solid fa-plus text-[10px]"></i>
             </span>
@@ -577,18 +573,17 @@
 <!-- ================= CTA ================= -->
 <section class="relative pb-4 pt-6">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-sky-700 via-sky-600 to-cyan-500 px-6 py-14 text-center shadow-2xl shadow-sky-600/25 sm:px-10" data-reveal>
-      <div class="cta-grid pointer-events-none absolute inset-0 opacity-10" aria-hidden="true"></div>
+    <div class="relative overflow-hidden bg-[#0369a1] px-6 py-14 text-center shadow-2xl shadow-sky-600/25 sm:px-10" data-reveal>
       <div class="relative mx-auto max-w-2xl">
         <h2 class="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Cùng xây một chợ sinh viên tử tế.</h2>
         <p class="mt-4 text-sm leading-relaxed text-sky-50 sm:text-base">
           Dọn kệ sách hôm nay, mở giá trị mới cho một bạn sinh viên khác. Chỉ mất 30 giây để xác thực email trường.
         </p>
         <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <a href="{{ $demo }}" class="inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-7 py-4 text-sm font-extrabold text-sky-700 shadow-xl transition hover:-translate-y-0.5 hover:bg-sky-50 sm:w-auto">
+          <a href="{{ $demo }}" class="inline-flex w-full items-center justify-center gap-2 bg-white px-7 py-4 text-sm font-extrabold text-sky-700 shadow-xl transition hover:-translate-y-0.5 hover:bg-sky-50 sm:w-auto">
             <i class="fa-solid fa-store text-xs"></i> Vào chợ ngay
           </a>
-          <a href="mailto:{{ site.Params.email }}" class="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 px-6 py-4 text-sm font-bold text-white backdrop-blur transition hover:-translate-y-0.5 hover:bg-white/20 sm:w-auto">
+          <a href="mailto:{{ site.Params.email }}" class="inline-flex w-full items-center justify-center gap-2 border border-white/30 bg-white/10 px-6 py-4 text-sm font-bold text-white backdrop-blur transition hover:-translate-y-0.5 hover:bg-white/20 sm:w-auto">
             <i class="fa-solid fa-envelope text-xs"></i> Liên hệ nhóm phát triển
           </a>
         </div>
