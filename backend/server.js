@@ -610,7 +610,7 @@ function setupMailer() {
 
   if (!user || !password) {
     emailConfigured = false;
-    console.log('[email] Chưa cấu hình Gmail App Password -> chạy DEMO MODE (OTP in ra console + debug_otp).');
+    console.log('[email] Chưa cấu hình SMTP (EMAIL_USER / EMAIL_APP_PASSWORD) -> chạy DEMO MODE (OTP in ra console + debug_otp).');
     return;
   }
 
@@ -689,7 +689,7 @@ async function deliverOtp({ to, code, name, purpose }) {
   } catch (error) {
     console.error(`[email] Gửi OTP thất bại: ${error.message}`);
     if (!DEMO_MODE) {
-      fail(502, 'Không gửi được email OTP. Vui lòng thử lại sau hoặc kiểm tra cấu hình Gmail App Password.');
+      fail(502, 'Không gửi được email OTP. Vui lòng thử lại sau hoặc kiểm tra cấu hình SMTP.');
     }
     console.log(`[Studeal][DEMO OTP FALLBACK] ${to} | ${code}`);
     return { sent: false, error: error.message };

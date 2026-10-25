@@ -45,8 +45,8 @@ Mật khẩu chung: **`123456`**
 | `PORT` | `3001` | Cổng chạy API + frontend |
 | `DEMO_MODE` | `true` | `true`: trả `debug_otp` trong JSON; `false`: bắt buộc gửi mail thật |
 | `JWT_SECRET` | (chuỗi mẫu) | **Đổi trước khi deploy** |
-| `EMAIL_USER` | (trống) | Gmail dùng để gửi OTP |
-| `EMAIL_APP_PASSWORD` | (trống) | Gmail App Password 16 ký tự |
+| `EMAIL_USER` | `resend` | User SMTP (Resend: luôn là `resend`) |
+| `EMAIL_APP_PASSWORD` | (trống) | Resend API key (`re_...`) |
 | `OTP_EXPIRES_MINUTES` | `5` | Hạn OTP |
 | `PLATFORM_FEE_PERCENT` | `2` | Phí sàn (%) |
 | `VIP_FEE` | `15000` | Phí đẩy tin VIP (đ) |
@@ -54,17 +54,36 @@ Mật khẩu chung: **`123456`**
 | `UPLOAD_DIR` | `./uploads` | Thư mục ảnh upload |
 | `FRONTEND_DIR` | `../frontend/public` | Thư mục frontend tĩnh |
 
-### Bật gửi OTP qua Gmail thật
+### Gửi mail thật từ `@studeal.namprojects.site` (Resend SMTP)
 
-1. Bật **2-Step Verification** cho tài khoản Google.
-2. Vào **Google Account → Security → App passwords**, tạo mật khẩu ứng dụng (16 ký tự).
-3. Điền vào `.env`:
+1. Tạo tài khoản tại https://resend.com → **Domains → Add Domain** → `studeal.namprojects.site`.
+2. Resend hiện các bản ghi DNS (MX + TXT SPF trên `send.studeal`, TXT DKIM `resend._domainkey.studeal`).
+   Thêm đúng các bản ghi đó vào **Cloudflare DNS** của `namprojects.site` (để **DNS only**, không bật proxy) → bấm **Verify**.
+3. Nên thêm DMARC: TXT `_dmarc.studeal` = `v=DMARC1; p=none;`
+4. **API Keys → Create** (quyền *Sending access*), điền vào `.env`:
    ```env
-   EMAIL_USER=yourmail@gmail.com
-   EMAIL_APP_PASSWORD=abcdefghijklmnop
+   EMAIL_HOST=smtp.resend.com
+   EMAIL_PORT=465
+   EMAIL_SECURE=true
+   EMAIL_USER=resend
+   EMAIL_APP_PASSWORD=re_xxxxxxxxxxxxxxxx
+   EMAIL_FROM=Studeal <no-reply@studeal.namprojects.site>
+   DEMO_MODE=false
    ```
-4. Đặt `DEMO_MODE=false` nếu muốn ẩn `debug_otp` và bắt buộc gửi mail thành công.
+5. Khởi động lại server, log phải có `[email] SMTP sẵn sàng`.
    (Nếu để trống `EMAIL_USER`/`EMAIL_APP_PASSWORD`, hệ thống tự chuyển sang DEMO MODE.)
+
+### Nhận mail về `@studeal.namprojects.site` (Cloudflare Email Routing)
+
+1. Cloudflare → `namprojects.site` → **Email → Email Routing** → bật cho subdomain `studeal.namprojects.site`
+   (Cloudflare tự thêm MX/SPF cho subdomain).
+2. **Destination addresses** → thêm Gmail cá nhân và bấm link xác minh trong mail.
+3. **Routing rules** → tạo `hello@studeal.namprojects.site` (và `support@`…) → *Send to* Gmail trên.
+   Có thể bật **Catch-all** để nhận mọi địa chỉ.
+4. Muốn trả lời bằng chính địa chỉ domain từ Gmail: **Gmail → Settings → Accounts → Send mail as** →
+   SMTP `smtp.resend.com`, cổng 465, user `resend`, mật khẩu = Resend API key.
+
+> Lưu ý: Email Routing và Resend đều thêm MX — Resend đặt MX ở `send.studeal`, Email Routing ở `studeal`, nên không xung đột.
 
 ---
 
@@ -193,6 +212,6 @@ Server sẽ tự tạo lại CSDL và nạp **3 tài khoản – 8 sản phẩm 
 ## 9. Ghi chú triển khai
 
 - Đổi `JWT_SECRET` sang chuỗi ngẫu nhiên mạnh.
-- Đặt `DEMO_MODE=false` và cấu hình Gmail App Password.
+- Đặt `DEMO_MODE=false` và cấu hình Resend SMTP (mục 3).
 - Phí VIP 15.000đ hiện được **hiển thị và ghi nhận** trong đơn đăng tin nhưng **chưa trừ tiền thật** ở bản demo.
 - `sql.js` giữ CSDL trong bộ nhớ và ghi ra file sau mỗi thay đổi — phù hợp demo/đồ án, không dành cho tải cao.
