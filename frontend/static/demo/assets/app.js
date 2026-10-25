@@ -424,7 +424,7 @@
         ` : ''}
         <div class="field">
           <label for="authEmail">Email</label>
-          <input class="input" id="authEmail" name="email" type="email" placeholder="ban@studeal.vn" autocomplete="email" required />
+          <input class="input" id="authEmail" name="email" type="email" placeholder="ban@studeal.namprojects.site" autocomplete="email" required />
         </div>
         <div class="field">
           <label for="authPassword">Mật khẩu</label>
@@ -435,9 +435,9 @@
 
       <p class="form-note" style="margin-top:14px;">
         Tài khoản demo (mật khẩu 123456):
-        <button type="button" class="link-btn" data-action="demo-login" data-email="buyer@studeal.vn">người mua</button> ·
-        <button type="button" class="link-btn" data-action="demo-login" data-email="seller.khtn@studeal.vn">SV KHTN</button> ·
-        <button type="button" class="link-btn" data-action="demo-login" data-email="seller.uit@studeal.vn">SV UIT</button>
+        <button type="button" class="link-btn" data-action="demo-login" data-email="namhuynhnhat2008@gmail.com">người mua</button> ·
+        <button type="button" class="link-btn" data-action="demo-login" data-email="2612205118@student.hcmus.edu.vn">SV KHTN</button> ·
+        <button type="button" class="link-btn" data-action="demo-login" data-email="nnamhuynh2008luuanh1@gmail.com">SV UIT</button>
       </p>
     `, 'auth');
   }

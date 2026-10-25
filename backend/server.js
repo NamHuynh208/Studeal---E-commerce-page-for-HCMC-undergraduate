@@ -390,21 +390,21 @@ function seedDatabase() {
       `INSERT INTO users
         (id, name, email, password_hash, is_student_verified, student_email, university_name, wallet_balance, created_at)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [1, 'Nguyễn Minh Anh', 'seller.khtn@studeal.vn', passwordHash, 1,
+      [1, 'Nguyễn Minh Anh', '2612205118@student.hcmus.edu.vn', passwordHash, 1,
         'minhanh@student.hcmus.edu.vn', 'SV ĐH KHTN', 0, iso(60)]
     );
     run(
       `INSERT INTO users
         (id, name, email, password_hash, is_student_verified, student_email, university_name, wallet_balance, created_at)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [2, 'Trần Quốc Bảo', 'seller.uit@studeal.vn', passwordHash, 1,
+      [2, 'Trần Quốc Bảo', 'nnamhuynh2008luuanh1@gmail.com', passwordHash, 1,
         'baotq@gm.uit.edu.vn', 'SV ĐH CNTT', 0, iso(55)]
     );
     run(
       `INSERT INTO users
         (id, name, email, password_hash, is_student_verified, student_email, university_name, wallet_balance, created_at)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [3, 'Lê Thu Hà', 'buyer@studeal.vn', passwordHash, 0, null, null, 0, iso(50)]
+      [3, 'Lê Thu Hà', 'namhuynhnhat2008@gmail.com', passwordHash, 0, null, null, 0, iso(50)]
     );
 
     /* --------------------------- PRODUCTS -------------------------- */
@@ -1951,9 +1951,9 @@ async function start() {
     console.log(`  Phí sàn   : ${Math.round(PLATFORM_FEE_RATE * 10000) / 100}% | VIP: ${VIP_FEE.toLocaleString('vi-VN')}đ`);
     console.log('------------------------------------------------------------');
     console.log('  Tài khoản demo (mật khẩu: 123456)');
-    console.log('   - seller.khtn@studeal.vn  (SV ĐH KHTN)');
-    console.log('   - seller.uit@studeal.vn   (SV ĐH CNTT)');
-    console.log('   - buyer@studeal.vn        (Người mua)');
+    console.log('   - 2612205118@student.hcmus.edu.vn  (SV ĐH KHTN)');
+    console.log('   - nnamhuynh2008luuanh1@gmail.com   (SV ĐH CNTT)');
+    console.log('   - namhuynhnhat2008@gmail.com        (Người mua)');
     console.log('============================================================');
     console.log('');
   });

@@ -29,9 +29,9 @@ Mật khẩu chung: **`123456`**
 
 | Email | Vai trò |
 |---|---|
-| `seller.khtn@studeal.vn` | Người bán – SV ĐH KHTN (đã xác thực) |
-| `seller.uit@studeal.vn` | Người bán – SV ĐH CNTT (đã xác thực) |
-| `buyer@studeal.vn` | Người mua |
+| `2612205118@student.hcmus.edu.vn` | Người bán – SV ĐH KHTN (đã xác thực) |
+| `nnamhuynh2008luuanh1@gmail.com` | Người bán – SV ĐH CNTT (đã xác thực) |
+| `namhuynhnhat2008@gmail.com` | Người mua |
 
 > **Đăng nhập:** nhập email → nhận OTP 6 số → nhập OTP.
 > Ở **DEMO MODE**, OTP hiện ngay trên màn hình (ô OTP được tự điền) và in ra console server.

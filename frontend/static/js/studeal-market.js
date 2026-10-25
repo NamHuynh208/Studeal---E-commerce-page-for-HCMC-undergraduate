@@ -850,7 +850,7 @@
           <label for="marketLoginEmail" class="mb-1.5 block text-[11px] font-extrabold text-slate-700">Email tài khoản</label>
           <input id="marketLoginEmail" name="email" type="email" autocomplete="email" required
                  class="h-11 w-full border border-slate-200 bg-slate-50 px-3 text-sm font-semibold text-ink outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100"
-                 placeholder="ban@studeal.vn">
+                 placeholder="ban@studeal.namprojects.site">
         </div>
         <div>
           <label for="marketLoginPassword" class="mb-1.5 block text-[11px] font-extrabold text-slate-700">Mật khẩu</label>
@@ -866,10 +866,10 @@
         <p class="text-[10px] font-extrabold uppercase tracking-[0.14em] text-sky-700">Tài khoản demo</p>
         <p class="mt-1 text-[10px] leading-relaxed text-slate-500">Mật khẩu <strong class="text-slate-700">123456</strong>. OTP demo hiện ngay ở bước sau.</p>
         <div class="mt-2.5 grid grid-cols-2 gap-2">
-          <button type="button" data-market-action="quick-login" data-email="buyer@studeal.vn" class="inline-flex h-9 items-center justify-center gap-1.5 bg-white px-2 text-[10px] font-extrabold text-sky-700 ring-1 ring-sky-100 transition hover:bg-sky-100">
+          <button type="button" data-market-action="quick-login" data-email="namhuynhnhat2008@gmail.com" class="inline-flex h-9 items-center justify-center gap-1.5 bg-white px-2 text-[10px] font-extrabold text-sky-700 ring-1 ring-sky-100 transition hover:bg-sky-100">
             <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i> Người mua
           </button>
-          <button type="button" data-market-action="quick-login" data-email="seller.khtn@studeal.vn" class="inline-flex h-9 items-center justify-center gap-1.5 bg-white px-2 text-[10px] font-extrabold text-emerald-700 ring-1 ring-emerald-100 transition hover:bg-emerald-50">
+          <button type="button" data-market-action="quick-login" data-email="2612205118@student.hcmus.edu.vn" class="inline-flex h-9 items-center justify-center gap-1.5 bg-white px-2 text-[10px] font-extrabold text-emerald-700 ring-1 ring-emerald-100 transition hover:bg-emerald-50">
             <i class="fa-solid fa-store" aria-hidden="true"></i> Người bán
           </button>
         </div>
@@ -886,7 +886,7 @@
           <label for="marketRegisterEmail" class="mb-1.5 block text-[11px] font-extrabold text-slate-700">Email</label>
           <input id="marketRegisterEmail" name="email" type="email" autocomplete="email" required
                  class="h-11 w-full border border-slate-200 bg-slate-50 px-3 text-sm font-semibold text-ink outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100"
-                 placeholder="ban@studeal.vn">
+                 placeholder="ban@studeal.namprojects.site">
         </div>
         <div>
           <label for="marketRegisterPassword" class="mb-1.5 block text-[11px] font-extrabold text-slate-700">Mật khẩu</label>
@@ -1909,8 +1909,8 @@
 
   async function switchDemoAccount(email) {
     const accounts = {
-      'buyer@studeal.vn': 'Tài khoản Người Mua',
-      'seller.khtn@studeal.vn': 'Người Bán SV KHTN',
+      'namhuynhnhat2008@gmail.com': 'Tài khoản Người Mua',
+      '2612205118@student.hcmus.edu.vn': 'Người Bán SV KHTN',
     };
     if (!accounts[email]) return;
     if (!window.confirm(`Chuyển sang ${accounts[email]}? Phiên đăng nhập hiện tại sẽ kết thúc.`)) return;
