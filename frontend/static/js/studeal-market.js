@@ -416,15 +416,11 @@
   function priceBlock(product, deal) {
     const listed = Number(product.price) || 0;
     const price = deal ? Number(deal.offer_price) || 0 : listed;
-    const original = Number(product.original_price) || 0;
-    const discount = original > listed && listed > 0 ? Math.round((1 - listed / original) * 100) : 0;
     return `
       <div class="min-w-0">
         <div class="flex flex-wrap items-baseline gap-2">
           <span class="text-lg font-extrabold tracking-tight ${deal ? 'text-amber-600' : 'text-sky-700'}">${vnd(price)}</span>
           ${deal ? `<span class="text-[10px] font-bold text-slate-400 line-through">${vnd(listed)}</span>` : ''}
-          ${!deal && original > listed ? `<span class="text-[10px] font-semibold text-slate-400 line-through">${vnd(original)}</span>` : ''}
-          ${!deal && discount > 0 ? `<span class=" bg-emerald-50 px-1.5 py-0.5 text-[9px] font-extrabold text-emerald-700">-${discount}%</span>` : ''}
         </div>
         ${deal ? '<p class="mt-1 inline-flex items-center gap-1 text-[9px] font-extrabold uppercase tracking-wide text-amber-600"><i class="fa-solid fa-handshake" aria-hidden="true"></i> Giá Deal đã chốt</p>' : ''}
       </div>`;
@@ -1136,7 +1132,7 @@
           <div><label for="marketSellCategory" class="mb-1 block text-[10px] font-extrabold text-slate-700">Danh mục</label><select id="marketSellCategory" name="category" class="h-10 w-full border border-slate-200 bg-white px-2 text-xs font-semibold text-ink">${categories.map((item) => `<option>${esc(item)}</option>`).join('')}</select></div>
           <div><label for="marketSellCondition" class="mb-1 block text-[10px] font-extrabold text-slate-700">Tình trạng</label><select id="marketSellCondition" name="condition_text" class="h-10 w-full border border-slate-200 bg-white px-2 text-xs font-semibold text-ink">${conditions.map((item) => `<option>${esc(item)}</option>`).join('')}</select></div>
         </div>
-        <div class="grid grid-cols-2 gap-2"><div><label for="marketSellPrice" class="mb-1 block text-[10px] font-extrabold text-slate-700">Giá bán (đ)</label><input id="marketSellPrice" name="price" type="number" min="1000" step="1000" required placeholder="75000" class="h-10 w-full border border-slate-200 bg-slate-50 px-3 text-xs font-semibold text-ink outline-none focus:border-sky-400 focus:ring-4 focus:ring-sky-100"></div><div><label for="marketSellOriginal" class="mb-1 block text-[10px] font-extrabold text-slate-700">Giá gốc (đ)</label><input id="marketSellOriginal" name="original_price" type="number" min="1000" step="1000" placeholder="150000" class="h-10 w-full border border-slate-200 bg-slate-50 px-3 text-xs font-semibold text-ink outline-none focus:border-sky-400 focus:ring-4 focus:ring-sky-100"></div></div>
+        <div class="grid grid-cols-1 gap-2"><div><label for="marketSellPrice" class="mb-1 block text-[10px] font-extrabold text-slate-700">Giá bán (đ)</label><input id="marketSellPrice" name="price" type="number" min="1000" step="1000" required placeholder="75000" class="h-10 w-full border border-slate-200 bg-slate-50 px-3 text-xs font-semibold text-ink outline-none focus:border-sky-400 focus:ring-4 focus:ring-sky-100"></div></div>
         <div><label for="marketSellDescription" class="mb-1 block text-[10px] font-extrabold text-slate-700">Mô tả</label><textarea id="marketSellDescription" name="description" maxlength="3000" rows="3" placeholder="Mô tả tình trạng, phụ kiện, lý do bán…" class="w-full border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-medium text-ink outline-none focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100"></textarea><p id="marketPhoneWarning" class="mt-1 hidden bg-rose-50 px-2.5 py-2 text-[10px] font-bold text-rose-700"><i class="fa-solid fa-triangle-exclamation mr-1"></i>Phát hiện số điện thoại. Không đăng thông tin liên lạc để giữ ẩn danh.</p></div>
         <div class="grid gap-2 sm:grid-cols-2"><div><label for="marketSellImageUrl" class="mb-1 block text-[10px] font-extrabold text-slate-700">Link ảnh (tùy chọn)</label><input id="marketSellImageUrl" name="image_url" type="url" placeholder="https://…" class="h-10 w-full border border-slate-200 bg-slate-50 px-3 text-xs text-ink outline-none focus:border-sky-400 focus:ring-4 focus:ring-sky-100"></div><div><label for="marketSellImageFile" class="mb-1 block text-[10px] font-extrabold text-slate-700">Hoặc tải ảnh lên</label><input id="marketSellImageFile" name="image" type="file" accept="image/jpeg,image/png,image/webp,image/gif" class="block w-full text-[10px] text-slate-500 file:mr-2 file:border-0 file:bg-sky-50 file:px-2 file:py-2 file:text-[10px] file:font-bold file:text-sky-700"><p class="mt-1 text-[9px] text-slate-400">JPG/PNG/WEBP/GIF · tối đa 5MB</p></div></div>
         <div class=" border border-slate-200 bg-slate-50 p-3">
@@ -1165,9 +1161,6 @@
     if (!form.elements.allow_meetup.checked && !form.elements.allow_ship_3rd.checked && !form.elements.allow_khtn_routine.checked) {
       return showFormError(form, 'Chọn ít nhất một phương thức giao dịch.');
     }
-    const price = Number(form.elements.price.value);
-    const original = Number(form.elements.original_price.value || price);
-    if (original < price) return showFormError(form, 'Giá gốc không được thấp hơn giá bán.');
     setButtonLoading(button, true, 'Đang đăng tin…');
     try {
       const data = await api('/api/products', { method: 'POST', form: formData });

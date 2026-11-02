@@ -218,23 +218,6 @@ div[id] {
   animation: studeal-spin-slow 34s linear infinite;
 }
 
-@keyframes studeal-marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.marquee-track {
-  animation: studeal-marquee 42s linear infinite;
-}
-
-.marquee-track:hover {
-  animation-play-state: paused;
-}
-
 @keyframes studeal-route-dash {
   to {
     stroke-dashoffset: -56;
@@ -420,6 +403,181 @@ input[type="range"]::-moz-range-thumb {
   scrollbar-width: thin;
 }
 
+/* ---------- Hero motion video ----------
+   Trạng thái trên [data-hero-frame]: (chưa có class, đã có JS) = đang chờ video,
+   .is-playing = video phủ hero, .is-done = hero hiện lại + nút play. */
+
+.hero-video {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: #f7fbfe; /* trùng nền video, viền letterbox không lộ */
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.01);
+  /* thoát: khung cuối video đã khớp hero (thẻ cùng chỗ, cùng nền) -> chỉ cần hòa tan ngắn, ease-in-out */
+  transition:
+    opacity 0.9s cubic-bezier(0.65, 0, 0.35, 1),
+    transform 1s cubic-bezier(0.33, 1, 0.68, 1),
+    visibility 0s linear 1s;
+}
+
+.hero-video video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+html.js .hero-frame:not(.is-done) .hero-video,
+.hero-frame.is-playing .hero-video {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition:
+    opacity 0.7s cubic-bezier(0.33, 1, 0.68, 1) 0.15s,
+    transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s,
+    visibility 0s;
+}
+
+/* Nội dung hero hiện dần (stagger) cùng lúc video tan đi */
+.hero-content > div:first-child > *,
+.hero-content > div:last-child {
+  transition:
+    opacity 1s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s),
+    transform 1.2s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s);
+}
+
+/* thẻ phải là "phần tử chung" với khung cuối video nên hiện đầu tiên, chữ trái theo sau */
+.hero-content > div:last-child { --d: 0s; }
+.hero-content > div:first-child > :nth-child(1) { --d: 0.2s; }
+.hero-content > div:first-child > :nth-child(2) { --d: 0.28s; }
+.hero-content > div:first-child > :nth-child(3) { --d: 0.36s; }
+.hero-content > div:first-child > :nth-child(4) { --d: 0.44s; }
+.hero-content > div:first-child > :nth-child(5) { --d: 0.52s; }
+.hero-content > div:first-child > :nth-child(6) { --d: 0.6s; }
+
+html.js .hero-frame:not(.is-done) .hero-content > div:first-child > *,
+html.js .hero-frame:not(.is-done) .hero-content > div:last-child {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.4s cubic-bezier(0.32, 0, 0.67, 0),
+    transform 0.4s cubic-bezier(0.32, 0, 0.67, 0);
+}
+
+html.js .hero-frame:not(.is-done) .hero-content > div:last-child {
+  transform: scale(0.98); /* đứng yên tại chỗ thẻ trong video, chỉ nở nhẹ */
+}
+
+.hero-play {
+  position: absolute;
+  z-index: 6;
+  display: none;
+}
+
+html.js .hero-play {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-play {
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  width: 35px;
+  height: 35px;
+  border: 2px solid #e0f2fe;
+  background: #fff;
+  color: #0284c7;
+  font-size: 11px;
+  box-shadow: 0 10px 22px -10px rgba(2, 132, 199, 0.35);
+  opacity: 0;
+  scale: 0.6;
+  pointer-events: none;
+  transition:
+    opacity 0.25s cubic-bezier(0.4, 0, 1, 1),
+    scale 0.25s cubic-bezier(0.4, 0, 1, 1),
+    background-color 0.2s,
+    color 0.2s;
+}
+
+.hero-play i {
+  margin-left: 1px; /* tam giác lệch tâm thị giác */
+}
+
+.hero-play::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border: 2px solid #38bdf8;
+  opacity: 0;
+}
+
+.hero-frame.is-done .hero-play {
+  opacity: 1;
+  scale: 1;
+  pointer-events: auto;
+  transition:
+    opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.9s,
+    scale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.9s,
+    background-color 0.2s,
+    color 0.2s;
+}
+
+.hero-frame.is-done .hero-play::after {
+  animation: hero-play-ring 2.4s cubic-bezier(0, 0, 0.2, 1) 1.5s infinite;
+}
+
+.hero-play:hover,
+.hero-play:focus-visible {
+  background: #0284c7;
+  color: #fff;
+}
+
+.hero-play:focus-visible {
+  outline: 3px solid #7dd3fc;
+  outline-offset: 3px;
+}
+
+@keyframes hero-play-ring {
+  from {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+}
+
+/* Màn hẹp: hero xếp dọc nên giữa màn hình sẽ đè chữ -> đưa nút lên góc phải */
+@media (max-width: 1023px) {
+  /* hero dọc cao hơn nhiều so với video 16:9: thu khung về đúng chiều cao video khi đang phát */
+  html.js .hero-frame:not(.is-done) {
+    height: 56.25vw;
+    overflow: hidden;
+  }
+
+  .hero-play {
+    left: auto;
+    right: 16px;
+    top: 16px;
+    translate: none;
+    width: 30px;
+    height: 30px;
+    font-size: 10px;
+  }
+}
+
+/* Điện thoại: phát bản dọc 9:16 (JS chọn studeal-promo-mobile.mp4), khung cao theo video nhưng không quá 1 màn hình */
+@media (max-width: 767px) {
+  html.js .hero-frame:not(.is-done) {
+    height: min(177.78vw, 100svh);
+  }
+}
+
 /* ---------- Reduced motion ---------- */
 
 @media (prefers-reduced-motion: reduce) {
@@ -440,7 +598,15 @@ input[type="range"]::-moz-range-thumb {
     transform: none;
   }
 
-  .marquee-track {
-    animation: none;
+  /* Không tự phát video: hero hiện ngay trước khi JS gắn .is-done */
+  html.js .hero-frame:not(.is-playing) .hero-video {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  html.js .hero-frame:not(.is-playing) .hero-content > div:first-child > *,
+  html.js .hero-frame:not(.is-playing) .hero-content > div:last-child {
+    opacity: 1;
+    transform: none;
   }
 }

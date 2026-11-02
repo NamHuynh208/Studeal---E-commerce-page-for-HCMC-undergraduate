@@ -279,9 +279,6 @@
 
   function productCard(product) {
     const own = isOwnProduct(product);
-    const discount = product.original_price > product.price
-      ? Math.round((1 - (product.price / product.original_price)) * 100)
-      : 0;
     const deliveryTags = (product.delivery_methods || [])
       .map((method) => `<span class="delivery-tag">${esc(method.label || DELIVERY_LABELS[method.code] || method.code)}</span>`)
       .join('');
@@ -304,8 +301,6 @@
           <div class="card-delivery">${deliveryTags}</div>
           <div class="card-price-row">
             <span class="card-price">${vnd(product.price)}</span>
-            ${product.original_price > product.price ? `<span class="card-old">${vnd(product.original_price)}</span>` : ''}
-            ${discount > 0 ? `<span class="card-off">-${discount}%</span>` : ''}
           </div>
           <div class="card-actions">
             ${own
@@ -682,11 +677,6 @@
           <select class="select" id="sellCondition" name="condition_text" required>
             ${CONDITION_OPTIONS.map((item) => `<option value="${esc(item)}">${esc(item)}</option>`).join('')}
           </select>
-        </div>
-
-        <div class="field">
-          <label for="sellOriginal">Giá gốc (đ)</label>
-          <input class="input" id="sellOriginal" name="original_price" type="number" min="0" step="1000" placeholder="150000" />
         </div>
 
         <div class="field">

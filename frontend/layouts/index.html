@@ -4,7 +4,15 @@
 <section class="relative overflow-hidden">
   <div class="hero-mesh pointer-events-none absolute inset-0" aria-hidden="true"></div>
 
-  <div class="relative mx-auto grid max-w-7xl items-center gap-16 px-4 pb-20 pt-14 sm:px-6 lg:grid-cols-2 lg:gap-10 lg:px-8 lg:pb-28 lg:pt-20">
+  <div class="hero-frame relative" data-hero-frame>
+  <div class="hero-video" aria-hidden="true">
+    <video data-hero-video muted playsinline preload="auto" data-src="{{ "video/studeal-promo.mp4" | relURL }}?v=2513" data-src-mobile="{{ "video/studeal-promo-mobile.mp4" | relURL }}?v=2601"></video>
+  </div>
+  <button type="button" class="hero-play" data-hero-play aria-label="Xem lại video giới thiệu Studeal">
+    <i class="fa-solid fa-play" aria-hidden="true"></i>
+  </button>
+
+  <div class="hero-content relative mx-auto grid max-w-7xl items-center gap-16 px-4 pb-20 pt-14 sm:px-6 lg:grid-cols-2 lg:gap-10 lg:px-8 lg:pb-28 lg:pt-20" data-hero-content>
     <div class="max-w-2xl">
       <div class="inline-flex items-center gap-2 border border-sky-200/80 bg-white/80 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.16em] text-sky-700 shadow-sm backdrop-blur">
         <span class="relative flex h-2.5 w-2.5">
@@ -131,27 +139,6 @@
       </div>
     </div>
   </div>
-
-  <div class="relative border-y border-sky-100/80 bg-white/70 py-4 backdrop-blur">
-    <div class="overflow-hidden">
-      {{ $schools := slice "ĐH Khoa học Tự nhiên" "ĐH Công nghệ Thông tin" "ĐH Bách Khoa" "ĐH Kinh tế TP.HCM" "ĐH Sư phạm" "ĐH Y Dược" "ĐH Luật" "ĐH Ngân hàng" }}
-      <div class="marquee-track flex w-max">
-        <div class="flex shrink-0 items-center gap-10 pr-10">
-          {{ range $schools }}
-            <span class="inline-flex items-center gap-2 whitespace-nowrap text-xs font-bold uppercase tracking-[0.12em] text-slate-400">
-              <i class="fa-solid fa-graduation-cap text-sky-300"></i> {{ . }}
-            </span>
-          {{ end }}
-        </div>
-        <div class="flex shrink-0 items-center gap-10 pr-10" aria-hidden="true">
-          {{ range $schools }}
-            <span class="inline-flex items-center gap-2 whitespace-nowrap text-xs font-bold uppercase tracking-[0.12em] text-slate-400">
-              <i class="fa-solid fa-graduation-cap text-sky-300"></i> {{ . }}
-            </span>
-          {{ end }}
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -726,5 +713,5 @@
 {{ end }}
 
 {{ define "scripts" }}
-<script src="{{ "js/studeal-market.js" | relURL }}?v=2410" defer></script>
+<script src="{{ "js/studeal-market.js" | relURL }}?v=2513" defer></script>
 {{ end }}

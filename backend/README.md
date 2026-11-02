@@ -34,7 +34,7 @@ Mật khẩu chung: **`123456`**
 | `namhuynhnhat2008@gmail.com` | Người mua |
 
 > **Đăng nhập:** nhập email → nhận OTP 6 số → nhập OTP.
-> Ở **DEMO MODE**, OTP hiện ngay trên màn hình (ô OTP được tự điền) và in ra console server.
+> Tài khoản demo dùng OTP cố định `246810` (hiện sẵn trên màn hình). Tài khoản đăng ký mới luôn nhận OTP thật qua email; đăng ký bằng email `*.edu.vn` sẽ tự xác thực sinh viên sau khi nhập OTP.
 
 ---
 
@@ -43,7 +43,8 @@ Mật khẩu chung: **`123456`**
 | Biến | Mặc định | Ý nghĩa |
 |---|---|---|
 | `PORT` | `3001` | Cổng chạy API + frontend |
-| `DEMO_MODE` | `true` | `true`: trả `debug_otp` trong JSON; `false`: bắt buộc gửi mail thật |
+| `DEMO_MODE` | `true` | `true`: bật API reset dữ liệu mẫu. Không còn ảnh hưởng tới OTP |
+| `DEMO_ACCOUNT_OTP` | `246810` | OTP cố định chỉ dành cho 3 tài khoản demo (không gửi mail). Mọi tài khoản khác nhận OTP thật qua email |
 | `JWT_SECRET` | (chuỗi mẫu) | **Đổi trước khi deploy** |
 | `EMAIL_USER` | `resend` | User SMTP (Resend: luôn là `resend`) |
 | `EMAIL_APP_PASSWORD` | (trống) | Resend API key (`re_...`) |

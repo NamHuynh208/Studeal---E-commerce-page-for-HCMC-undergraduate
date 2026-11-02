@@ -35,6 +35,15 @@ const PORT = Number(process.env.PORT || 3001);
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const DEMO_MODE = String(process.env.DEMO_MODE || 'true').toLowerCase() !== 'false';
 
+// Chỉ 3 tài khoản mẫu dùng OTP cố định (không gửi mail); mọi tài khoản khác nhận OTP thật qua SMTP.
+const DEMO_ACCOUNT_OTP = String(process.env.DEMO_ACCOUNT_OTP || '246810').replace(/\D/g, '').padStart(6, '0').slice(0, 6);
+const DEMO_EMAILS = new Set([
+  'namhuynhnhat2008@gmail.com',
+  '2612205118@student.hcmus.edu.vn',
+  'nnamhuynh2008luuanh1@gmail.com',
+]);
+const isDemoAccount = (email) => DEMO_EMAILS.has(email);
+
 const JWT_SECRET = process.env.JWT_SECRET || 'studeal_dev_secret_change_me';
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
 
@@ -156,6 +165,11 @@ const nowIso = () => new Date().toISOString();
 const otpExpiryIso = () => new Date(Date.now() + OTP_TTL_MINUTES * 60 * 1000).toISOString();
 
 const generateOtp = () => String(crypto.randomInt(0, 1_000_000)).padStart(6, '0');
+const otpFor = (email) => (isDemoAccount(email) ? DEMO_ACCOUNT_OTP : generateOtp());
+// Email .edu.vn -> tên trường, hoặc null (không ném lỗi như resolveUniversity).
+const schoolOf = (email) => {
+  try { return resolveUniversity(email); } catch (error) { return null; }
+};
 
 /**
  * Chống giao dịch ngoài luồng: che SĐT 10 số, email, link Zalo/Facebook...
@@ -666,14 +680,10 @@ function otpEmailHtml({ name, code, purpose }) {
 }
 
 async function deliverOtp({ to, code, name, purpose }) {
+  if (isDemoAccount(to)) return { sent: false, demo: true };
   if (!transporter) {
-    console.log(
-      `\n[Studeal][DEMO OTP] ${String(purpose || 'LOGIN').padEnd(8)} | ${to} | ${code} | hết hạn ${OTP_TTL_MINUTES} phút\n`
-    );
-    if (!DEMO_MODE) {
-      fail(503, 'Chưa cấu hình EMAIL_USER / EMAIL_APP_PASSWORD nên không thể gửi OTP. Hãy bật DEMO_MODE=true để demo.');
-    }
-    return { sent: false, demo: true };
+    console.error('[email] Chưa cấu hình SMTP, không thể gửi OTP thật.');
+    fail(503, 'Hệ thống chưa cấu hình gửi email nên không thể gửi OTP. Vui lòng thử lại sau.');
   }
 
   try {
@@ -688,11 +698,7 @@ async function deliverOtp({ to, code, name, purpose }) {
     return { sent: true };
   } catch (error) {
     console.error(`[email] Gửi OTP thất bại: ${error.message}`);
-    if (!DEMO_MODE) {
-      fail(502, 'Không gửi được email OTP. Vui lòng thử lại sau hoặc kiểm tra cấu hình SMTP.');
-    }
-    console.log(`[Studeal][DEMO OTP FALLBACK] ${to} | ${code}`);
-    return { sent: false, error: error.message };
+    fail(502, 'Không gửi được email OTP. Vui lòng kiểm tra địa chỉ email và thử lại sau.');
   }
 }
 
@@ -706,8 +712,8 @@ function otpResponse(user, purpose, delivery, message) {
     otp_expires_at: user.otp_expires,
     email_sent: Boolean(delivery && delivery.sent),
   };
-  if (delivery && delivery.error && DEMO_MODE) payload.email_error = delivery.error;
-  if (DEMO_MODE) payload.debug_otp = user.otp_code;
+  // OTP chỉ lộ ra cho tài khoản mẫu; tài khoản thật bắt buộc đọc OTP trong hộp thư.
+  if (purpose !== 'STUDENT' && isDemoAccount(user.email)) payload.debug_otp = user.otp_code;
   return payload;
 }
 
@@ -1058,16 +1064,22 @@ app.post('/api/auth/register', asyncRoute(async (req, res) => {
   }
 
   let user = get('SELECT * FROM users WHERE id = ?', [userId]);
-  const delivery = await deliverOtp({ to: email, code: otp, name, purpose: 'REGISTER' });
+  let delivery;
+  try {
+    delivery = await deliverOtp({ to: email, code: otp, name, purpose: 'REGISTER' });
+  } catch (error) {
+    run('DELETE FROM users WHERE id = ?', [userId]); // mail không gửi được -> không giữ tài khoản treo
+    throw error;
+  }
 
   res.status(201).json({
     ...otpResponse(
       user,
       'REGISTER',
       delivery,
-      delivery.sent
-        ? 'Đăng ký thành công! Mã OTP đã được gửi tới email của bạn.'
-        : 'Đăng ký thành công! Hãy dùng mã OTP bên dưới để xác thực (chế độ demo).'
+      schoolOf(email)
+        ? `Đăng ký thành công! Mã OTP đã được gửi tới ${email}. Xác thực OTP cũng sẽ xác thực luôn email trường của bạn.`
+        : 'Đăng ký thành công! Mã OTP đã được gửi tới email của bạn.'
     ),
     user: publicUser(user),
   });
@@ -1086,7 +1098,7 @@ app.post('/api/auth/login', asyncRoute(async (req, res) => {
   const passwordOk = await bcrypt.compare(password, user.password_hash);
   if (!passwordOk) fail(401, 'Email hoặc mật khẩu không đúng.');
 
-  const otp = generateOtp();
+  const otp = otpFor(email);
   const expires = otpExpiryIso();
   run(
     `UPDATE users
@@ -1173,15 +1185,22 @@ app.post('/api/auth/verify-otp', asyncRoute(async (req, res) => {
       [studentEmail, universityName, user.id]
     );
   } else {
+    // Đăng ký bằng email .edu.vn: OTP đã chứng minh quyền sở hữu hộp thư trường -> tự xác thực sinh viên.
+    const autoSchool = purpose === 'REGISTER' ? schoolOf(user.email) : null;
+    const taken = autoSchool && get('SELECT id FROM users WHERE student_email = ? AND id <> ?', [user.email, user.id]);
+    const autoVerify = autoSchool && !taken;
     run(
       `UPDATE users
        SET otp_code = NULL,
            otp_expires = NULL,
            otp_purpose = NULL,
            pending_student_email = NULL,
-           pending_university_name = NULL
+           pending_university_name = NULL,
+           is_student_verified = CASE WHEN ? THEN 1 ELSE is_student_verified END,
+           student_email = CASE WHEN ? THEN ? ELSE student_email END,
+           university_name = CASE WHEN ? THEN ? ELSE university_name END
        WHERE id = ?`,
-      [user.id]
+      [autoVerify ? 1 : 0, autoVerify ? 1 : 0, user.email, autoVerify ? 1 : 0, autoSchool, user.id]
     );
   }
 
@@ -1191,7 +1210,9 @@ app.post('/api/auth/verify-otp', asyncRoute(async (req, res) => {
   res.json({
     message: purpose === 'STUDENT'
       ? `Xác thực sinh viên thành công! Bạn đã có huy hiệu ${fresh.university_name}.`
-      : 'Xác thực OTP thành công. Bạn đã đăng nhập Studeal.',
+      : purpose === 'REGISTER' && fresh.is_student_verified
+        ? `Đăng ký thành công! Email trường đã được xác thực, bạn có huy hiệu ${fresh.university_name}.`
+        : 'Xác thực OTP thành công. Bạn đã đăng nhập Studeal.',
     token,
     token_type: 'Bearer',
     expires_in: JWT_EXPIRES_IN,
@@ -1267,7 +1288,13 @@ app.post('/api/auth/resend-otp', asyncRoute(async (req, res) => {
     fail(400, 'Không có email sinh viên đang chờ xác thực. Vui lòng gửi lại email sinh viên.');
   }
 
-  const otp = generateOtp();
+  // Chống spam mail: mỗi OTP gửi cách nhau tối thiểu 60 giây (thời điểm gửi = hạn - TTL).
+  const sentAt = new Date(user.otp_expires).getTime() - OTP_TTL_MINUTES * 60 * 1000;
+  if (!isDemoAccount(user.email) && user.otp_code && Date.now() - sentAt < 60 * 1000) {
+    fail(429, 'Vui lòng đợi khoảng 1 phút trước khi gửi lại OTP.');
+  }
+
+  const otp = purpose === 'STUDENT' ? generateOtp() : otpFor(user.email);
   const expires = otpExpiryIso();
   run('UPDATE users SET otp_code = ?, otp_expires = ? WHERE id = ?', [otp, expires, user.id]);
 
