@@ -3,12 +3,27 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <script>document.documentElement.classList.add('js');</script>
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#ffffff" data-theme-color>
+  <!-- Chọn giao diện sáng/tối trước khi vẽ trang để không bị nháy -->
+  <script>
+    (function () {
+      var root = document.documentElement;
+      root.classList.add('js');
+      var saved = '';
+      try {
+        saved = localStorage.getItem('studeal_theme') || '';
+        if (localStorage.getItem('studeal_token')) root.classList.add('has-session');
+      } catch (e) {}
+      var dark = saved ? saved === 'dark' : window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      root.classList.toggle('dark', dark);
+    })();
+  </script>
   {{ partial "seo.html" . }}
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
 
   <link rel="icon" type="image/png" sizes="48x48" href="{{ "images/favicon.png" | relURL }}">
   <link rel="icon" href="{{ "favicon.ico" | relURL }}?v=20261026">
@@ -16,47 +31,55 @@
 
   <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
   <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              50: '#f0f9ff',
-              100: '#e0f2fe',
-              200: '#bae6fd',
-              300: '#7dd3fc',
-              400: '#38bdf8',
-              500: '#0ea5e9',
-              600: '#0284c7',
-              700: '#0369a1',
-              800: '#075985',
-              900: '#0c4a6e'
+    // Màu trung tính, trắng và các sắc sky nhạt đi qua biến CSS (xem studeal.css) để đổi sáng/tối một chỗ.
+    (function () {
+      var v = function (name) { return 'rgb(var(--' + name + ') / <alpha-value>)'; };
+      var slate = {};
+      [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950].forEach(function (n) { slate[n] = v('slate-' + n); });
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              white: v('c-white'),
+              ink: v('c-ink'),
+              page: v('c-page'),
+              slate: slate,
+              sky: { 50: v('sky-50'), 100: v('sky-100'), 200: v('sky-200') },
+              brand: {
+                50: '#f0f9ff', 100: '#e0f2fe', 200: '#bae6fd', 300: '#7dd3fc', 400: '#38bdf8',
+                500: '#0ea5e9', 600: '#0284c7', 700: '#0369a1', 800: '#075985', 900: '#0c4a6e'
+              }
             },
-            ink: '#0b1220'
-          },
-          fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif']
-          },
-          boxShadow: {
-            soft: '0 24px 60px -28px rgba(2, 132, 199, 0.35)',
-            card: '0 18px 40px -24px rgba(15, 23, 42, 0.28)'
+            fontFamily: {
+              sans: ['"SF Pro Display"', '"SF Pro Text"', '-apple-system', 'BlinkMacSystemFont', '"Be Vietnam Pro"', 'system-ui', 'sans-serif']
+            },
+            // Tiêu đề kiểu Apple dùng semibold, không dùng nét quá đậm
+            fontWeight: { bold: '600', extrabold: '700' },
+            letterSpacing: { tight: '-0.022em', tighter: '-0.035em' },
+            boxShadow: {
+              sm: '0 1px 2px rgb(0 0 0 / 0.05)',
+              DEFAULT: '0 2px 8px -2px rgb(0 0 0 / 0.08)',
+              md: '0 6px 16px -6px rgb(0 0 0 / 0.1)',
+              lg: '0 12px 28px -10px rgb(0 0 0 / 0.14)',
+              xl: '0 20px 44px -16px rgb(0 0 0 / 0.18)',
+              '2xl': '0 32px 70px -24px rgb(0 0 0 / 0.28)',
+              soft: '0 20px 44px -18px rgb(0 0 0 / 0.16)',
+              card: '0 2px 10px -4px rgb(0 0 0 / 0.08)'
+            }
           }
         }
-      }
-    }
+      };
+    })();
   </script>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" referrerpolicy="no-referrer">
-  <link rel="stylesheet" href="{{ "css/studeal.css" | relURL }}?v=2601">
-
-  <!-- Studeal Sharp & Flat Design: cấm tuyệt đối bo góc trên mọi thành phần -->
-  <style>*, *::before, *::after { border-radius: 0px !important; }</style>
+  <link rel="stylesheet" href="{{ "css/studeal.css" | relURL }}?v=3011">
 
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
-<body class="bg-[#f7fbfe] font-sans text-slate-700 antialiased selection:bg-sky-200 selection:text-sky-950">
-  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-sky-600 focus:px-5 focus:py-3 focus:text-sm focus:font-bold focus:text-white">
+<body class="bg-page font-sans text-slate-600 antialiased">
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-sky-600 focus:px-5 focus:py-3 focus:text-sm focus:font-bold focus:text-white">
     Bỏ qua điều hướng
   </a>
 
@@ -68,15 +91,15 @@
 
   {{ partial "footer.html" . }}
 
-  <div x-data="{ show: false }" @scroll.window.throttle.200ms="show = window.scrollY > 700" x-cloak>
+  <div x-data="{ show: false }" @scroll.window.throttle.200ms="show = window.scrollY > 900" x-cloak>
     <a x-show="show" x-transition.opacity.duration.300ms href="#main"
-       class="fixed bottom-6 right-6 z-40 flex h-12 w-12 items-center justify-center bg-sky-600 text-white shadow-lg shadow-sky-600/30 transition hover:-translate-y-1 hover:bg-sky-700"
+       class="glass fixed bottom-5 right-5 z-40 flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 text-slate-700 shadow-lg transition hover:-translate-y-0.5 hover:text-sky-600"
        aria-label="Lên đầu trang">
-      <i class="fa-solid fa-arrow-up"></i>
+      <i class="fa-solid fa-arrow-up text-sm"></i>
     </a>
   </div>
 
-  <script src="{{ "js/studeal.js" | relURL }}?v=2601" defer></script>
+  <script src="{{ "js/studeal.js" | relURL }}?v=3011" defer></script>
   {{ block "scripts" . }}{{ end }}
 </body>
 </html>

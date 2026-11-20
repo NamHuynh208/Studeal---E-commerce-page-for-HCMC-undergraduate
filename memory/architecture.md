@@ -1,4 +1,4 @@
-> Cập nhật: 2026-11-02
+> Cập nhật: 2026-11-10
 
 ## Stack
 - Backend: Node >= 18, Express, sql.js (SQLite WASM, giữ trong RAM, ghi ra `backend/data/studeal.sqlite`), nodemailer, JWT, bcryptjs, multer
@@ -16,3 +16,5 @@
 - `backend/.env` không commit; `*.tar.gz` và `frontend/public/` bị gitignore
 - Video hero lấy từ dự án Remotion riêng `D:\Project\Studeal_motion_graphic\studeal-video` (composition `StudealPromo`, 1920x1080, 30fps, 28s; bản dọc `StudealPortrait` 1080x1920 cho điện thoại); bản web nằm ở `frontend/static/video/`
 - Đổi CSS/JS tĩnh thì tăng `?v=` trong `baseof.html` / `index.html` (Cloudflare cache)
+
+- Giao diện: màu trung tính/trắng/sky nhạt là biến CSS (`studeal.css` mục 1) nối vào `tailwind.config` trong `baseof.html`; chế độ tối = class `dark` trên `<html>`. Khối nền đậm thêm class `on-dark` để giữ bộ màu sáng bên trong. Mã cũ không có `rounded-*`: `studeal.css` mục 3 bo góc theo vai trò phần tử, phần tử có `rounded-*` tường minh thì giữ nguyên.

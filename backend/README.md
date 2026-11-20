@@ -29,9 +29,9 @@ Mật khẩu chung: **`123456`**
 
 | Email | Vai trò |
 |---|---|
-| `2612205118@student.hcmus.edu.vn` | Người bán – SV ĐH KHTN (đã xác thực) |
-| `nnamhuynh2008luuanh1@gmail.com` | Người bán – SV ĐH CNTT (đã xác thực) |
-| `namhuynhnhat2008@gmail.com` | Người mua |
+| `xxxxxxxxxx@student.hcmus.edu.vn` | Người bán – SV ĐH KHTN (đã xác thực) |
+| `xxxxxxxx@gm.uit.edu.vn` | Người bán – SV ĐH CNTT (đã xác thực) |
+| `nguyenvana@gmail.com` | Người mua |
 
 > **Đăng nhập:** nhập email → nhận OTP 6 số → nhập OTP.
 > Tài khoản demo dùng OTP cố định `246810` (hiện sẵn trên màn hình). Tài khoản đăng ký mới luôn nhận OTP thật qua email; đăng ký bằng email `*.edu.vn` sẽ tự xác thực sinh viên sau khi nhập OTP.

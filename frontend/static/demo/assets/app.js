@@ -430,9 +430,9 @@
 
       <p class="form-note" style="margin-top:14px;">
         Tài khoản demo (mật khẩu 123456):
-        <button type="button" class="link-btn" data-action="demo-login" data-email="namhuynhnhat2008@gmail.com">người mua</button> ·
-        <button type="button" class="link-btn" data-action="demo-login" data-email="2612205118@student.hcmus.edu.vn">SV KHTN</button> ·
-        <button type="button" class="link-btn" data-action="demo-login" data-email="nnamhuynh2008luuanh1@gmail.com">SV UIT</button>
+        <button type="button" class="link-btn" data-action="demo-login" data-email="nguyenvana@gmail.com">người mua</button> ·
+        <button type="button" class="link-btn" data-action="demo-login" data-email="xxxxxxxxxx@student.hcmus.edu.vn">SV KHTN</button> ·
+        <button type="button" class="link-btn" data-action="demo-login" data-email="xxxxxxxx@gm.uit.edu.vn">SV UIT</button>
       </p>
     `, 'auth');
   }

@@ -24,7 +24,7 @@
           }
         });
       },
-      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+      { threshold: 0.1, rootMargin: '0px 0px -6% 0px' }
     );
 
     items.forEach(function (item) {
@@ -32,75 +32,155 @@
     });
   }
 
-  function initIcons() {
-    if (window.lucide && typeof window.lucide.createIcons === 'function') {
-      window.lucide.createIcons();
+  // Nút sáng/tối: mặc định theo hệ thống, bấm thì nhớ lựa chọn trên thiết bị.
+  function initTheme() {
+    var root = document.documentElement;
+    var meta = document.querySelector('[data-theme-color]');
+
+    function sync() {
+      if (meta) meta.setAttribute('content', root.classList.contains('dark') ? '#000000' : '#ffffff');
+      document.dispatchEvent(new Event('studeal:theme'));
+    }
+
+    sync();
+    document.addEventListener('click', function (event) {
+      var button = event.target.closest('[data-theme-toggle]');
+      if (!button) return;
+      var dark = !root.classList.contains('dark');
+      root.classList.toggle('dark', dark);
+      try { localStorage.setItem('studeal_theme', dark ? 'dark' : 'light'); } catch (e) { /* chế độ riêng tư */ }
+      sync();
+    });
+
+    if (window.matchMedia) {
+      var query = window.matchMedia('(prefers-color-scheme: dark)');
+      var follow = function (event) {
+        var saved = '';
+        try { saved = localStorage.getItem('studeal_theme') || ''; } catch (e) { /* ignore */ }
+        if (saved) return; // người dùng đã tự chọn
+        root.classList.toggle('dark', event.matches);
+        sync();
+      };
+      if (query.addEventListener) query.addEventListener('change', follow);
     }
   }
 
-  // Video motion phủ hero: tự phát 1 lần, hết video (hoặc lỗi) thì hero hiện lại kèm nút phát lại.
+  // Ô tài khoản trên header: thay nút Đăng nhập khi đã đăng nhập (trang chủ cập nhật qua sự kiện studeal:auth)
+  function initHeaderAccount() {
+    var chip = document.querySelector('[data-header-account]');
+    if (!chip) return;
+    function render() {
+      var user = null;
+      try {
+        if (localStorage.getItem('studeal_token')) user = JSON.parse(localStorage.getItem('studeal_user') || 'null');
+      } catch (e) { user = null; }
+      chip.classList.toggle('hidden', !user);
+      document.documentElement.classList.toggle('has-session', Boolean(user));
+      if (!user) return;
+      var name = String(user.name || 'Sinh viên').trim();
+      chip.querySelector('[data-account-initial]').textContent = name.charAt(0).toUpperCase();
+      chip.querySelector('[data-account-name]').textContent = name;
+      var status = chip.querySelector('[data-account-status]');
+      status.textContent = user.verified ? 'Đã xác thực ' + (user.school || 'mail sinh viên') : 'Chưa xác thực';
+      status.className = 'block truncate text-[11px] leading-tight ' + (user.verified ? 'text-emerald-600' : 'text-slate-400');
+      chip.setAttribute('aria-label', 'Mở tài khoản ' + name);
+    }
+    render();
+    document.addEventListener('studeal:auth', render);
+  }
+
+  // Video giới thiệu trong khung hero: tự phát (tắt tiếng, lặp) khi nằm trong khung nhìn,
+  // dừng khi cuộn đi; người dùng bấm tạm dừng thì không tự phát lại.
   function initHeroVideo() {
-    var frame = document.querySelector('[data-hero-frame]');
-    if (!frame) return;
-    var video = frame.querySelector('[data-hero-video]');
-    var content = frame.querySelector('[data-hero-content]');
-    var play = frame.querySelector('[data-hero-play]');
-    var stallTimer = null;
-    var startTimer = null;
-    // điện thoại dùng bản dọc 9:16; chỉ gán 1 nguồn để không tải cả 2 file
-    // shortcut: chọn 1 lần lúc tải trang, xoay màn hình không đổi bản video
-    var mobile = window.matchMedia && window.matchMedia('(max-width: 767px)').matches;
-    video.src = (mobile && video.dataset.srcMobile) || video.dataset.src;
-
-    function setPlaying(playing) {
-      frame.classList.toggle('is-playing', playing);
-      frame.classList.toggle('is-done', !playing);
-      content.inert = playing;
-      play.tabIndex = playing ? -1 : 0;
-    }
-
-    // keepRolling: hòa tan khi video còn chạy nốt những frame cuối (không đóng băng hình)
-    function finish(keepRolling) {
-      clearTimeout(stallTimer);
-      clearTimeout(startTimer);
-      if (frame.classList.contains('is-done')) return;
-      var hadFocus = frame.contains(document.activeElement);
-      if (keepRolling !== true) video.pause();
-      setPlaying(false);
-      if (hadFocus) play.focus({ preventScroll: true });
-    }
-
-    function start() {
-      clearTimeout(startTimer);
-      setPlaying(true);
-      // mạng chậm / trình duyệt chặn autoplay: không để hero bị che quá 3s
-      stallTimer = setTimeout(finish, 3000);
-      try { video.currentTime = 0; } catch (e) { /* metadata chưa tải */ }
-      var p = video.play();
-      if (p && p.catch) p.catch(finish);
-    }
-
-    video.addEventListener('playing', function () { clearTimeout(stallTimer); });
-    // video tự có outro (thẻ trượt về chỗ thẻ hero, nền về màu hero) -> chỉ hòa tan ở 0,4s cuối
-    video.addEventListener('timeupdate', function () {
-      if (video.duration && video.duration - video.currentTime <= 0.4) finish(true);
-    });
-    video.addEventListener('ended', function () { finish(true); });
-    video.addEventListener('error', finish);
-    play.addEventListener('click', function () {
-      setPlaying(true);
-      // đợi nội dung hero rút đi rồi mới phát từ đầu
-      startTimer = setTimeout(start, 300);
-    });
+    var tile = document.querySelector('[data-hero-tile]');
+    if (!tile) return;
+    var video = tile.querySelector('[data-hero-video]');
+    var button = tile.querySelector('[data-hero-toggle]');
+    if (!video || !button) return;
 
     var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduced) setPlaying(false);
-    else start();
+    var userPaused = reduced; // giảm chuyển động: chỉ phát khi người dùng bấm
+    var loaded = false;
+
+    // shortcut: chọn bản dọc/ngang 1 lần lúc tải trang, xoay màn hình không đổi bản video
+    var mobile = window.matchMedia && window.matchMedia('(max-width: 767px)').matches;
+
+    // điện thoại dùng bản dọc 9:16, giao diện tối dùng bản nền tối; chỉ gán 1 nguồn để không tải nhiều file
+    function pickSrc() {
+      var d = video.dataset;
+      var dark = document.documentElement.classList.contains('dark');
+      if (mobile) return (dark && d.srcMobileDark) || d.srcMobile || d.src;
+      return (dark && d.srcDark) || d.src;
+    }
+
+    function load() {
+      if (loaded) return;
+      loaded = true;
+      video.src = pickSrc();
+    }
+
+    // Đổi sáng/tối khi video đã tải: thay nguồn, giữ vị trí đang xem
+    document.addEventListener('studeal:theme', function () {
+      if (!loaded) return;
+      var next = pickSrc();
+      if (video.getAttribute('src') === next) return;
+      var time = video.currentTime;
+      var wasPlaying = !video.paused;
+      video.addEventListener('loadedmetadata', function () {
+        try { video.currentTime = time; } catch (e) { /* ignore */ }
+      }, { once: true });
+      video.preload = 'auto'; // preload="none" sẽ không tải nguồn mới cho đến khi play()
+      video.src = next;
+      if (wasPlaying) play();
+    });
+
+    function setIcon(playing) {
+      button.innerHTML = '<i class="fa-solid ' + (playing ? 'fa-pause' : 'fa-play') + '" aria-hidden="true"></i>';
+      button.setAttribute('aria-label', playing ? 'Tạm dừng video giới thiệu' : 'Phát video giới thiệu');
+    }
+
+    function play() {
+      load();
+      var promise = video.play();
+      if (promise && promise.catch) promise.catch(function () { setIcon(false); });
+    }
+
+    video.addEventListener('playing', function () {
+      tile.classList.add('is-playing');
+      setIcon(true);
+    });
+    video.addEventListener('pause', function () { setIcon(false); });
+    video.addEventListener('error', function () { tile.classList.remove('is-playing'); setIcon(false); });
+
+    button.addEventListener('click', function () {
+      if (video.paused) {
+        userPaused = false;
+        play();
+      } else {
+        userPaused = true;
+        video.pause();
+      }
+    });
+
+    if (!('IntersectionObserver' in window)) {
+      if (!userPaused) play();
+      return;
+    }
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          if (!userPaused) play();
+        } else if (!video.paused) {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.35 }).observe(tile);
   }
 
   function init() {
     initReveal();
-    initIcons();
+    initTheme();
+    initHeaderAccount();
     initHeroVideo();
   }
 
@@ -109,6 +189,4 @@
   } else {
     init();
   }
-
-  document.addEventListener('alpine:initialized', initIcons);
 })();

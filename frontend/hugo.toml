@@ -10,10 +10,10 @@ summaryLength = 30
 timeZone = "Asia/Ho_Chi_Minh"
 
 [params]
-  description = "Studeal là sàn mua bán giáo trình, máy tính và đồ dùng sinh viên đã xác thực .edu.vn tại TP.HCM. Escrow an toàn, phí trung gian chỉ 2%, ẩn danh tuyệt đối thông tin người bán."
+  description = "Studeal là sàn mua bán giáo trình, máy tính và đồ dùng sinh viên đã xác thực mail sinh viên tại TP.HCM. Escrow an toàn, phí trung gian chỉ 2%, ẩn danh tuyệt đối thông tin người bán."
   keywords = ["studeal", "mua bán giáo trình", "đồ cũ sinh viên", "escrow", "sinh viên TP.HCM", "đại học khoa học tự nhiên", "tuyến giao hàng xanh"]
   author = "Studeal Team"
-  ogImage = "images/og-cover.png"
+  ogImage = "images/og-share-v2.png"
   platformFee = 2
   vipFee = 15000
   email = "contact@studeal.namprojects.site"

@@ -38,9 +38,9 @@ const DEMO_MODE = String(process.env.DEMO_MODE || 'true').toLowerCase() !== 'fal
 // Chỉ 3 tài khoản mẫu dùng OTP cố định (không gửi mail); mọi tài khoản khác nhận OTP thật qua SMTP.
 const DEMO_ACCOUNT_OTP = String(process.env.DEMO_ACCOUNT_OTP || '246810').replace(/\D/g, '').padStart(6, '0').slice(0, 6);
 const DEMO_EMAILS = new Set([
-  'namhuynhnhat2008@gmail.com',
-  '2612205118@student.hcmus.edu.vn',
-  'nnamhuynh2008luuanh1@gmail.com',
+  'nguyenvana@gmail.com',
+  'xxxxxxxxxx@student.hcmus.edu.vn',
+  'xxxxxxxx@gm.uit.edu.vn',
 ]);
 const isDemoAccount = (email) => DEMO_EMAILS.has(email);
 
@@ -388,8 +388,33 @@ async function initDatabase() {
     seedDatabase();
     console.log('[db] Đã nạp dữ liệu mẫu (3 users, 8 products, 3 vouchers).');
   }
+  ensureDemoAccounts();
 
   persist();
+}
+
+// Seed chỉ chạy với CSDL trống, nên CSDL đã có trên server được đồng bộ tên/email demo ở mỗi lần khởi động.
+// User id 1, 2, 3 luôn là tài khoản demo do seed tạo; giữ nguyên tin đăng và đơn hàng của chúng.
+const DEMO_ACCOUNT_ROWS = [
+  { id: 1, name: 'Trần Thị B', email: 'xxxxxxxxxx@student.hcmus.edu.vn' },
+  { id: 2, name: 'Lê Văn C', email: 'xxxxxxxx@gm.uit.edu.vn' },
+  { id: 3, name: 'Nguyễn Văn A', email: 'nguyenvana@gmail.com' },
+];
+
+function ensureDemoAccounts() {
+  const passwordHash = bcrypt.hashSync('123456', 10);
+  for (const demo of DEMO_ACCOUNT_ROWS) {
+    const row = get('SELECT id, name, email FROM users WHERE id = ?', [demo.id]);
+    if (!row || (row.email === demo.email && row.name === demo.name)) continue;
+    const taken = get('SELECT id FROM users WHERE email = ? AND id <> ?', [demo.email, demo.id]);
+    if (taken) {
+      console.warn(`[db] Bỏ qua đổi tài khoản demo #${demo.id}: email ${demo.email} đã thuộc user #${taken.id}.`);
+      continue;
+    }
+    run('UPDATE users SET name = ?, email = ?, password_hash = ? WHERE id = ?', [demo.name, demo.email, passwordHash, demo.id]);
+    if (demo.id !== 3) run('UPDATE users SET student_email = ? WHERE id = ?', [demo.email, demo.id]);
+    console.log(`[db] Đồng bộ tài khoản demo #${demo.id}: ${row.email} -> ${demo.email}`);
+  }
 }
 
 function seedDatabase() {
@@ -404,21 +429,21 @@ function seedDatabase() {
       `INSERT INTO users
         (id, name, email, password_hash, is_student_verified, student_email, university_name, wallet_balance, created_at)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [1, 'Nguyễn Minh Anh', '2612205118@student.hcmus.edu.vn', passwordHash, 1,
-        'minhanh@student.hcmus.edu.vn', 'SV ĐH KHTN', 0, iso(60)]
+      [1, 'Trần Thị B', 'xxxxxxxxxx@student.hcmus.edu.vn', passwordHash, 1,
+        'xxxxxxxxxx@student.hcmus.edu.vn', 'SV ĐH KHTN', 0, iso(60)]
     );
     run(
       `INSERT INTO users
         (id, name, email, password_hash, is_student_verified, student_email, university_name, wallet_balance, created_at)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [2, 'Trần Quốc Bảo', 'nnamhuynh2008luuanh1@gmail.com', passwordHash, 1,
-        'baotq@gm.uit.edu.vn', 'SV ĐH CNTT', 0, iso(55)]
+      [2, 'Lê Văn C', 'xxxxxxxx@gm.uit.edu.vn', passwordHash, 1,
+        'xxxxxxxx@gm.uit.edu.vn', 'SV ĐH CNTT', 0, iso(55)]
     );
     run(
       `INSERT INTO users
         (id, name, email, password_hash, is_student_verified, student_email, university_name, wallet_balance, created_at)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [3, 'Lê Thu Hà', 'namhuynhnhat2008@gmail.com', passwordHash, 0, null, null, 0, iso(50)]
+      [3, 'Nguyễn Văn A', 'nguyenvana@gmail.com', passwordHash, 0, null, null, 0, iso(50)]
     );
 
     /* --------------------------- PRODUCTS -------------------------- */
@@ -1978,9 +2003,9 @@ async function start() {
     console.log(`  Phí sàn   : ${Math.round(PLATFORM_FEE_RATE * 10000) / 100}% | VIP: ${VIP_FEE.toLocaleString('vi-VN')}đ`);
     console.log('------------------------------------------------------------');
     console.log('  Tài khoản demo (mật khẩu: 123456)');
-    console.log('   - 2612205118@student.hcmus.edu.vn  (SV ĐH KHTN)');
-    console.log('   - nnamhuynh2008luuanh1@gmail.com   (SV ĐH CNTT)');
-    console.log('   - namhuynhnhat2008@gmail.com        (Người mua)');
+    console.log('   - xxxxxxxxxx@student.hcmus.edu.vn  (SV ĐH KHTN)');
+    console.log('   - xxxxxxxx@gm.uit.edu.vn   (SV ĐH CNTT)');
+    console.log('   - nguyenvana@gmail.com        (Người mua)');
     console.log('============================================================');
     console.log('');
   });

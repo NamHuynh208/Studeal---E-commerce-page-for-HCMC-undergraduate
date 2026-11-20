@@ -1,114 +1,74 @@
-﻿<footer class="relative mt-24 overflow-hidden bg-[#061826] text-slate-300">
-  <div class="relative mx-auto max-w-7xl px-4 pb-10 pt-16 sm:px-6 lg:px-8">
-    <div class="grid gap-12 lg:grid-cols-12">
+﻿<footer class="mt-24 bg-slate-100 text-slate-500">
+  <div class="mx-auto max-w-7xl px-4 pb-8 pt-14 sm:px-6 lg:px-8">
+    <div class="grid gap-10 lg:grid-cols-12">
       <div class="lg:col-span-4">
-        <a href="{{ "/" | relURL }}" class="inline-flex items-center gap-3" aria-label="Studeal – trang chủ">
-          <img src="{{ "images/logo-mark.png" | relURL }}" alt="" width="44" height="44" class="h-11 w-11 object-contain">
-          <span class="leading-tight">
-            <strong class="block text-lg font-extrabold tracking-tight text-white">Studeal</strong>
-            <small class="block text-[10px] font-semibold uppercase tracking-[0.16em] text-sky-300">Chợ đồ cũ sinh viên</small>
-          </span>
+        <a href="{{ "/" | relURL }}" class="inline-flex items-center gap-2.5" aria-label="Studeal – trang chủ">
+          <img src="{{ "images/logo-mark.png" | relURL }}" alt="" width="36" height="36" class="h-9 w-9 rounded-lg object-contain">
+          <strong class="text-lg font-bold tracking-tight text-ink">Studeal</strong>
         </a>
-        <p class="mt-5 max-w-sm text-sm leading-relaxed text-slate-400">
-          Sàn mua bán giáo trình, máy tính và đồ dùng dành riêng cho sinh viên đã xác thực
-          <span class="font-semibold text-sky-300">.edu.vn</span> tại TP.Hồ Chí Minh.
+        <p class="mt-4 max-w-sm text-sm leading-relaxed">
+          Chợ đồ cũ dành riêng cho sinh viên đã xác thực mail sinh viên tại TP. Hồ Chí Minh.
           Escrow giữ tiền an toàn, phí trung gian chỉ {{ site.Params.platformFee }}%.
         </p>
-        <div class="mt-6 flex items-center gap-2">
-          <a href="mailto:{{ site.Params.email }}" aria-label="Gửi email cho Studeal"
-             class="flex h-10 w-10 items-center justify-center border border-white/10 bg-white/5 text-slate-300 transition hover:-translate-y-0.5 hover:border-sky-400/40 hover:bg-sky-500/15 hover:text-sky-300">
-            <i class="fa-solid fa-envelope"></i>
-          </a>
-          <a href="{{ site.Params.facebook }}" target="_blank" rel="noopener noreferrer" aria-label="Studeal trên Facebook"
-             class="flex h-10 w-10 items-center justify-center border border-white/10 bg-white/5 text-slate-300 transition hover:-translate-y-0.5 hover:border-sky-400/40 hover:bg-sky-500/15 hover:text-sky-300">
-            <i class="fa-brands fa-facebook-f"></i>
-          </a>
-          <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" aria-label="Studeal trên TikTok"
-             class="flex h-10 w-10 items-center justify-center border border-white/10 bg-white/5 text-slate-300 transition hover:-translate-y-0.5 hover:border-sky-400/40 hover:bg-sky-500/15 hover:text-sky-300">
-            <i class="fa-brands fa-tiktok"></i>
-          </a>
-        </div>
-        <div class="mt-6 inline-flex items-center gap-2 border border-emerald-400/20 bg-emerald-400/10 px-3 py-1.5 text-[11px] font-semibold text-emerald-300">
-          <span class="relative flex h-2 w-2">
-            <span class="absolute inline-flex h-full w-full animate-ping bg-emerald-400 opacity-75"></span>
-            <span class="relative inline-flex h-2 w-2 bg-emerald-400"></span>
-          </span>
-          Đang phục vụ sinh viên TP.HCM
+
+        <div x-data="{ email: '', joined: false }" class="mt-6 max-w-sm">
+          <form x-show="!joined" @submit.prevent="joined = email.length > 3" class="flex gap-2">
+            <label for="newsletter-email" class="sr-only">Email sinh viên</label>
+            <input id="newsletter-email" type="email" required x-model="email" placeholder="ban@student.edu.vn"
+                   class="h-11 min-w-0 flex-1 rounded-full border border-slate-300 bg-white px-4 text-sm text-ink placeholder:text-slate-400 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/30">
+            <button type="submit" class="h-11 shrink-0 rounded-full bg-ink px-5 text-sm font-semibold text-page transition hover:opacity-85">
+              Nhận tin
+            </button>
+          </form>
+          <p x-show="!joined" class="mt-2 text-xs text-slate-400">Lịch chuyến xanh và voucher, mỗi tuần một email.</p>
+          <p x-show="joined" x-cloak x-transition class="rounded-2xl bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+            <i class="fa-solid fa-circle-check mr-1"></i>
+            Đã ghi nhận email. Hẹn gặp bạn ở chuyến xe xanh tuần này.
+          </p>
         </div>
       </div>
 
-      <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:col-span-6">
+      <div class="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-8 lg:pl-10">
         <div>
-          <h3 class="text-xs font-bold uppercase tracking-[0.16em] text-white">Khám phá</h3>
-          <ul class="mt-4 space-y-3 text-sm">
-            <li><a href="{{ "/" | relURL }}" class="text-slate-400 transition hover:text-sky-300">Trang chủ</a></li>
-            <li><a href="{{ "/#san-pham" | relURL }}" class="text-slate-400 transition hover:text-sky-300">Chợ sinh viên</a></li>
-            <li><a href="{{ "/#cach-hoat-dong" | relURL }}" class="text-slate-400 transition hover:text-sky-300">Cách hoạt động</a></li>
-            <li><a href="{{ site.Params.demoURL | relURL }}" class="text-slate-400 transition hover:text-sky-300">Dùng thử ứng dụng</a></li>
+          <h3 class="text-xs font-semibold text-ink">Khám phá</h3>
+          <ul class="mt-3 space-y-2.5 text-[13px]">
+            <li><a href="{{ "/" | relURL }}" class="transition hover:text-ink">Trang chủ</a></li>
+            <li><a href="{{ "/#san-pham" | relURL }}" class="transition hover:text-ink">Chợ sinh viên</a></li>
+            <li><a href="{{ "/#cach-hoat-dong" | relURL }}" class="transition hover:text-ink">Cách hoạt động</a></li>
+            <li><a href="{{ site.Params.demoURL | relURL }}" class="transition hover:text-ink">Dùng thử ứng dụng</a></li>
           </ul>
         </div>
         <div>
-          <h3 class="text-xs font-bold uppercase tracking-[0.16em] text-white">Về Studeal</h3>
-          <ul class="mt-4 space-y-3 text-sm">
-            <li><a href="{{ "/about/" | relURL }}" class="text-slate-400 transition hover:text-sky-300">Giới thiệu</a></li>
-            <li><a href="{{ "/about/#escrow" | relURL }}" class="text-slate-400 transition hover:text-sky-300">Cơ chế Escrow</a></li>
-            <li><a href="{{ "/about/#verification" | relURL }}" class="text-slate-400 transition hover:text-sky-300">Xác thực .edu.vn</a></li>
-            <li><a href="{{ "/about/#routine" | relURL }}" class="text-slate-400 transition hover:text-sky-300">Tuyến giao hàng xanh</a></li>
+          <h3 class="text-xs font-semibold text-ink">Về Studeal</h3>
+          <ul class="mt-3 space-y-2.5 text-[13px]">
+            <li><a href="{{ "/about/" | relURL }}" class="transition hover:text-ink">Giới thiệu</a></li>
+            <li><a href="{{ "/about/#escrow" | relURL }}" class="transition hover:text-ink">Cơ chế Escrow</a></li>
+            <li><a href="{{ "/about/#verification" | relURL }}" class="transition hover:text-ink">Xác thực .edu.vn</a></li>
+            <li><a href="{{ "/about/#routine" | relURL }}" class="transition hover:text-ink">Tuyến giao hàng xanh</a></li>
           </ul>
         </div>
         <div class="col-span-2 sm:col-span-1">
-          <h3 class="text-xs font-bold uppercase tracking-[0.16em] text-white">Liên hệ</h3>
-          <ul class="mt-4 space-y-3 text-sm">
-            <li class="flex items-start gap-3">
-              <i class="fa-solid fa-location-dot mt-0.5 text-sky-400"></i>
-              <span class="text-slate-400">{{ site.Params.address }}</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <i class="fa-solid fa-envelope mt-0.5 text-sky-400"></i>
-              <a href="mailto:{{ site.Params.email }}" class="min-w-0 break-all text-slate-400 transition hover:text-sky-300">{{ site.Params.email }}</a>
-            </li>
-            <li class="flex items-start gap-3">
-              <i class="fa-solid fa-clock mt-0.5 text-sky-400"></i>
-              <span class="text-slate-400">T2 – T7 · 08:00 – 20:00</span>
+          <h3 class="text-xs font-semibold text-ink">Liên hệ</h3>
+          <ul class="mt-3 space-y-2.5 text-[13px]">
+            <li>{{ site.Params.address }}</li>
+            <li><a href="mailto:{{ site.Params.email }}" class="break-all transition hover:text-ink">{{ site.Params.email }}</a></li>
+            <li>T2 – T7 · 08:00 – 20:00</li>
+            <li class="flex gap-4 pt-1 text-base text-slate-500">
+              <a href="mailto:{{ site.Params.email }}" aria-label="Gửi email cho Studeal" class="transition hover:text-ink"><i class="fa-solid fa-envelope"></i></a>
+              <a href="{{ site.Params.facebook }}" target="_blank" rel="noopener noreferrer" aria-label="Studeal trên Facebook" class="transition hover:text-ink"><i class="fa-brands fa-facebook-f"></i></a>
+              <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" aria-label="Studeal trên TikTok" class="transition hover:text-ink"><i class="fa-brands fa-tiktok"></i></a>
             </li>
           </ul>
-        </div>
-      </div>
-
-      <div class="lg:col-span-3">
-        <div class=" border border-white/10 bg-white/5 p-5 backdrop-blur-sm">
-          <h3 class="text-sm font-bold text-white">Nhận tin tuyến giao hàng</h3>
-          <p class="mt-2 text-xs leading-relaxed text-slate-400">
-            Lịch chuyến xanh, voucher và mẹo mua bán an toàn — mỗi tuần một email.
-          </p>
-          <div x-data="{ email: '', joined: false }" class="mt-4">
-            <form x-show="!joined" @submit.prevent="joined = email.length > 3" class="space-y-2">
-              <label for="newsletter-email" class="sr-only">Email sinh viên</label>
-              <input id="newsletter-email" type="email" required x-model="email" placeholder="ban@student.edu.vn"
-                     class="w-full border border-white/10 bg-[#0a2236] px-3.5 py-2.5 text-sm text-white placeholder:text-slate-500 focus:border-sky-400 focus:ring-sky-400/30">
-              <button type="submit"
-                      class="w-full bg-sky-600 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-sky-700">
-                Đăng ký nhận tin
-              </button>
-              <p class="text-[10px] leading-relaxed text-slate-500">Không spam. Hủy đăng ký bất cứ lúc nào.</p>
-            </form>
-            <div x-show="joined" x-cloak x-transition class=" border border-emerald-400/20 bg-emerald-400/10 p-3 text-xs text-emerald-300">
-              <i class="fa-solid fa-circle-check mr-1"></i>
-              Đã ghi nhận email. Hẹn gặp bạn ở chuyến xe xanh tuần này!
-            </div>
-          </div>
         </div>
       </div>
     </div>
 
-    <div class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-xs text-slate-500 sm:flex-row">
-      <p>© {{ now.Year }} Studeal. Đồ án sinh viên — không vì mục tiêu lợi nhuận.</p>
-      <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
-        <a href="{{ "/about/" | relURL }}" class="transition hover:text-sky-300">Về chúng tôi</a>
-        <a href="{{ "/about/#escrow" | relURL }}" class="transition hover:text-sky-300">Bảo mật &amp; Escrow</a>
-        <a href="{{ "/about/#verification" | relURL }}" class="transition hover:text-sky-300">Quy chế xác thực</a>
-        <a href="{{ "/sitemap.xml" | relURL }}" class="transition hover:text-sky-300">Sitemap</a>
-      </div>
+    <div class="mt-10 flex flex-col items-start justify-between gap-3 border-t border-slate-300 pt-5 text-xs sm:flex-row sm:items-center">
+      <p>© {{ now.Year }} Studeal. Đồ án sinh viên, không vì mục tiêu lợi nhuận.</p>
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
+        <a href="{{ "/about/" | relURL }}" class="transition hover:text-ink">Về chúng tôi</a>
+        <a href="{{ "/about/#escrow" | relURL }}" class="transition hover:text-ink">Bảo mật &amp; Escrow</a>
+        <a href="{{ "/about/#verification" | relURL }}" class="transition hover:text-ink">Quy chế xác thực</a>      </div>
     </div>
   </div>
 </footer>

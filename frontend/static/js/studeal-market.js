@@ -8,6 +8,10 @@
 
   const API_BASE = '';
   const TOKEN_KEY = 'studeal_token';
+  const HEADER_USER_KEY = 'studeal_user';
+  const SAVED_KEY = 'studeal_saved';   // tin đã lưu (chỉ trên thiết bị này)
+  const RECENT_KEY = 'studeal_recent'; // tin vừa xem
+  const RECENT_MAX = 8;
   const FALLBACK_IMG = 'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=900&q=80';
   const VIETQR_BANK = {
     bin: '970436',
@@ -55,12 +59,12 @@
     CANCELLED: { label: 'Đã hủy', cls: 'bg-rose-50 text-rose-700 ring-rose-200' },
   };
   const BTN = {
-    primary: 'inline-flex h-10 w-full items-center justify-center gap-2 bg-sky-600 px-3 text-xs font-extrabold text-white shadow-lg shadow-sky-500/15 transition hover:bg-sky-700 disabled:cursor-wait disabled:opacity-70',
-    outline: 'inline-flex h-10 w-full items-center justify-center gap-2 border border-sky-200 bg-white px-3 text-xs font-extrabold text-sky-700 transition hover:border-sky-300 hover:bg-sky-50 disabled:cursor-wait disabled:opacity-70',
-    gold: 'inline-flex h-10 w-full items-center justify-center gap-2 bg-amber-400 px-3 text-xs font-extrabold text-amber-950 shadow-lg shadow-amber-400/25 transition hover:bg-amber-300 disabled:cursor-wait disabled:opacity-70',
-    soft: 'inline-flex h-9 items-center justify-center gap-2 bg-sky-50 px-3.5 text-[11px] font-extrabold text-sky-700 ring-1 ring-sky-100 transition hover:bg-sky-100 disabled:cursor-wait disabled:opacity-70',
-    danger: 'inline-flex h-9 items-center justify-center gap-2 bg-rose-50 px-3.5 text-[11px] font-extrabold text-rose-700 ring-1 ring-rose-100 transition hover:bg-rose-100 disabled:cursor-wait disabled:opacity-70',
-    success: 'inline-flex h-9 items-center justify-center gap-2 bg-emerald-600 px-3.5 text-[11px] font-extrabold text-white shadow-sm transition hover:bg-emerald-700 disabled:cursor-wait disabled:opacity-70',
+    primary: 'inline-flex h-11 w-full items-center justify-center gap-2 rounded-full bg-sky-600 px-4 text-[13px] font-semibold text-white transition hover:bg-sky-700 active:scale-[0.98] disabled:cursor-wait disabled:opacity-70',
+    outline: 'inline-flex h-11 w-full items-center justify-center gap-2 rounded-full bg-white px-4 text-[13px] font-semibold text-ink ring-1 ring-inset ring-slate-300 transition hover:bg-slate-100 active:scale-[0.98] disabled:cursor-wait disabled:opacity-70',
+    gold: 'inline-flex h-11 w-full items-center justify-center gap-2 rounded-full bg-amber-400 px-4 text-[13px] font-semibold text-amber-950 transition hover:bg-amber-300 active:scale-[0.98] disabled:cursor-wait disabled:opacity-70',
+    soft: 'inline-flex h-9 items-center justify-center gap-2 rounded-full bg-sky-50 px-4 text-xs font-semibold text-sky-700 transition hover:bg-sky-100 disabled:cursor-wait disabled:opacity-70',
+    danger: 'inline-flex h-9 items-center justify-center gap-2 rounded-full bg-rose-50 px-4 text-xs font-semibold text-rose-700 transition hover:bg-rose-100 disabled:cursor-wait disabled:opacity-70',
+    success: 'inline-flex h-9 items-center justify-center gap-2 rounded-full bg-emerald-600 px-4 text-xs font-semibold text-white transition hover:bg-emerald-700 disabled:cursor-wait disabled:opacity-70',
   };
 
   const state = {
@@ -73,7 +77,9 @@
     loadingProducts: false,
     productError: null,
     marketSig: '',
-    filters: { q: '', category: '', delivery: '' },
+    filters: { q: '', category: '', delivery: '', price: '', sort: 'new', saved: false },
+    saved: [],
+    recent: [],
     offers: { sent: [], received: [] },
     orders: { buying: [], selling: [], orders: [] },
     vouchers: [],
@@ -271,6 +277,9 @@
     const content = $('#marketModalContent');
     if (!root || root.classList.contains('hidden')) return;
     root.classList.remove('is-open');
+    if (/^#sp-\d+$/.test(window.location.hash)) {
+      try { window.history.replaceState(null, '', window.location.pathname + window.location.search); } catch { /* ignore */ }
+    }
     const token = ++state.modalSeq;
     window.setTimeout(() => {
       if (token !== state.modalSeq) return;
@@ -355,29 +364,28 @@
     return head.length > 34 ? `${head.slice(0, 31)}…` : head;
   }
 
+  /** Danh sách cách nhận hàng, dùng trong trang chi tiết. */
   function deliveryTags(product) {
     return (product.delivery_methods || []).map((method) => {
-      const meta = DELIVERY_META[method.code] || { icon: 'fa-truck', tone: 'bg-slate-50 text-slate-600 ring-slate-100' };
-      let label = meta.short;
-      if (method.code === 'MEETUP') label = `Tại ${shortLocation(product.meetup_location)}`;
-      if (method.code === 'KHTN_ROUTINE') label = 'Miễn phí CS1-CS2';
-      return `<span class="inline-flex max-w-full items-center gap-1 px-2 py-1 text-[9px] font-extrabold ring-1 ${meta.tone}">
-        <i class="fa-solid ${meta.icon}" aria-hidden="true"></i><span class="truncate">${esc(label)}</span>
-      </span>`;
+      const meta = DELIVERY_META[method.code] || { icon: 'fa-truck', label: method.label || method.code, desc: '' };
+      const desc = method.code === 'MEETUP' ? `Tại ${shortLocation(product.meetup_location)}` : meta.desc;
+      return `<li class="flex items-center gap-3 py-3">
+        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-slate-100 text-sm text-slate-700"><i class="fa-solid ${meta.icon}" aria-hidden="true"></i></span>
+        <span class="min-w-0">
+          <span class="block text-[15px] font-semibold text-ink">${esc(meta.label)}</span>
+          <span class="block text-[13px] leading-snug text-slate-500">${esc(desc)}</span>
+        </span>
+      </li>`;
     }).join('');
   }
 
-  function sellerBadge(product) {
-    const badge = product.seller_badge || (product.seller && product.seller.university) || 'sinh viên';
-    return `<div class="flex min-w-0 items-center gap-1.5">
-      <span class="inline-flex max-w-full items-center gap-1 bg-emerald-50 px-2 py-1 text-[9px] font-extrabold text-emerald-700 ring-1 ring-emerald-100" title="Bảo mật 100% thông tin liên lạc">
-        <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>
-        <span class="truncate">Đã xác thực ${esc(badge)}</span>
-      </span>
-      <i class="fa-solid fa-lock shrink-0 text-[8px] text-emerald-500" title="Không hiển thị email, số điện thoại hay Zalo" aria-hidden="true"></i>
-      <span class="hidden shrink-0 text-[8px] font-bold text-emerald-600 sm:inline">Liên hệ ẩn 100%</span>
-      <span class="sr-only">Bảo mật 100% thông tin liên lạc</span>
-    </div>`;
+  /** Dòng phụ dưới tên món: tình trạng + huy hiệu trường đã xác thực. */
+  function metaLine(product) {
+    const badge = product.seller_badge || (product.seller && product.seller.university) || '';
+    return `<p class="mt-1 flex min-w-0 items-center gap-1.5 text-[13px] text-slate-500">
+      <span class="truncate">${esc(product.condition_text || '')}${badge ? ` · ${esc(badge)}` : ''}</span>
+      ${badge ? '<i class="fa-solid fa-circle-check shrink-0 text-[11px] text-emerald-500" title="Đã xác thực email trường" aria-hidden="true"></i><span class="sr-only">đã xác thực email trường</span>' : ''}
+    </p>`;
   }
 
   function isOwnProduct(product) {
@@ -393,66 +401,75 @@
     )) || null;
   }
 
-  function actionButtons(product, deal) {
+  /** compact: nút gọn trên thẻ sản phẩm; mặc định: nút đầy đủ trong trang chi tiết / tin nổi bật. */
+  function actionButtons(product, deal, { compact = false } = {}) {
+    const size = compact ? ' !h-10 !px-1 whitespace-nowrap' : '';
     if (isOwnProduct(product)) {
-      return `<button type="button" data-market-action="open-offers" class="${BTN.outline}">
-        <i class="fa-solid fa-handshake-angle" aria-hidden="true"></i> Quản lý offer của tin này
+      return `<button type="button" data-market-action="open-offers" class="${BTN.outline}${size}">
+        ${compact ? 'Quản lý offer' : '<i class="fa-solid fa-handshake-angle" aria-hidden="true"></i> Quản lý offer của tin này'}
       </button>`;
     }
-    const offerButton = `<button type="button" data-market-action="offer" data-product-id="${product.id}" class="${BTN.outline}">
-      <i class="fa-solid fa-tag" aria-hidden="true"></i> Trả giá (Deal giá)
+    const offerButton = `<button type="button" data-market-action="offer" data-product-id="${product.id}" class="${BTN.outline}${size}">
+      ${compact ? 'Trả giá' : '<i class="fa-solid fa-tag" aria-hidden="true"></i> Trả giá'}
     </button>`;
     if (deal) {
-      return `<button type="button" data-market-action="buy" data-product-id="${product.id}" data-offer-id="${deal.id}" class="${BTN.gold}">
-          <i class="fa-solid fa-bolt" aria-hidden="true"></i> Mua ngay với giá Deal
-        </button>${offerButton}`;
+      return `<button type="button" data-market-action="buy" data-product-id="${product.id}" data-offer-id="${deal.id}" class="${BTN.gold}${size}">
+          ${compact ? 'Mua giá Deal' : '<i class="fa-solid fa-bolt" aria-hidden="true"></i> Mua ngay với giá Deal'}
+        </button>${compact ? '' : offerButton}`;
     }
     return `${offerButton}
-      <button type="button" data-market-action="buy" data-product-id="${product.id}" class="${BTN.primary}">
-        <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i> Mua ngay
+      <button type="button" data-market-action="buy" data-product-id="${product.id}" class="${BTN.primary}${size}">
+        ${compact ? '<span class="sm:hidden">Mua</span><span class="hidden sm:inline">Mua ngay</span>' : '<i class="fa-solid fa-bag-shopping" aria-hidden="true"></i> Mua ngay'}
       </button>`;
   }
 
-  function priceBlock(product, deal) {
+  function priceBlock(product, deal, size = 'text-[17px]') {
     const listed = Number(product.price) || 0;
     const price = deal ? Number(deal.offer_price) || 0 : listed;
-    return `
-      <div class="min-w-0">
-        <div class="flex flex-wrap items-baseline gap-2">
-          <span class="text-lg font-extrabold tracking-tight ${deal ? 'text-amber-600' : 'text-sky-700'}">${vnd(price)}</span>
-          ${deal ? `<span class="text-[10px] font-bold text-slate-400 line-through">${vnd(listed)}</span>` : ''}
-        </div>
-        ${deal ? '<p class="mt-1 inline-flex items-center gap-1 text-[9px] font-extrabold uppercase tracking-wide text-amber-600"><i class="fa-solid fa-handshake" aria-hidden="true"></i> Giá Deal đã chốt</p>' : ''}
-      </div>`;
+    return `<p class="flex flex-wrap items-baseline gap-x-2">
+        <span class="${size} font-semibold tracking-tight ${deal ? 'text-amber-600' : 'text-ink'}">${vnd(price)}</span>
+        ${deal ? `<span class="text-[13px] text-slate-400 line-through">${vnd(listed)}</span><span class="text-[13px] font-medium text-amber-600">Giá Deal đã chốt</span>` : ''}
+      </p>`;
+  }
+
+  function isSaved(productId) {
+    return state.saved.includes(Number(productId));
+  }
+
+  function heartButton(productId, extra = '') {
+    const on = isSaved(productId);
+    return `<button type="button" data-market-action="toggle-save" data-save-id="${productId}" aria-pressed="${on}"
+      class="heart-btn above ${extra} ${on ? 'is-on' : ''}" aria-label="${on ? 'Bỏ lưu tin này' : 'Lưu tin này'}" title="${on ? 'Bỏ lưu' : 'Lưu tin'}">
+      <i class="${on ? 'fa-solid' : 'fa-regular'} fa-heart" aria-hidden="true"></i>
+    </button>`;
+  }
+
+  function imageBadge(deal, own, promoted) {
+    if (own) return '<span class="absolute left-3 top-3 rounded-full bg-slate-950/75 px-3 py-1 text-[11px] font-semibold text-white backdrop-blur">Tin của bạn</span>';
+    if (deal) return '<span class="absolute left-3 top-3 rounded-full bg-amber-300 px-3 py-1 text-[11px] font-semibold text-amber-950">Deal đã chốt</span>';
+    if (promoted) return '<span class="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-slate-700 backdrop-blur">Quảng cáo</span>';
+    return '';
   }
 
   function productCard(product) {
     const deal = acceptedOfferFor(product.id);
-    const cat = categoryMeta(product.category);
     const img = product.image_url || FALLBACK_IMG;
     const own = isOwnProduct(product);
     return `
-      <article class="group flex h-full min-w-0 flex-col overflow-hidden border border-sky-100 bg-white shadow-card transition duration-300 hover:-translate-y-1 hover:border-sky-200 hover:shadow-soft" data-product-card="${product.id}">
-        <div class="relative aspect-[4/3] shrink-0 overflow-hidden bg-sky-50">
-          <img src="${esc(img)}" alt="${esc(product.title)}" loading="lazy" data-fallback="${esc(FALLBACK_IMG)}"
-               class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
-          <span class="absolute left-3 top-3 inline-flex items-center gap-1 px-2 py-1 text-[9px] font-extrabold ring-1 backdrop-blur ${cat.cls}">
-            <i class="fa-solid ${cat.icon}" aria-hidden="true"></i> ${esc(product.category)}
-          </span>
-          ${deal ? '<span class="absolute bottom-3 left-3 inline-flex items-center gap-1 bg-amber-300 px-2.5 py-1 text-[9px] font-extrabold text-amber-950 shadow-lg"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Deal đã chấp nhận</span>' : ''}
-          ${own ? '<span class="absolute right-3 top-3 bg-slate-950/75 px-2.5 py-1 text-[9px] font-extrabold text-white backdrop-blur">Tin của bạn</span>' : ''}
+      <article class="product-card group relative flex min-w-0 flex-col" data-product-card="${product.id}">
+        <div class="media relative aspect-square overflow-hidden rounded-3xl bg-white sm:aspect-[4/3]">
+          <img src="${esc(img)}" alt="" loading="lazy" data-fallback="${esc(FALLBACK_IMG)}" class="h-full w-full object-cover">
+          ${imageBadge(deal, own, false)}
+          ${heartButton(product.id, 'absolute right-2.5 top-2.5')}
         </div>
-        <div class="flex flex-1 flex-col p-5">
-          <div class="flex flex-wrap items-center gap-1.5">
-            <span class=" bg-slate-50 px-2 py-1 text-[9px] font-bold text-slate-500 ring-1 ring-slate-100">${esc(product.condition_text)}</span>
-            <span class="text-[10px] font-semibold text-slate-400">${esc(product.seller ? product.seller.alias : '')}</span>
-          </div>
-          <h3 class="mt-2 line-clamp-2 min-h-[2.5rem] text-[15px] font-extrabold leading-snug text-ink">${esc(product.title)}</h3>
-          <div class="mt-2">${sellerBadge(product)}</div>
-          <div class="mt-3 flex flex-wrap gap-1.5">${deliveryTags(product)}</div>
-          <div class="mt-auto pt-4">
+        <div class="flex flex-1 flex-col px-1 pt-3">
+          <h3 class="line-clamp-2 text-[15px] font-semibold leading-snug text-ink sm:text-[17px]">
+            <a href="#sp-${product.id}" class="open-detail outline-none group-hover:text-sky-700" data-market-action="open-detail" data-product-id="${product.id}">${esc(product.title)}</a>
+          </h3>
+          ${metaLine(product)}
+          <div class="mt-auto pt-2.5">
             ${priceBlock(product, deal)}
-            <div class="mt-3 ${deal || own ? 'grid gap-2' : 'grid grid-cols-2 gap-2'}">${actionButtons(product, deal)}</div>
+            <div class="relative z-[2] mt-3 grid ${deal || own ? '' : 'grid-cols-2'} gap-2">${actionButtons(product, deal, { compact: true })}</div>
           </div>
         </div>
       </article>`;
@@ -460,57 +477,195 @@
 
   function vipCard(product) {
     const deal = acceptedOfferFor(product.id);
-    const cat = categoryMeta(product.category);
     const img = product.image_url || FALLBACK_IMG;
     const own = isOwnProduct(product);
     return `
-      <article class="vip-card group grid min-w-0 overflow-hidden lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]" data-product-card="${product.id}">
-        <div class="relative min-h-[190px] overflow-hidden bg-sky-50 lg:min-h-full">
-          <img src="${esc(img)}" alt="${esc(product.title)}" loading="lazy" data-fallback="${esc(FALLBACK_IMG)}"
-               class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
-          <span class="absolute left-3 top-3 inline-flex items-center gap-1 bg-sky-600 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-wide text-white shadow-lg">
-            <i class="fa-solid fa-crown" aria-hidden="true"></i> VIP
-          </span>
-          <span class="absolute right-3 top-3 bg-amber-300 px-2.5 py-1 text-[9px] font-extrabold text-amber-950 shadow-lg">Quảng cáo</span>
+      <article class="vip-card product-card group grid min-w-0 overflow-hidden rounded-[28px] bg-white sm:grid-cols-2" data-product-card="${product.id}">
+        <div class="media relative min-h-[220px] overflow-hidden bg-slate-100 sm:min-h-[300px]">
+          <img src="${esc(img)}" alt="" loading="lazy" data-fallback="${esc(FALLBACK_IMG)}" class="absolute inset-0 h-full w-full object-cover">
+          ${imageBadge(deal, own, true)}
+          ${heartButton(product.id, 'absolute right-3 top-3')}
         </div>
-        <div class="flex min-w-0 flex-col p-5 sm:p-6">
-          <div class="flex flex-wrap items-center gap-1.5">
-            <span class="inline-flex items-center gap-1 px-2 py-1 text-[9px] font-extrabold ring-1 ${cat.cls}">
-              <i class="fa-solid ${cat.icon}" aria-hidden="true"></i> ${esc(product.category)}
-            </span>
-            <span class=" bg-slate-50 px-2 py-1 text-[9px] font-bold text-slate-500 ring-1 ring-slate-100">${esc(product.condition_text)}</span>
-            ${own ? '<span class=" bg-slate-950/80 px-2 py-1 text-[9px] font-extrabold text-white">Tin của bạn</span>' : ''}
-          </div>
-          <h3 class="mt-3 line-clamp-2 text-lg font-extrabold leading-snug tracking-tight text-ink">${esc(product.title)}</h3>
-          <p class="mt-2 line-clamp-2 text-xs leading-relaxed text-slate-500">${esc(product.description || 'Tin tài trợ nổi bật từ sinh viên đã xác thực.')}</p>
-          <div class="mt-3">${sellerBadge(product)}</div>
-          <div class="mt-3 flex flex-wrap gap-1.5">${deliveryTags(product)}</div>
-          <div class="mt-auto pt-4">
-            ${priceBlock(product, deal)}
-            <div class="mt-3 flex flex-col gap-2 sm:flex-row">${actionButtons(product, deal)}</div>
+        <div class="flex min-w-0 flex-col p-6 sm:p-7">
+          <p class="text-[13px] font-medium text-sky-700">${esc(product.category)}</p>
+          <h3 class="mt-1.5 line-clamp-2 text-xl font-bold leading-snug tracking-tight text-ink sm:text-2xl">
+            <a href="#sp-${product.id}" class="open-detail outline-none group-hover:text-sky-700" data-market-action="open-detail" data-product-id="${product.id}">${esc(product.title)}</a>
+          </h3>
+          ${metaLine(product)}
+          <p class="mt-3 line-clamp-2 text-[15px] leading-relaxed text-slate-500">${esc(product.description || '')}</p>
+          <div class="mt-auto pt-5">
+            ${priceBlock(product, deal, 'text-2xl')}
+            <div class="relative z-[2] mt-4 grid ${deal || own ? '' : 'grid-cols-2'} gap-2">${actionButtons(product, deal, { compact: true })}</div>
           </div>
         </div>
       </article>`;
   }
 
+  /** Thẻ nhỏ trong dải "Bạn vừa xem". */
+  function recentCard(product) {
+    const img = product.image_url || FALLBACK_IMG;
+    return `
+      <a href="#sp-${product.id}" data-market-action="open-detail" data-product-id="${product.id}" class="group w-36 shrink-0 snap-start sm:w-44">
+        <span class="block aspect-square overflow-hidden rounded-2xl bg-white">
+          <img src="${esc(img)}" alt="" loading="lazy" data-fallback="${esc(FALLBACK_IMG)}" class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
+        </span>
+        <span class="mt-2 line-clamp-2 block text-[13px] font-medium leading-snug text-ink">${esc(product.title)}</span>
+        <span class="mt-0.5 block text-[13px] text-slate-500">${vnd(product.price)}</span>
+      </a>`;
+  }
+
+  function renderRecent() {
+    const section = $('#marketRecentSection');
+    const row = $('#marketRecentRow');
+    if (!section || !row) return;
+    const items = state.recent.map(productById).filter(Boolean);
+    section.hidden = items.length === 0;
+    row.innerHTML = items.map(recentCard).join('');
+  }
+
+  function rememberRecent(productId) {
+    const id = Number(productId);
+    state.recent = [id, ...state.recent.filter((item) => item !== id)].slice(0, RECENT_MAX);
+    storageSet(RECENT_KEY, JSON.stringify(state.recent));
+    renderRecent();
+  }
+
+  function toggleSave(productId) {
+    const id = Number(productId);
+    if (!id) return;
+    const on = !isSaved(id);
+    state.saved = on ? [...state.saved, id] : state.saved.filter((item) => item !== id);
+    storageSet(SAVED_KEY, JSON.stringify(state.saved));
+    // đổi trạng thái mọi nút tim của tin này tại chỗ, không vẽ lại cả lưới
+    $$(`[data-save-id="${id}"]`).forEach((button) => {
+      button.classList.toggle('is-on', on);
+      button.setAttribute('aria-pressed', String(on));
+      button.setAttribute('aria-label', on ? 'Bỏ lưu tin này' : 'Lưu tin này');
+      button.title = on ? 'Bỏ lưu' : 'Lưu tin';
+      const icon = button.querySelector('i');
+      if (icon) icon.className = `${on ? 'fa-solid' : 'fa-regular'} fa-heart`;
+    });
+    updateCounts();
+    if (state.filters.saved) renderMarket(true);
+    toast(on ? 'Đã lưu tin. Xem lại ở nút “Đã lưu”.' : 'Đã bỏ lưu tin.', on ? 'success' : 'info', 2600);
+  }
+
+  function readIdList(key) {
+    try {
+      const list = JSON.parse(storageGet(key) || '[]');
+      return Array.isArray(list) ? list.map(Number).filter((id) => Number.isInteger(id) && id > 0) : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function inPriceRange(price, range) {
+    if (!range) return true;
+    const [min, max] = range.split('-').map((part) => (part === '' ? null : Number(part)));
+    if (min != null && price < min) return false;
+    if (max != null && price >= max) return false;
+    return true;
+  }
+
   function getFilteredProducts(promoted) {
     const q = normalize(state.filters.q.trim());
-    const category = state.filters.category;
-    const delivery = state.filters.delivery;
-    return state.products.filter((product) => {
+    const { category, delivery, price, sort, saved } = state.filters;
+    const list = state.products.filter((product) => {
       if (Boolean(product.is_promoted) !== Boolean(promoted)) return false;
       if (category && product.category !== category) return false;
       if (delivery && !(product.delivery_methods || []).some((method) => method.code === delivery)) return false;
+      if (!inPriceRange(Number(product.price) || 0, price)) return false;
+      if (saved && !isSaved(product.id)) return false;
       if (q) {
         const haystack = normalize(`${product.title} ${product.description || ''} ${product.category} ${product.seller_badge || ''}`);
         if (!haystack.includes(q)) return false;
       }
       return true;
     });
+    // "new" giữ nguyên thứ tự API (mới nhất trước)
+    if (sort === 'price-asc') list.sort((a, b) => a.price - b.price);
+    if (sort === 'price-desc') list.sort((a, b) => b.price - a.price);
+    return list;
   }
 
   function hasActiveFilters() {
-    return Boolean(state.filters.q.trim() || state.filters.category || state.filters.delivery);
+    const f = state.filters;
+    return Boolean(f.q.trim() || f.category || f.delivery || f.price || f.saved);
+  }
+
+  function shareProduct(product) {
+    const url = `${window.location.origin}${window.location.pathname}#sp-${product.id}`;
+    const data = { title: product.title, text: `${product.title} – ${vnd(product.price)} trên Studeal`, url };
+    if (navigator.share) {
+      navigator.share(data).catch(() => { /* người dùng đóng bảng chia sẻ */ });
+      return;
+    }
+    const done = () => toast('Đã sao chép liên kết tin đăng.', 'success', 2600);
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(done).catch(() => window.prompt('Sao chép liên kết:', url));
+    } else {
+      window.prompt('Sao chép liên kết:', url);
+    }
+  }
+
+  /** Trang chi tiết sản phẩm (mở dạng sheet), có liên kết riêng #sp-<id> để chia sẻ. */
+  function openProductDetail(productId) {
+    const product = productById(productId);
+    if (!product) {
+      toast('Tin này không còn trên chợ.', 'info');
+      return;
+    }
+    const deal = acceptedOfferFor(product.id);
+    const own = isOwnProduct(product);
+    const img = product.image_url || FALLBACK_IMG;
+    const badge = product.seller_badge || (product.seller && product.seller.university) || '';
+    openModal(`
+      <div class="-m-5 sm:-m-7">
+        <div class="grid sm:grid-cols-2">
+          <div class="relative aspect-[4/3] bg-slate-100 sm:aspect-auto sm:min-h-[520px]">
+            <img src="${esc(img)}" alt="${esc(product.title)}" data-fallback="${esc(FALLBACK_IMG)}" class="absolute inset-0 h-full w-full object-cover">
+            ${imageBadge(deal, own, product.is_promoted)}
+          </div>
+          <div class="flex flex-col p-6 sm:p-8">
+            <p class="pr-10 text-[13px] font-medium text-sky-700">${esc(product.category)}</p>
+            <h2 class="mt-1.5 pr-6 text-2xl font-bold leading-tight tracking-tight text-ink sm:text-[28px]">${esc(product.title)}</h2>
+            <div class="mt-3">${priceBlock(product, deal, 'text-3xl')}</div>
+
+            <dl class="mt-5 grid grid-cols-2 gap-3 text-[13px]">
+              <div class="rounded-2xl bg-slate-100 p-3.5"><dt class="text-slate-500">Tình trạng</dt><dd class="mt-0.5 text-[15px] font-semibold text-ink">${esc(product.condition_text || 'Chưa ghi')}</dd></div>
+              <div class="rounded-2xl bg-slate-100 p-3.5"><dt class="text-slate-500">Người bán</dt><dd class="mt-0.5 flex items-center gap-1.5 text-[15px] font-semibold text-ink"><span>${esc(product.seller ? product.seller.alias : 'Sinh viên')}</span>${badge ? '<i class="fa-solid fa-circle-check text-xs text-emerald-500" aria-hidden="true"></i>' : ''}</dd>${badge ? `<dd class="text-slate-500">${esc(badge)}</dd>` : ''}</div>
+            </dl>
+
+            ${product.description ? `<p class="mt-5 whitespace-pre-line text-[15px] leading-relaxed text-slate-600">${esc(product.description)}</p>` : ''}
+
+            <h3 class="mt-6 text-[13px] font-semibold text-slate-500">Cách nhận hàng</h3>
+            <ul class="mt-1 divide-y divide-slate-200">${deliveryTags(product)}</ul>
+
+            <div class="mt-6 grid ${deal || own ? '' : 'grid-cols-2'} gap-2">${actionButtons(product, deal)}</div>
+            <div class="mt-3 flex items-center justify-between gap-3">
+              <button type="button" data-market-action="toggle-save" data-save-id="${product.id}" aria-pressed="${isSaved(product.id)}"
+                class="heart-btn !flex !h-10 !w-auto items-center gap-2 !rounded-full !bg-transparent px-3 text-[13px] font-medium !shadow-none ${isSaved(product.id) ? 'is-on' : ''}" aria-label="${isSaved(product.id) ? 'Bỏ lưu tin này' : 'Lưu tin này'}">
+                <i class="${isSaved(product.id) ? 'fa-solid' : 'fa-regular'} fa-heart" aria-hidden="true"></i><span class="text-slate-600">Lưu tin</span>
+              </button>
+              <button type="button" data-market-action="share" data-product-id="${product.id}" class="inline-flex h-10 items-center gap-2 rounded-full px-3 text-[13px] font-medium text-slate-600 transition hover:text-ink">
+                <i class="fa-solid fa-arrow-up-from-bracket" aria-hidden="true"></i> Chia sẻ
+              </button>
+            </div>
+            <p class="mt-4 flex items-start gap-2 text-[13px] leading-relaxed text-slate-500">
+              <i class="fa-solid fa-shield-halved mt-0.5 text-emerald-500" aria-hidden="true"></i>
+              Studeal giữ tiền đến khi bạn xác nhận đã nhận hàng. Thông tin liên lạc của hai bên luôn được ẩn.
+            </p>
+          </div>
+        </div>
+      </div>`, { wide: true, label: product.title });
+    rememberRecent(product.id);
+    try { window.history.replaceState(null, '', `#sp-${product.id}`); } catch { /* ignore */ }
+  }
+
+  /** Mở tin theo liên kết chia sẻ #sp-<id> (gọi sau khi đã tải sản phẩm). */
+  function openDetailFromHash() {
+    const match = /^#sp-(\d+)$/.exec(window.location.hash);
+    if (match && productById(Number(match[1]))) openProductDetail(Number(match[1]));
   }
 
   function updateFilterUI() {
@@ -522,6 +677,12 @@
     });
     const input = $('#marketSearchInput');
     if (input && input.value !== state.filters.q) input.value = state.filters.q;
+    const price = $('#marketPrice');
+    if (price) price.value = state.filters.price;
+    const sort = $('#marketSort');
+    if (sort) sort.value = state.filters.sort;
+    const savedButton = $('#marketSavedButton');
+    if (savedButton) savedButton.setAttribute('aria-pressed', String(state.filters.saved));
     const clear = $('#marketSearchClear');
     if (clear) {
       const show = Boolean(state.filters.q);
@@ -630,31 +791,47 @@
       offersCount.classList.toggle('hidden', pending === 0);
       offersCount.classList.toggle('inline-flex', pending > 0);
     }
+    const savedCount = $('#marketSavedCount');
+    if (savedCount) savedCount.textContent = String(state.saved.length);
     const cartCount = $('#marketCartCount');
     if (cartCount) cartCount.textContent = state.cart ? '1' : '0';
   }
 
   function updateAuthUI() {
+    // .has-session ẩn nút Đăng nhập trên header (đặt sẵn trước khi vẽ trang ở baseof.html)
+    if (!(state.token && !state.authReady)) {
+      document.documentElement.classList.toggle('has-session', Boolean(state.user));
+      // Bản tóm tắt cho ô tài khoản trên header (studeal.js vẽ, dùng cả ở trang không có chợ)
+      if (state.user) {
+        storageSet(HEADER_USER_KEY, JSON.stringify({
+          name: state.user.name,
+          verified: Boolean(state.user.is_student_verified),
+          school: state.user.university_name || '',
+        }));
+      } else {
+        storageRemove(HEADER_USER_KEY);
+      }
+      document.dispatchEvent(new Event('studeal:auth'));
+    }
     const area = $('#marketAuthArea');
     if (!area) return;
     if (state.token && !state.authReady && !state.user) {
-      area.innerHTML = '<span class="inline-flex h-11 items-center gap-2 border border-sky-100 bg-white px-4 text-xs font-bold text-slate-400"><i class="fa-solid fa-circle-notch fa-spin" aria-hidden="true"></i><span class="hidden sm:inline">Đang xác thực…</span></span>';
+      area.innerHTML = '<span class="inline-flex h-11 items-center gap-2 rounded-full bg-white px-4 text-[13px] font-medium text-slate-400 shadow-sm"><i class="fa-solid fa-circle-notch fa-spin" aria-hidden="true"></i><span class="hidden sm:inline">Đang xác thực…</span></span>';
       return;
     }
     if (!state.user) {
-      area.innerHTML = `<button type="button" data-market-action="login" class="inline-flex h-11 items-center justify-center gap-2 border border-sky-200 bg-white px-4 text-xs font-extrabold text-sky-700 shadow-sm transition hover:-translate-y-0.5 hover:border-sky-300 hover:bg-sky-50">
-        <i class="fa-solid fa-user" aria-hidden="true"></i><span>Đăng nhập</span>
+      area.innerHTML = `<button type="button" data-market-action="login" class="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-ink px-5 text-[13px] font-semibold text-page transition hover:opacity-85">
+        Đăng nhập
       </button>`;
       return;
     }
     const verified = Boolean(state.user.is_student_verified);
-    area.innerHTML = `<button type="button" data-market-action="open-account" class="group flex h-11 max-w-[15rem] items-center gap-2 border border-sky-200 bg-white py-1 pl-1 pr-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-sky-300 hover:bg-sky-50" aria-label="Mở tài khoản ${esc(state.user.name)}">
-      <span class="flex h-9 w-9 shrink-0 items-center justify-center bg-sky-600 text-xs font-extrabold text-white shadow-md shadow-sky-500/20">${userInitial(state.user)}</span>
+    area.innerHTML = `<button type="button" data-market-action="open-account" class="group flex h-11 max-w-[15rem] items-center gap-2 rounded-full bg-white py-1 pl-1 pr-4 text-left shadow-sm transition hover:shadow-md" aria-label="Mở tài khoản ${esc(state.user.name)}">
+      <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-sky-600 text-[13px] font-semibold text-white">${userInitial(state.user)}</span>
       <span class="hidden min-w-0 sm:block">
-        <span class="block truncate text-[11px] font-extrabold text-ink">${esc(state.user.name)}</span>
-        <span class="block truncate text-[9px] font-bold ${verified ? 'text-emerald-600' : 'text-slate-400'}">${verified ? `Đã xác thực ${esc(state.user.university_name || '.edu.vn')}` : 'Tài khoản sinh viên'}</span>
+        <span class="block truncate text-[13px] font-semibold leading-tight text-ink">${esc(state.user.name)}</span>
+        <span class="block truncate text-[11px] leading-tight ${verified ? 'text-emerald-600' : 'text-slate-400'}">${verified ? `Đã xác thực ${esc(state.user.university_name || 'mail sinh viên')}` : 'Chưa xác thực'}</span>
       </span>
-      <i class="fa-solid fa-chevron-down hidden text-[8px] text-slate-400 sm:block" aria-hidden="true"></i>
     </button>`;
   }
 
@@ -680,6 +857,7 @@
       state.productError = null;
       reconcileCartAfterProducts();
       renderMarket(!silent);
+      renderRecent();
     } catch (error) {
       state.productError = error.message;
       state.productsLoaded = true;
@@ -861,12 +1039,15 @@
       <div class="mt-4 border border-sky-100 bg-sky-50/70 p-3.5">
         <p class="text-[10px] font-extrabold uppercase tracking-[0.14em] text-sky-700">Tài khoản demo</p>
         <p class="mt-1 text-[10px] leading-relaxed text-slate-500">Mật khẩu <strong class="text-slate-700">123456</strong>. OTP demo hiện ngay ở bước sau.</p>
-        <div class="mt-2.5 grid grid-cols-2 gap-2">
-          <button type="button" data-market-action="quick-login" data-email="namhuynhnhat2008@gmail.com" class="inline-flex h-9 items-center justify-center gap-1.5 bg-white px-2 text-[10px] font-extrabold text-sky-700 ring-1 ring-sky-100 transition hover:bg-sky-100">
-            <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i> Người mua
+        <div class="mt-2.5 grid grid-cols-1 gap-2 sm:grid-cols-3">
+          <button type="button" data-market-action="quick-login" data-email="nguyenvana@gmail.com" class="inline-flex h-9 items-center justify-center gap-1.5 whitespace-nowrap bg-white px-2 text-[10px] font-extrabold text-sky-700 ring-1 ring-sky-100 transition hover:bg-sky-100">
+            <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i> Nguyễn Văn A · Mua
           </button>
-          <button type="button" data-market-action="quick-login" data-email="2612205118@student.hcmus.edu.vn" class="inline-flex h-9 items-center justify-center gap-1.5 bg-white px-2 text-[10px] font-extrabold text-emerald-700 ring-1 ring-emerald-100 transition hover:bg-emerald-50">
-            <i class="fa-solid fa-store" aria-hidden="true"></i> Người bán
+          <button type="button" data-market-action="quick-login" data-email="xxxxxxxxxx@student.hcmus.edu.vn" class="inline-flex h-9 items-center justify-center gap-1.5 whitespace-nowrap bg-white px-2 text-[10px] font-extrabold text-emerald-700 ring-1 ring-emerald-100 transition hover:bg-emerald-50">
+            <i class="fa-solid fa-store" aria-hidden="true"></i> Trần Thị B · KHTN
+          </button>
+          <button type="button" data-market-action="quick-login" data-email="xxxxxxxx@gm.uit.edu.vn" class="inline-flex h-9 items-center justify-center gap-1.5 whitespace-nowrap bg-white px-2 text-[10px] font-extrabold text-indigo-700 ring-1 ring-indigo-100 transition hover:bg-indigo-50">
+            <i class="fa-solid fa-store" aria-hidden="true"></i> Lê Văn C · UIT
           </button>
         </div>
       </div>` : `
@@ -1043,7 +1224,7 @@
       await refreshSession({ silent: true });
       toast(data.message || 'Đăng nhập thành công.', 'success');
       if (wasStudentVerification) {
-        toast(`Huy hiệu sinh viên đã được cấp: ${data.user && data.user.university_name ? data.user.university_name : 'đã xác thực .edu.vn'}.`, 'success', 5200);
+        toast(`Huy hiệu sinh viên đã được cấp: ${data.user && data.user.university_name ? data.user.university_name : 'đã xác thực mail sinh viên'}.`, 'success', 5200);
         if (after && after.type === 'sell') window.setTimeout(openSellModal, 240);
         else window.setTimeout(() => openOffersModal('received'), 240);
       } else if (after) window.setTimeout(() => runAfterAuth(after), 240);
@@ -1067,7 +1248,7 @@
         <h2 class="mt-3 text-2xl font-extrabold tracking-tight text-ink">Xác thực email trường</h2>
         <p class="mt-2 text-xs leading-relaxed text-slate-500">Nhập email .edu.vn để nhận OTP và cấp huy hiệu trường. Email trường không hiển thị cho người mua; xác thực mở khóa chức năng đăng bán.</p>
       </div>
-      ${state.user.is_student_verified ? `<div class="mt-4 border border-emerald-200 bg-emerald-50 p-3 text-[11px] font-semibold text-emerald-800"><i class="fa-solid fa-circle-check mr-1"></i>Đã xác thực ${esc(state.user.university_name || '.edu.vn')} · ${esc(state.user.student_email || '')}</div>` : ''}
+      ${state.user.is_student_verified ? `<div class="mt-4 border border-emerald-200 bg-emerald-50 p-3 text-[11px] font-semibold text-emerald-800"><i class="fa-solid fa-circle-check mr-1"></i>Đã xác thực ${esc(state.user.university_name || 'mail sinh viên')} · ${esc(state.user.student_email || '')}</div>` : ''}
       <form data-market-form="student" class="mt-5 space-y-3" novalidate>
         <p data-form-error class="hidden bg-rose-50 px-3 py-2 text-[11px] font-semibold text-rose-700 ring-1 ring-rose-100"></p>
         <label for="marketStudentEmail" class="block text-[11px] font-extrabold text-slate-700">Email sinh viên .edu.vn</label>
@@ -1348,7 +1529,7 @@
             <h2 class="mt-0.5 truncate text-xl font-extrabold tracking-tight text-ink">${esc(user.name)}</h2>
             <div class="mt-1 flex flex-wrap items-center gap-1.5">
               <span class="truncate text-[10px] font-semibold text-slate-400">${esc(user.email)}</span>
-              <span class=" px-2 py-0.5 text-[9px] font-extrabold ${verified ? 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100' : 'bg-slate-100 text-slate-500'}">${verified ? `Đã xác thực ${esc(user.university_name || '.edu.vn')}` : 'Chưa xác thực .edu.vn'}</span>
+              <span class=" px-2 py-0.5 text-[9px] font-extrabold ${verified ? 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100' : 'bg-slate-100 text-slate-500'}">${verified ? `Đã xác thực ${esc(user.university_name || 'mail sinh viên')}` : 'Chưa xác thực mail sinh viên'}</span>
             </div>
           </div>
         </div>
@@ -1902,8 +2083,9 @@
 
   async function switchDemoAccount(email) {
     const accounts = {
-      'namhuynhnhat2008@gmail.com': 'Tài khoản Người Mua',
-      '2612205118@student.hcmus.edu.vn': 'Người Bán SV KHTN',
+      'nguyenvana@gmail.com': 'Nguyễn Văn A (người mua)',
+      'xxxxxxxxxx@student.hcmus.edu.vn': 'Trần Thị B (người bán KHTN)',
+      'xxxxxxxx@gm.uit.edu.vn': 'Lê Văn C (người bán UIT)',
     };
     if (!accounts[email]) return;
     if (!window.confirm(`Chuyển sang ${accounts[email]}? Phiên đăng nhập hiện tại sẽ kết thúc.`)) return;
@@ -1976,7 +2158,7 @@
   }
 
   function resetFilters() {
-    state.filters = { q: '', category: '', delivery: '' };
+    state.filters = { q: '', category: '', delivery: '', price: '', sort: state.filters.sort, saved: false };
     updateFilterUI();
     renderMarket(true);
     const input = $('#marketSearchInput');
@@ -2021,6 +2203,22 @@
       case 'retry-products':
         loadProducts();
         break;
+      case 'open-detail':
+        openProductDetail(productId);
+        break;
+      case 'toggle-save':
+        toggleSave(element.dataset.saveId);
+        break;
+      case 'toggle-saved':
+        state.filters.saved = !state.filters.saved;
+        updateFilterUI();
+        renderMarket(true);
+        break;
+      case 'share': {
+        const product = productById(productId);
+        if (product) shareProduct(product);
+        break;
+      }
       case 'offer':
         openOfferModal(productId);
         break;
@@ -2232,6 +2430,12 @@
 
   function onChange(event) {
     const target = event.target;
+    if (target.id === 'marketSort' || target.id === 'marketPrice') {
+      state.filters[target.id === 'marketSort' ? 'sort' : 'price'] = target.value;
+      updateFilterUI();
+      renderMarket(true);
+      return;
+    }
     if (!state.cart) return;
     if (target.name === 'delivery_method') {
       state.cart.method = target.value;
@@ -2267,9 +2471,15 @@
     if (!$('#marketGrid')) return;
     state.token = storageGet(TOKEN_KEY);
     state.authReady = !state.token;
+    state.saved = readIdList(SAVED_KEY);
+    state.recent = readIdList(RECENT_KEY).slice(0, RECENT_MAX);
     updateAuthUI();
     updateCounts();
-    bindImageFallbacks(document);
+    // ảnh lỗi (kể cả thẻ được vẽ sau này): đổi sang ảnh dự phòng. Sự kiện error không nổi bọt nên bắt ở pha capture.
+    document.addEventListener('error', (event) => {
+      const image = event.target;
+      if (image && image.tagName === 'IMG' && image.dataset.fallback && image.src !== image.dataset.fallback) image.src = image.dataset.fallback;
+    }, true);
 
     document.addEventListener('click', onClick);
     document.addEventListener('submit', onSubmit);
@@ -2278,7 +2488,14 @@
     document.addEventListener('keydown', onKeydown);
 
     await Promise.allSettled([loadProducts(), loadVouchers()]);
+    openDetailFromHash();
+    window.addEventListener('hashchange', openDetailFromHash);
     if (state.token) await refreshSession({ silent: true });
+    if (window.location.hash === '#dang-nhap' || window.location.hash === '#tai-khoan') {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+      if (state.user) openOffersModal('received');
+      else openAuth('login');
+    }
     else {
       state.authReady = true;
       updateAuthUI();
